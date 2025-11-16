@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_lib_asset">
+    <sys_ux_lib_asset action="INSERT_OR_UPDATE">
+        <bundled_asset>false</bundled_asset>
+        <category>component</category>
+        <checksum>4730028c1701c5332557c961872ef668</checksum>
+        <config_option/>
+        <content>/*__ESM_BODY_START__*/import{c as client,j as jsxRuntimeExports,R as React,r as reactExports,A as AayosService}from"./dashboard-CYtVhDCO.jsdbx";client.createRoot(document.getElementById("root")).render(jsxRuntimeExports.jsx(React.StrictMode,{children:jsxRuntimeExports.jsx(function(){let[vehicles,setVehicles]=reactExports.useState([]),[loading,setLoading]=reactExports.useState(!0),[searchTerm,setSearchTerm]=reactExports.useState("");reactExports.useEffect(()=&gt;{new AayosService().getVehicles().then(data=&gt;{setVehicles(data),setLoading(!1)}).catch(error=&gt;{console.error("Failed to load vehicles:",error),setLoading(!1)})},[]);let handleRowClick=vehicle=&gt;{let sysId="object"==typeof vehicle.sys_id?vehicle.sys_id.value:vehicle.sys_id;window.location.href=`/aayos_admin/aayos_vehicle_details?sys_id=${sysId}`},filteredVehicles=vehicles.filter(vehicle=&gt;{let plateNumber="object"==typeof vehicle.plate_number?vehicle.plate_number.display_value:vehicle.plate_number,ownerName="object"==typeof vehicle.owner_name?vehicle.owner_name.display_value:vehicle.owner_name,make="object"==typeof vehicle.make?vehicle.make.display_value:vehicle.make,model="object"==typeof vehicle.model?vehicle.model.display_value:vehicle.model;return plateNumber?.toLowerCase().includes(searchTerm.toLowerCase())||ownerName?.toLowerCase().includes(searchTerm.toLowerCase())||make?.toLowerCase().includes(searchTerm.toLowerCase())||model?.toLowerCase().includes(searchTerm.toLowerCase())});return jsxRuntimeExports.jsxs("div",{className:"dashboard",children:[jsxRuntimeExports.jsxs("header",{className:"dashboard-header",children:[jsxRuntimeExports.jsx("h1",{children:"Vehicle Management"}),jsxRuntimeExports.jsx("button",{onClick:()=&gt;window.location.href="/aayos_admin/aayos_vehicle_register",className:"primary-button",children:"Register New Vehicle"})]}),jsxRuntimeExports.jsx("div",{className:"search-section",children:jsxRuntimeExports.jsx("input",{type:"text",placeholder:"Search vehicles...",value:searchTerm,onChange:e=&gt;setSearchTerm(e.target.value),className:"search-input"})}),loading?jsxRuntimeExports.jsx("div",{className:"loading",children:"Loading vehicles..."}):jsxRuntimeExports.jsxs("div",{className:"table-container",children:[jsxRuntimeExports.jsxs("table",{className:"data-table",children:[jsxRuntimeExports.jsx("thead",{children:jsxRuntimeExports.jsxs("tr",{children:[jsxRuntimeExports.jsx("th",{children:"Vehicle ID"}),jsxRuntimeExports.jsx("th",{children:"Plate Number"}),jsxRuntimeExports.jsx("th",{children:"Make"}),jsxRuntimeExports.jsx("th",{children:"Model"}),jsxRuntimeExports.jsx("th",{children:"Year"}),jsxRuntimeExports.jsx("th",{children:"Owner"}),jsxRuntimeExports.jsx("th",{children:"Mileage"}),jsxRuntimeExports.jsx("th",{children:"Status"})]})}),jsxRuntimeExports.jsx("tbody",{children:filteredVehicles.map(vehicle=&gt;{let sysId="object"==typeof vehicle.sys_id?vehicle.sys_id.value:vehicle.sys_id;return jsxRuntimeExports.jsxs("tr",{onClick:()=&gt;handleRowClick(vehicle),className:"clickable-row",children:[jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.number?vehicle.number.display_value:vehicle.number}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.plate_number?vehicle.plate_number.display_value:vehicle.plate_number}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.make?vehicle.make.display_value:vehicle.make}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.model?vehicle.model.display_value:vehicle.model}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.model_year?vehicle.model_year.display_value:vehicle.model_year}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.owner_name?vehicle.owner_name.display_value:vehicle.owner_name}),jsxRuntimeExports.jsx("td",{children:"object"==typeof vehicle.current_mileage?vehicle.current_mileage.display_value:vehicle.current_mileage}),jsxRuntimeExports.jsx("td",{children:jsxRuntimeExports.jsx("span",{className:`status ${"object"==typeof vehicle.vehicle_status?vehicle.vehicle_status.value:vehicle.vehicle_status}`,children:"object"==typeof vehicle.vehicle_status?vehicle.vehicle_status.display_value:vehicle.vehicle_status})})]},sysId)})})]}),0===filteredVehicles.length&amp;&amp;!loading&amp;&amp;jsxRuntimeExports.jsx("div",{className:"no-data",children:"No vehicles found matching your search."})]})]})},{})}));
+//# sourceMappingURL=vehicles.js.map.jsdbx
+</content>
+        <content_meta/>
+        <dependencies/>
+        <es_module>true</es_module>
+        <is_attachment>false</is_attachment>
+        <mime_type>application/javascript</mime_type>
+        <name>x_1868112_aayos/vehicles</name>
+        <sys_class_name>sys_ux_lib_asset</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 17:34:51</sys_created_on>
+        <sys_id>04b77167ef4f4fd482f752c9b777a5c1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos/vehicles</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ux_lib_asset_04b77167ef4f4fd482f752c9b777a5c1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 17:34:51</sys_updated_on>
+    </sys_ux_lib_asset>
+</record_update>

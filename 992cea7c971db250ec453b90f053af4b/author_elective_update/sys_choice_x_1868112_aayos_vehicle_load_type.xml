@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="load_type" table="x_1868112_aayos_vehicle" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>load_type</element>
+            <name>x_1868112_aayos_vehicle</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>load_type</sys_name>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_choice_x_1868112_aayos_vehicle_load_type</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Light Load</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>0</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>light_load</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Normal Load</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>1</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>normal_load</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Heavy Load</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>2</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>heavy_load</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Variable Load</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>variable_load</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Towing</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>4</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>towing</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Passenger Heavy</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>5</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>passenger_heavy</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>load_type</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Cargo Transport</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>6</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <value>cargo_transport</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

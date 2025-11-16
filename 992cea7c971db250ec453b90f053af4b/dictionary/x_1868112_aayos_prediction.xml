@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="1e6ea270975db250ec453b90f053af8a" label="AAYOS Prediction" max_length="40" name="x_1868112_aayos_prediction" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Prediction ID" max_length="40" name="prediction_id" read_only="true" type="string"/>
+        <element attributes="edge_encryption_enabled=true" display="true" label="Predicted Issue" max_length="500" name="predicted_issue" type="string"/>
+        <element label="Confidence Score" max_length="20" name="confidence_score" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Input Data Snapshot" max_length="4000" name="input_snapshot" type="string"/>
+        <element choice="1" label="Outcome" max_length="40" name="outcome" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Unknown" sequence="3" value="unknown"/>
+                <element inactive_on_update="false" label="Confirmed" sequence="0" value="confirmed"/>
+                <element inactive_on_update="false" label="False Positive" sequence="1" value="false_positive"/>
+                <element inactive_on_update="false" label="Partially Confirmed" sequence="2" value="partially_confirmed"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Predicted Service Date" max_length="40" name="predicted_service_date" type="glide_date"/>
+        <element attributes="encode_utf8=false" label="Vehicle" mandatory="true" max_length="32" name="vehicle" reference="x_1868112_aayos_vehicle" type="reference"/>
+        <element choice="1" label="Issue Category" max_length="40" name="issue_category" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Brakes" sequence="1" value="brakes"/>
+                <element inactive_on_update="false" label="Inspection" sequence="5" value="inspection"/>
+                <element inactive_on_update="false" label="Tires" sequence="2" value="tires"/>
+                <element inactive_on_update="false" label="Other" sequence="6" value="other"/>
+                <element inactive_on_update="false" label="Battery" sequence="3" value="battery"/>
+                <element inactive_on_update="false" label="Oil" sequence="0" value="oil"/>
+                <element inactive_on_update="false" label="Engine" sequence="4" value="engine"/>
+            </choice>
+        </element>
+        <element label="Risk Score" max_length="20" name="risk_score" type="decimal"/>
+        <element attributes="edge_encryption_enabled=true" label="Prediction Valid Until" max_length="40" name="valid_until" type="glide_date_time"/>
+        <element choice="1" default="new" label="Prediction Status" max_length="40" name="prediction_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Cancelled" sequence="3" value="cancelled"/>
+                <element inactive_on_update="false" label="New" sequence="0" value="new"/>
+                <element inactive_on_update="false" label="Used" sequence="1" value="used"/>
+                <element inactive_on_update="false" label="Expired" sequence="2" value="expired"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Technician Feedback" max_length="2000" name="technician_feedback" type="string"/>
+        <element label="Estimated Time To Failure (days)" max_length="40" name="est_ttf_days" type="integer"/>
+        <element attributes="encode_utf8=false" label="Ticket" max_length="32" name="ticket" reference="x_1868112_aayos_service_ticket" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" label="Issue Details" max_length="2000" name="issue_details" type="string"/>
+        <element choice="1" label="Source Type" max_length="40" name="source_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Scheduled Scan" sequence="3" value="scheduled_scan"/>
+                <element inactive_on_update="false" label="Telematics" sequence="0" value="telematics"/>
+                <element inactive_on_update="false" label="Manual" sequence="1" value="manual"/>
+                <element inactive_on_update="false" label="AI Batch" sequence="2" value="ai_batch"/>
+            </choice>
+        </element>
+        <element label="Was Ticket Created" max_length="40" name="ticket_created" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" label="Admin Notes" max_length="2000" name="admin_notes" type="string"/>
+        <element choice="1" label="Severity Level" max_length="40" name="severity_level" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Low" sequence="3" value="low"/>
+                <element inactive_on_update="false" label="Critical" sequence="0" value="critical"/>
+                <element inactive_on_update="false" label="High" sequence="1" value="high"/>
+                <element inactive_on_update="false" label="Medium" sequence="2" value="medium"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Prediction Date" max_length="40" name="prediction_date" type="glide_date_time"/>
+        <element choice="1" label="Created By Source" max_length="40" name="created_by_source" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="AI Model" sequence="0" value="ai_model"/>
+                <element inactive_on_update="false" label="Telematics" sequence="1" value="telematics"/>
+                <element inactive_on_update="false" label="Manual Admin" sequence="2" value="manual_admin"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Telematics Reading Raw" max_length="4000" name="telematics_raw" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Ticket Creation Date" max_length="40" name="ticket_creation_date" type="glide_date_time"/>
+        <index name="index">
+            <element name="ticket"/>
+        </index>
+        <index name="index2">
+            <element name="vehicle"/>
+        </index>
+    </element>
+</database>

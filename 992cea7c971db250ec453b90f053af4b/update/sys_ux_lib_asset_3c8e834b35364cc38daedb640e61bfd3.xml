@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ux_lib_asset">
+    <sys_ux_lib_asset action="INSERT_OR_UPDATE">
+        <bundled_asset>false</bundled_asset>
+        <category>component</category>
+        <checksum>b9611658f7b892d20090a255577f9dd2</checksum>
+        <config_option/>
+        <content>/*__ESM_BODY_START__*/import{c as client,j as jsxRuntimeExports,R as React,r as reactExports,A as AayosService}from"./dashboard-CYtVhDCO.jsdbx";client.createRoot(document.getElementById("root")).render(jsxRuntimeExports.jsx(React.StrictMode,{children:jsxRuntimeExports.jsx(function(){let[stats,setStats]=reactExports.useState({totalVehicles:0,openTickets:0,activeTechnicians:0,pendingPredictions:0});reactExports.useEffect(()=&gt;{let service=new AayosService;Promise.all([service.getVehicleCount(),service.getOpenTicketCount(),service.getActiveTechnicianCount(),service.getPendingPredictionCount()]).then(([vehicles,tickets,techs,predictions])=&gt;{setStats({totalVehicles:vehicles,openTickets:tickets,activeTechnicians:techs,pendingPredictions:predictions})})},[]);let navigateTo=url=&gt;{window.location.href=`/aayos_admin${url}`};return jsxRuntimeExports.jsxs("div",{className:"dashboard",children:[jsxRuntimeExports.jsxs("header",{className:"dashboard-header",children:[jsxRuntimeExports.jsx("h1",{children:"AAYOS Admin Dashboard"}),jsxRuntimeExports.jsx("p",{children:"AI-driven Automotive Yield Optimization System"})]}),jsxRuntimeExports.jsxs("div",{className:"stats-grid",children:[jsxRuntimeExports.jsxs("div",{className:"stat-card",onClick:()=&gt;navigateTo("/aayos_vehicles"),children:[jsxRuntimeExports.jsx("h3",{children:"Total Vehicles"}),jsxRuntimeExports.jsx("div",{className:"stat-number",children:stats.totalVehicles})]}),jsxRuntimeExports.jsxs("div",{className:"stat-card",onClick:()=&gt;navigateTo("/aayos_tickets"),children:[jsxRuntimeExports.jsx("h3",{children:"Open Tickets"}),jsxRuntimeExports.jsx("div",{className:"stat-number",children:stats.openTickets})]}),jsxRuntimeExports.jsxs("div",{className:"stat-card",onClick:()=&gt;navigateTo("/aayos_technicians"),children:[jsxRuntimeExports.jsx("h3",{children:"Active Technicians"}),jsxRuntimeExports.jsx("div",{className:"stat-number",children:stats.activeTechnicians})]}),jsxRuntimeExports.jsxs("div",{className:"stat-card",children:[jsxRuntimeExports.jsx("h3",{children:"Pending Predictions"}),jsxRuntimeExports.jsx("div",{className:"stat-number",children:stats.pendingPredictions})]})]}),jsxRuntimeExports.jsxs("div",{className:"quick-actions",children:[jsxRuntimeExports.jsx("h2",{children:"Quick Actions"}),jsxRuntimeExports.jsxs("div",{className:"action-buttons",children:[jsxRuntimeExports.jsx("button",{onClick:()=&gt;navigateTo("/aayos_vehicle_register"),className:"primary-button",children:"Register New Vehicle"}),jsxRuntimeExports.jsx("button",{onClick:()=&gt;navigateTo("/aayos_vehicles"),className:"secondary-button",children:"View All Vehicles"}),jsxRuntimeExports.jsx("button",{onClick:()=&gt;navigateTo("/aayos_tickets"),className:"secondary-button",children:"View All Tickets"}),jsxRuntimeExports.jsx("button",{onClick:()=&gt;navigateTo("/aayos_technicians"),className:"secondary-button",children:"Manage Technicians"})]})]})]})},{})}));
+//# sourceMappingURL=dashboard.js.map.jsdbx
+</content>
+        <content_meta/>
+        <dependencies/>
+        <es_module>true</es_module>
+        <is_attachment>false</is_attachment>
+        <mime_type>application/javascript</mime_type>
+        <name>x_1868112_aayos/dashboard</name>
+        <sys_class_name>sys_ux_lib_asset</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 17:32:24</sys_created_on>
+        <sys_id>3c8e834b35364cc38daedb640e61bfd3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos/dashboard</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ux_lib_asset_3c8e834b35364cc38daedb640e61bfd3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 17:32:24</sys_updated_on>
+    </sys_ux_lib_asset>
+</record_update>
