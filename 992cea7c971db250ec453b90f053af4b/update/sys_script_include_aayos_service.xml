@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>AAYOSService</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Client-callable service for AAYOS UI pages. Provides methods to fetch vehicles, tickets, technicians, and counts.</description>
+        <display_name>AAYOS Service</display_name>
+        <script><![CDATA[var AAYOSService = Class.create();
+AAYOSService.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    
+    /**
+     * Get all vehicles
+     */
+    getVehicles: function() {
+        try {
+            var vehicles = [];
+            var gr = new GlideRecord('x_1868112_aayos_vehicle');
+            gr.orderByDesc('sys_created_on');
+            gr.query();
+            
+            while (gr.next()) {
+                vehicles.push({
+                    sys_id: gr.sys_id.toString(),
+                    number: gr.vehicle_id.toString(),
+                    plate_number: gr.plate_number.toString(),
+                    make: gr.make.toString(),
+                    model: gr.model.toString(),
+                    model_year: gr.model_year.toString(),
+                    owner_name: gr.owner_name.toString(),
+                    current_mileage: gr.current_mileage.toString(),
+                    vehicle_status: {
+                        value: gr.vehicle_status.toString(),
+                        display_value: gr.vehicle_status.getDisplayValue()
+                    }
+                });
+            }
+            
+            return JSON.stringify(vehicles);
+        } catch (e) {
+            gs.error('AAYOS: Error in getVehicles: ' + e.toString());
+            return JSON.stringify([]);
+        }
+    },
+    
+    /**
+     * Get vehicle count
+     */
+    getVehicleCount: function() {
+        try {
+            var gr = new GlideRecord('x_1868112_aayos_vehicle');
+            gr.addQuery('vehicle_status', 'active');
+            return gr.getCount();
+        } catch (e) {
+            gs.error('AAYOS: Error in getVehicleCount: ' + e.toString());
+            return 0;
+        }
+    },
+    
+    /**
+     * Get all tickets
+     */
+    getTickets: function() {
+        try {
+            var tickets = [];
+            var gr = new GlideRecord('x_1868112_aayos_service_ticket');
+            gr.orderByDesc('sys_created_on');
+            gr.query();
+            
+            while (gr.next()) {
+                tickets.push({
+                    sys_id: gr.sys_id.toString(),
+                    number: gr.ticket_id.toString(),
+                    vehicle: {
+                        value: gr.vehicle.toString(),
+                        display_value: gr.vehicle.getDisplayValue()
+                    },
+                    issue_summary: gr.issue_summary.toString(),
+                    issue_category: {
+                        value: gr.issue_category.toString(),
+                        display_value: gr.issue_category.getDisplayValue()
+                    },
+                    severity_level: {
+                        value: gr.severity_level.toString(),
+                        display_value: gr.severity_level.getDisplayValue()
+                    },
+                    status: {
+                        value: gr.status.toString(),
+                        display_value: gr.status.getDisplayValue()
+                    },
+                    technician: {
+                        value: gr.technician.toString(),
+                        display_value: gr.technician.getDisplayValue()
+                    },
+                    preferred_service_date: gr.preferred_service_date ? gr.preferred_service_date.toString() : '',
+                    confirmed_service_date: gr.confirmed_service_date ? gr.confirmed_service_date.toString() : ''
+                });
+            }
+            
+            return JSON.stringify(tickets);
+        } catch (e) {
+            gs.error('AAYOS: Error in getTickets: ' + e.toString());
+            return JSON.stringify([]);
+        }
+    },
+    
+    /**
+     * Get single ticket by sys_id
+     */
+    getTicket: function() {
+        try {
+            var sysId = this.getParameter('sysparm_sys_id');
+            if (!sysId) {
+                return JSON.stringify(null);
+            }
+            
+            var gr = new GlideRecord('x_1868112_aayos_service_ticket');
+            if (!gr.get(sysId)) {
+                return JSON.stringify(null);
+            }
+            
+            var ticket = {
+                sys_id: gr.sys_id.toString(),
+                number: gr.ticket_id.toString(),
+                vehicle: {
+                    value: gr.vehicle.toString(),
+                    display_value: gr.vehicle.getDisplayValue()
+                },
+                prediction: {
+                    value: gr.prediction.toString(),
+                    display_value: gr.prediction.getDisplayValue()
+                },
+                issue_summary: gr.issue_summary.toString(),
+                issue_detail: gr.issue_detail.toString(),
+                issue_category: {
+                    value: gr.issue_category.toString(),
+                    display_value: gr.issue_category.getDisplayValue()
+                },
+                severity_level: {
+                    value: gr.severity_level.toString(),
+                    display_value: gr.severity_level.getDisplayValue()
+                },
+                urgency_level: {
+                    value: gr.urgency_level.toString(),
+                    display_value: gr.urgency_level.getDisplayValue()
+                },
+                status: {
+                    value: gr.status.toString(),
+                    display_value: gr.status.getDisplayValue()
+                },
+                customer_response: {
+                    value: gr.customer_response.toString(),
+                    display_value: gr.customer_response.getDisplayValue()
+                },
+                technician: {
+                    value: gr.technician.toString(),
+                    display_value: gr.technician.getDisplayValue()
+                },
+                tech_response_status: {
+                    value: gr.tech_response_status.toString(),
+                    display_value: gr.tech_response_status.getDisplayValue()
+                },
+                preferred_service_date: gr.preferred_service_date ? gr.preferred_service_date.toString() : '',
+                confirmed_service_date: gr.confirmed_service_date ? gr.confirmed_service_date.toString() : '',
+                estimated_duration_hours: gr.estimated_duration_hours.toString(),
+                resolution_summary: gr.resolution_summary.toString()
+            };
+            
+            return JSON.stringify(ticket);
+        } catch (e) {
+            gs.error('AAYOS: Error in getTicket: ' + e.toString());
+            return JSON.stringify(null);
+        }
+    },
+    
+    /**
+     * Get open ticket count
+     */
+    getOpenTicketCount: function() {
+        try {
+            var gr = new GlideRecord('x_1868112_aayos_service_ticket');
+            gr.addQuery('status', 'NOT IN', 'closed,cancelled,resolved');
+            return gr.getCount();
+        } catch (e) {
+            gs.error('AAYOS: Error in getOpenTicketCount: ' + e.toString());
+            return 0;
+        }
+    },
+    
+    /**
+     * Get active technician count
+     */
+    getActiveTechnicianCount: function() {
+        try {
+            var gr = new GlideRecord('x_1868112_aayos_technician');
+            gr.addQuery('tech_status', 'active');
+            return gr.getCount();
+        } catch (e) {
+            gs.error('AAYOS: Error in getActiveTechnicianCount: ' + e.toString());
+            return 0;
+        }
+    },
+    
+    /**
+     * Get pending prediction count
+     */
+    getPendingPredictionCount: function() {
+        try {
+            var gr = new GlideRecord('x_1868112_aayos_prediction');
+            gr.addQuery('prediction_status', 'new');
+            gr.addQuery('ticket_created', false);
+            return gr.getCount();
+        } catch (e) {
+            gs.error('AAYOS: Error in getPendingPredictionCount: ' + e.toString());
+            return 0;
+        }
+    },
+    
+    type: 'AAYOSService'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 18:00:00</sys_created_on>
+        <sys_id>b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOSService</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_script_include_aayos_service</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 18:00:00</sys_updated_on>
+    </sys_script_include>
+</record_update>
+

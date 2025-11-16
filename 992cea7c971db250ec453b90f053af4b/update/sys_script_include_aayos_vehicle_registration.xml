@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>AAYOSVehicleRegistration</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description>Handles vehicle registration from the UI wizard</description>
+        <display_name>AAYOS Vehicle Registration</display_name>
+        <script><![CDATA[var AAYOSVehicleRegistration = Class.create();
+AAYOSVehicleRegistration.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    
+    createVehicle: function() {
+        try {
+            var dataStr = this.getParameter('sysparm_data');
+            var data = JSON.parse(dataStr);
+            
+            var vehicle = new GlideRecord('x_1868112_aayos_vehicle');
+            vehicle.initialize();
+            
+            // Basic info
+            vehicle.make = data.make || '';
+            vehicle.model = data.model || '';
+            vehicle.model_year = data.model_year || '';
+            vehicle.vehicle_category = data.vehicle_category || '';
+            vehicle.fuel_type = data.fuel_type || '';
+            vehicle.transmission = data.transmission || '';
+            vehicle.vin = data.vin || '';
+            vehicle.plate_number = data.plate_number || '';
+            
+            // Owner info
+            vehicle.owner_name = data.owner_name || '';
+            vehicle.owner_phone = data.owner_phone || '';
+            vehicle.owner_email = data.owner_email || '';
+            vehicle.preferred_contact_method = data.preferred_contact_method || 'phone';
+            
+            // Usage
+            vehicle.usage_type = data.usage_type || '';
+            vehicle.load_type = data.load_type || '';
+            vehicle.driving_condition_profile = data.driving_condition_profile || '';
+            vehicle.has_tcu = data.has_tcu == 'true';
+            vehicle.region_climate = data.region_climate || '';
+            
+            // Mileage
+            vehicle.current_mileage = data.current_mileage || 0;
+            vehicle.estimated_monthly_mileage = data.estimated_monthly_mileage || 0;
+            
+            // Service history
+            if (data.last_service_date) vehicle.last_service_date = data.last_service_date;
+            vehicle.last_service_odometer = data.last_service_odometer || 0;
+            if (data.last_oil_change_date) vehicle.last_oil_change_date = data.last_oil_change_date;
+            vehicle.last_oil_change_odometer = data.last_oil_change_odometer || 0;
+            if (data.last_brake_service_date) vehicle.last_brake_service_date = data.last_brake_service_date;
+            vehicle.last_brake_service_odometer = data.last_brake_service_odometer || 0;
+            if (data.last_tire_service_date) vehicle.last_tire_service_date = data.last_tire_service_date;
+            vehicle.last_tire_service_odometer = data.last_tire_service_odometer || 0;
+            if (data.last_battery_service_date) vehicle.last_battery_service_date = data.last_battery_service_date;
+            vehicle.last_battery_service_odometer = data.last_battery_service_odometer || 0;
+            
+            // Defaults
+            vehicle.vehicle_status = 'active';
+            
+            var vehicleId = vehicle.insert();
+            
+            if (vehicleId) {
+                vehicle.get(vehicleId);
+                return JSON.stringify({
+                    success: true,
+                    vehicle_id: vehicle.vehicle_id.toString(),
+                    sys_id: vehicleId
+                });
+            } else {
+                return JSON.stringify({
+                    success: false,
+                    error: 'Failed to create vehicle record'
+                });
+            }
+        } catch (e) {
+            gs.error('AAYOS: Error in createVehicle: ' + e.toString());
+            return JSON.stringify({
+                success: false,
+                error: e.toString()
+            });
+        }
+    },
+    
+    type: 'AAYOSVehicleRegistration'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 18:00:00</sys_created_on>
+        <sys_id>a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOSVehicleRegistration</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_script_include_aayos_vehicle_registration</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 18:00:00</sys_updated_on>
+    </sys_script_include>
+</record_update>
+

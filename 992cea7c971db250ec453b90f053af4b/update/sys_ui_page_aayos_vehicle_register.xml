@@ -1,0 +1,656 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[var currentStep = 1;
+var totalSteps = 4;
+var formData = {};
+
+function init() {
+    showStep(1);
+}
+
+function showStep(step) {
+    // Hide all steps
+    for (var i = 1; i <= totalSteps; i++) {
+        var stepEl = gel('step' + i);
+        if (stepEl) stepEl.style.display = 'none';
+    }
+    
+    // Show current step
+    var currentStepEl = gel('step' + step);
+    if (currentStepEl) currentStepEl.style.display = 'block';
+    
+    // Update step indicators
+    updateStepIndicators(step);
+    
+    currentStep = step;
+}
+
+function updateStepIndicators(activeStep) {
+    for (var i = 1; i <= totalSteps; i++) {
+        var indicator = gel('step-indicator-' + i);
+        if (indicator) {
+            if (i < activeStep) {
+                indicator.className = 'step-indicator completed';
+            } else if (i == activeStep) {
+                indicator.className = 'step-indicator active';
+            } else {
+                indicator.className = 'step-indicator';
+            }
+        }
+    }
+}
+
+function nextStep() {
+    if (validateCurrentStep()) {
+        if (currentStep < totalSteps) {
+            saveStepData();
+            showStep(currentStep + 1);
+        }
+    }
+}
+
+function prevStep() {
+    if (currentStep > 1) {
+        saveStepData();
+        showStep(currentStep - 1);
+    }
+}
+
+function saveStepData() {
+    // Save form data from current step
+    var inputs = gel('step' + currentStep).getElementsByTagName('input');
+    var selects = gel('step' + currentStep).getElementsByTagName('select');
+    
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].name) {
+            formData[inputs[i].name] = inputs[i].value;
+        }
+    }
+    
+    for (var i = 0; i < selects.length; i++) {
+        if (selects[i].name) {
+            formData[selects[i].name] = selects[i].value;
+        }
+    }
+}
+
+function validateCurrentStep() {
+    var stepEl = gel('step' + currentStep);
+    var requiredFields = stepEl.querySelectorAll('[required]');
+    var isValid = true;
+    
+    for (var i = 0; i < requiredFields.length; i++) {
+        if (!requiredFields[i].value) {
+            requiredFields[i].classList.add('error');
+            isValid = false;
+        } else {
+            requiredFields[i].classList.remove('error');
+        }
+    }
+    
+    if (!isValid) {
+        alert('Please fill in all required fields.');
+    }
+    
+    return isValid;
+}
+
+function submitForm() {
+    if (!validateCurrentStep()) {
+        return;
+    }
+    
+    saveStepData();
+    
+    // Show loading
+    gel('submit-btn').disabled = true;
+    gel('submit-btn').innerHTML = 'Saving...';
+    
+    // Call server-side script
+    var ga = new GlideAjax('AAYOSVehicleRegistration');
+    ga.addParam('sysparm_name', 'createVehicle');
+    ga.addParam('sysparm_data', JSON.stringify(formData));
+    ga.getXML(function(response) {
+        var answer = response.responseXML.documentElement.getAttribute('answer');
+        var result = JSON.parse(answer);
+        
+        if (result.success) {
+            alert('Vehicle registered successfully! Vehicle ID: ' + result.vehicle_id);
+            window.location.href = '/x_1868112_aayos_vehicles.do';
+        } else {
+            alert('Error: ' + result.error);
+            gel('submit-btn').disabled = false;
+            gel('submit-btn').innerHTML = 'Register Vehicle';
+        }
+    });
+}]]></client_script>
+        <description>AAYOS Vehicle Registration Wizard - Multi-step form for registering new vehicles</description>
+        <direct>true</direct>
+        <endpoint>x_1868112_aayos_vehicle_register.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+<html>
+<head>
+    <title>AAYOS - Register Vehicle</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .header h1 {
+            margin: 0;
+            color: #333;
+        }
+        .step-indicators {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .step-indicators::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e0e0e0;
+            z-index: 0;
+        }
+        .step-indicator {
+            position: relative;
+            z-index: 1;
+            background: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #999;
+        }
+        .step-indicator.active {
+            border-color: #1976d2;
+            color: #1976d2;
+            background: #e3f2fd;
+        }
+        .step-indicator.completed {
+            border-color: #4caf50;
+            color: #4caf50;
+            background: #e8f5e9;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #333;
+        }
+        .form-group label .required {
+            color: #d32f2f;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-group input.error,
+        .form-group select.error {
+            border-color: #d32f2f;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-actions {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .btn-primary {
+            background: #1976d2;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #1565c0;
+        }
+        .btn-secondary {
+            background: #757575;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #616161;
+        }
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .review-section {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .review-section h3 {
+            margin-top: 0;
+            color: #1976d2;
+        }
+        .review-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .review-item:last-child {
+            border-bottom: none;
+        }
+        .review-label {
+            font-weight: 500;
+            color: #666;
+        }
+        .review-value {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Register New Vehicle</h1>
+            <p>Complete all steps to register a vehicle in AAYOS</p>
+        </div>
+        
+        <div class="step-indicators">
+            <div id="step-indicator-1" class="step-indicator active">1</div>
+            <div id="step-indicator-2" class="step-indicator">2</div>
+            <div id="step-indicator-3" class="step-indicator">3</div>
+            <div id="step-indicator-4" class="step-indicator">4</div>
+        </div>
+        
+        <!-- Step 1: Basic Vehicle Info -->
+        <div id="step1" class="step">
+            <h2>Step 1: Basic Vehicle Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Make <span class="required">*</span></label>
+                    <input type="text" name="make" required maxlength="100"/>
+                </div>
+                <div class="form-group">
+                    <label>Model <span class="required">*</span></label>
+                    <input type="text" name="model" required maxlength="100"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Model Year <span class="required">*</span></label>
+                    <input type="number" name="model_year" required min="1900" max="2100"/>
+                </div>
+                <div class="form-group">
+                    <label>Vehicle Category <span class="required">*</span></label>
+                    <select name="vehicle_category" required>
+                        <option value="">Select...</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="pickup">Pickup</option>
+                        <option value="van">Van</option>
+                        <option value="truck">Truck</option>
+                        <option value="hatchback">Hatchback</option>
+                        <option value="coupe">Coupe</option>
+                        <option value="convertible">Convertible</option>
+                        <option value="motorcycle">Motorcycle</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Fuel Type <span class="required">*</span></label>
+                    <select name="fuel_type" required>
+                        <option value="">Select...</option>
+                        <option value="petrol">Petrol</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="ev">Electric Vehicle (EV)</option>
+                        <option value="cng">CNG</option>
+                        <option value="lpg">LPG</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Transmission <span class="required">*</span></label>
+                    <select name="transmission" required>
+                        <option value="">Select...</option>
+                        <option value="manual">Manual</option>
+                        <option value="automatic">Automatic</option>
+                        <option value="cvt">CVT</option>
+                        <option value="semi_automatic">Semi-Automatic</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>VIN</label>
+                    <input type="text" name="vin" maxlength="40"/>
+                </div>
+                <div class="form-group">
+                    <label>Plate Number <span class="required">*</span></label>
+                    <input type="text" name="plate_number" required maxlength="40"/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div></div>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+        
+        <!-- Step 2: Owner & Usage -->
+        <div id="step2" class="step">
+            <h2>Step 2: Owner & Usage Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Owner Name <span class="required">*</span></label>
+                    <input type="text" name="owner_name" required maxlength="200"/>
+                </div>
+                <div class="form-group">
+                    <label>Owner Phone <span class="required">*</span></label>
+                    <input type="text" name="owner_phone" required maxlength="40"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Owner Email</label>
+                <input type="email" name="owner_email" maxlength="200"/>
+            </div>
+            <div class="form-group">
+                <label>Preferred Contact Method</label>
+                <select name="preferred_contact_method">
+                    <option value="phone">Phone</option>
+                    <option value="sms">SMS</option>
+                    <option value="email">Email</option>
+                    <option value="whatsapp">WhatsApp</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Usage Type <span class="required">*</span></label>
+                    <select name="usage_type" required>
+                        <option value="">Select...</option>
+                        <option value="daily_commute">Daily Commute</option>
+                        <option value="city_stop_go">City Stop &amp; Go</option>
+                        <option value="highway_long_distance">Highway Long Distance</option>
+                        <option value="mixed_use">Mixed Use</option>
+                        <option value="commercial_delivery">Commercial Delivery</option>
+                        <option value="commercial_taxi">Commercial Taxi</option>
+                        <option value="public_transport">Public Transport</option>
+                        <option value="off_road">Off Road</option>
+                        <option value="heavy_duty">Heavy Duty</option>
+                        <option value="low_usage">Low Usage</option>
+                        <option value="high_performance">High Performance</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Load Type <span class="required">*</span></label>
+                    <select name="load_type" required>
+                        <option value="">Select...</option>
+                        <option value="light_load">Light Load</option>
+                        <option value="normal_load">Normal Load</option>
+                        <option value="heavy_load">Heavy Load</option>
+                        <option value="variable_load">Variable Load</option>
+                        <option value="passenger_heavy">Passenger Heavy</option>
+                        <option value="cargo_transport">Cargo Transport</option>
+                        <option value="towing">Towing</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Driving Condition Profile</label>
+                <select name="driving_condition_profile">
+                    <option value="tropical">Tropical</option>
+                    <option value="cold">Cold</option>
+                    <option value="desert">Desert</option>
+                    <option value="rough_roads">Rough Roads</option>
+                    <option value="mixed">Mixed</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Has TCU (Telematics)</label>
+                    <select name="has_tcu">
+                        <option value="false">No</option>
+                        <option value="true">Yes</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Region/Climate</label>
+                    <input type="text" name="region_climate" maxlength="100"/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+        
+        <!-- Step 3: Service History -->
+        <div id="step3" class="step">
+            <h2>Step 3: Service History & Mileage</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Current Mileage (km) <span class="required">*</span></label>
+                    <input type="number" name="current_mileage" required min="0"/>
+                </div>
+                <div class="form-group">
+                    <label>Estimated Monthly Mileage (km)</label>
+                    <input type="number" name="estimated_monthly_mileage" min="0"/>
+                </div>
+            </div>
+            <h3>Last Service Dates</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Last General Service Date</label>
+                    <input type="date" name="last_service_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Last General Service Odometer (km)</label>
+                    <input type="number" name="last_service_odometer" min="0"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Last Oil Change Date</label>
+                    <input type="date" name="last_oil_change_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Last Oil Change Odometer (km)</label>
+                    <input type="number" name="last_oil_change_odometer" min="0"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Last Brake Service Date</label>
+                    <input type="date" name="last_brake_service_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Last Brake Service Odometer (km)</label>
+                    <input type="number" name="last_brake_service_odometer" min="0"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Last Tire Service Date</label>
+                    <input type="date" name="last_tire_service_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Last Tire Service Odometer (km)</label>
+                    <input type="number" name="last_tire_service_odometer" min="0"/>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Last Battery Service Date</label>
+                    <input type="date" name="last_battery_service_date"/>
+                </div>
+                <div class="form-group">
+                    <label>Last Battery Service Odometer (km)</label>
+                    <input type="number" name="last_battery_service_odometer" min="0"/>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+        
+        <!-- Step 4: Review & Submit -->
+        <div id="step4" class="step">
+            <h2>Step 4: Review & Submit</h2>
+            <p>Please review all information before submitting.</p>
+            
+            <div class="review-section">
+                <h3>Vehicle Information</h3>
+                <div class="review-item">
+                    <span class="review-label">Make/Model:</span>
+                    <span class="review-value" id="review-make-model"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Year:</span>
+                    <span class="review-value" id="review-year"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Category:</span>
+                    <span class="review-value" id="review-category"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Plate Number:</span>
+                    <span class="review-value" id="review-plate"></span>
+                </div>
+            </div>
+            
+            <div class="review-section">
+                <h3>Owner Information</h3>
+                <div class="review-item">
+                    <span class="review-label">Owner Name:</span>
+                    <span class="review-value" id="review-owner"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Phone:</span>
+                    <span class="review-value" id="review-phone"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Email:</span>
+                    <span class="review-value" id="review-email"></span>
+                </div>
+            </div>
+            
+            <div class="review-section">
+                <h3>Usage & Mileage</h3>
+                <div class="review-item">
+                    <span class="review-label">Usage Type:</span>
+                    <span class="review-value" id="review-usage"></span>
+                </div>
+                <div class="review-item">
+                    <span class="review-label">Current Mileage:</span>
+                    <span class="review-value" id="review-mileage"></span>
+                </div>
+            </div>
+            
+            <div class="form-actions">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button id="submit-btn" class="btn btn-primary" onclick="submitForm()">Register Vehicle</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Populate review on step 4
+        function populateReview() {
+            if (currentStep == 4) {
+                gel('review-make-model').innerHTML = (formData.make || '') + ' ' + (formData.model || '');
+                gel('review-year').innerHTML = formData.model_year || '';
+                gel('review-category').innerHTML = formData.vehicle_category || '';
+                gel('review-plate').innerHTML = formData.plate_number || '';
+                gel('review-owner').innerHTML = formData.owner_name || '';
+                gel('review-phone').innerHTML = formData.owner_phone || '';
+                gel('review-email').innerHTML = formData.owner_email || 'N/A';
+                gel('review-usage').innerHTML = formData.usage_type || '';
+                gel('review-mileage').innerHTML = (formData.current_mileage || '0') + ' km';
+            }
+        }
+        
+        // Override nextStep to populate review
+        var originalNextStep = nextStep;
+        nextStep = function() {
+            if (currentStep == 3) {
+                originalNextStep();
+                setTimeout(populateReview, 100);
+            } else {
+                originalNextStep();
+            }
+        };
+        
+        // Initialize on load
+        window.onload = function() {
+            init();
+        };
+    </script>
+</body>
+</html>
+</j:jelly>]]></html>
+        <name>aayos_vehicle_register</name>
+        <processing_script><![CDATA[// Server-side processing script for vehicle registration
+// This handles the AJAX call from the client]]></processing_script>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 18:00:00</sys_created_on>
+        <sys_id>f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>aayos_vehicle_register</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ui_page_aayos_vehicle_register</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 18:00:00</sys_updated_on>
+    </sys_ui_page>
+</record_update>
+
