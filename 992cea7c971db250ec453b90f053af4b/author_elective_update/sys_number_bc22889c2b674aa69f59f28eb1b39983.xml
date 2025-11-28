@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+  <sys_number action="DELETE">
+    <sys_id>bc22889c2b674aa69f59f28eb1b39983</sys_id>
+    <sys_scope display_value="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_scope>
+    <category>x_1868112_aayos_vehicle</category>
+    <maximum_digits>7</maximum_digits>
+    <number>1000</number>
+    <prefix>VEH</prefix>
+  </sys_number>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sys_number_bc22889c2b674aa69f59f28eb1b39983</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update>
+  <sys_number action="INSERT_OR_UPDATE">
+    <sys_id>bc22889c2b674aa69f59f28eb1b39983</sys_id>
+    <sys_scope display_value="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_scope>
+    <category>x_1868112_aayos_vehicle</category>
+    <maximum_digits>7</maximum_digits>
+    <number>1000</number>
+    <prefix>VEH</prefix>
+  </sys_number>
+</record_update>]]></payload>
+        <payload_hash>1063499456</payload_hash>
+        <record_name>VEH</record_name>
+        <reverted_from/>
+        <source>dd3d2230975db250ec453b90f053afbd</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 16:51:50</sys_created_on>
+        <sys_id>553d2230975db250ec453b90f053afc4</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19a8d947dce0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 16:51:50</sys_updated_on>
+        <type>Number</type>
+        <update_guid>153d2230795db250ac47875d942604c4</update_guid>
+        <update_guid_history>153d2230795db250ac47875d942604c4:1063499456</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:41:11</sys_created_on>
+        <sys_db_object display_value="" name="sys_number">sys_number</sys_db_object>
+        <sys_id>4449a114b45840e5bce034a7de726511</sys_id>
+        <sys_metadata>bc22889c2b674aa69f59f28eb1b39983</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>VEH</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent display_value="">cd3da638971db250ec453b90f053af7b</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sys_number_bc22889c2b674aa69f59f28eb1b39983</sys_update_name>
+        <sys_update_version display_value="sys_number_bc22889c2b674aa69f59f28eb1b39983">553d2230975db250ec453b90f053afc4</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:41:11</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

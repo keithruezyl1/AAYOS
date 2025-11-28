@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="target_service_date" label="Target Service Date" language="en" table="x_1868112_aayos_ticket">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>target_service_date</element>
+            <help/>
+            <hint/>
+            <label>Target Service Date</label>
+            <language>en</language>
+            <name>x_1868112_aayos_ticket</name>
+            <plural/>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 12:10:32</sys_created_on>
+            <sys_mod_count>3</sys_mod_count>
+            <sys_name>Target Service Date</sys_name>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_documentation_x_1868112_aayos_ticket_target_service_date_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 12:10:37</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

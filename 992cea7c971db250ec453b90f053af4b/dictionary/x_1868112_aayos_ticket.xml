@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="5a9b1b289769fe90ec453b90f053af2c" label="AAYOS Ticket" max_length="40" name="x_1868112_aayos_ticket" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Ticket ID" max_length="40" name="number" type="string"/>
+        <element label="Assigned Technician" max_length="32" name="assigned_technician" reference="x_1868112_aayos_technician" type="reference"/>
+        <element choice="3" default="correct" label="Prediction Validity" max_length="40" name="prediction_validity" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Correct" sequence="0" value="correct"/>
+                <element inactive_on_update="false" label="Not Applicable" sequence="3" value="not_applicable"/>
+                <element inactive_on_update="false" label="Partially Correct" sequence="1" value="partially_correct"/>
+                <element inactive_on_update="false" label="Incorrect" sequence="2" value="incorrect"/>
+            </choice>
+        </element>
+        <element choice="3" default="new" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="In Progress" sequence="1" value="in_progress"/>
+                <element inactive_on_update="false" label="New" sequence="0" value="new"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
+                <element inactive_on_update="false" label="Resolved" sequence="3" value="resolved"/>
+                <element inactive_on_update="false" label="Closed" sequence="4" value="closed"/>
+                <element inactive_on_update="false" label="On Hold" sequence="2" value="on_hold"/>
+            </choice>
+        </element>
+        <element label="Technician Response Due" mandatory="true" max_length="255" name="technician_response_due" type="glide_date_time"/>
+        <element label="Actual Service Date" max_length="255" name="actual_service_date" type="glide_date"/>
+        <element label="Service Window Start" max_length="255" name="service_window_start" type="glide_date_time"/>
+        <element label="Service Window End" max_length="255" name="service_window_end" type="glide_date_time"/>
+        <element choice="3" default="low" label="Urgency" mandatory="true" max_length="40" name="urgency" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+            </choice>
+        </element>
+        <element choice="3" default="low" label="Severity" mandatory="true" max_length="40" name="severity" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+                <element inactive_on_update="false" label="Critical" sequence="3" value="critical"/>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+            </choice>
+        </element>
+        <element label="Closed Date" max_length="255" name="closed_date" type="glide_date_time"/>
+        <element label="Vehicle" mandatory="true" max_length="32" name="vehicle" reference="x_1868112_aayos_vehicle" type="reference"/>
+        <element choice="3" default="predicted_maintenance" label="Ticket Type" mandatory="true" max_length="40" name="ticket_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Customer Requested" sequence="1" value="customer_requested"/>
+                <element inactive_on_update="false" label="Predicted Maintenance" sequence="0" value="predicted_maintenance"/>
+                <element inactive_on_update="false" label="Technician Flagged" sequence="2" value="technician_flagged"/>
+            </choice>
+        </element>
+        <element label="Customer Decision Date" max_length="255" name="customer_decision_date" type="glide_date_time"/>
+        <element choice="3" label="Customer Decision" mandatory="true" max_length="40" name="customer_decision" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Declined" sequence="2" value="declined"/>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Accepted" sequence="1" value="accepted"/>
+            </choice>
+        </element>
+        <element label="Prediction" mandatory="true" max_length="32" name="prediction" reference="x_1868112_aayos_prediction" type="reference"/>
+        <element label="Resolution Summary" max_length="2048" name="resolution_summary" type="string"/>
+        <element choice="3" default="ai" label="Source" mandatory="true" max_length="40" name="source" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Imported" sequence="2" value="imported"/>
+                <element inactive_on_update="false" label="AI" sequence="0" value="ai"/>
+                <element inactive_on_update="false" label="Manual Admin" sequence="1" value="manual_admin"/>
+            </choice>
+        </element>
+        <element label="Target Service Date" max_length="255" name="target_service_date" type="glide_date"/>
+        <element label="Reassignment Count" mandatory="true" max_length="255" name="reassignment_count" type="integer"/>
+        <index name="index">
+            <element name="assigned_technician"/>
+        </index>
+        <index name="index2">
+            <element name="prediction"/>
+        </index>
+        <index name="index3">
+            <element name="vehicle"/>
+        </index>
+    </element>
+</database>

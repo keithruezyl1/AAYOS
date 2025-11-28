@@ -20,209 +20,76 @@
             <element>usage_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Daily Commute</label>
+            <label>Personal</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>daily_commute</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>personal</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>usage_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>City Stop &amp; Go</label>
+            <label>Commercial</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>city_stop_go</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>commercial</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>usage_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Highway Long Distance</label>
+            <label>Fleet</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>highway_long_distance</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>fleet</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>usage_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Mixed Use</label>
+            <label>Other</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>3</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>mixed_use</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Commercial Delivery</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>4</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>commercial_delivery</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Commercial Taxi</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>5</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>commercial_taxi</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Public Transport</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>6</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>public_transport</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Off Road</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>7</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>off_road</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Heavy Duty</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>8</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>heavy_duty</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Low Usage</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>9</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>low_usage</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>usage_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>High Performance</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>10</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>high_performance</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>other</value>
         </sys_choice>
     </sys_choice>
 </record_update>

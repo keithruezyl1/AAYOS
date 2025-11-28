@@ -20,76 +20,57 @@
             <element>source_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Telematics</label>
+            <label>Daily Job</label>
             <language>en</language>
             <name>x_1868112_aayos_prediction</name>
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:57:06</sys_created_on>
+            <sys_created_on>2025-11-28 11:52:13</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:57:06</sys_updated_on>
-            <value>telematics</value>
+            <sys_updated_on>2025-11-28 11:52:13</sys_updated_on>
+            <value>daily_job</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>source_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Manual</label>
+            <label>Manual Run</label>
             <language>en</language>
             <name>x_1868112_aayos_prediction</name>
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:57:06</sys_created_on>
+            <sys_created_on>2025-11-28 11:52:13</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:57:06</sys_updated_on>
-            <value>manual</value>
+            <sys_updated_on>2025-11-28 11:52:13</sys_updated_on>
+            <value>manual_run</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>source_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>AI Batch</label>
+            <label>Imported</label>
             <language>en</language>
             <name>x_1868112_aayos_prediction</name>
             <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:57:06</sys_created_on>
+            <sys_created_on>2025-11-28 11:52:13</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:57:06</sys_updated_on>
-            <value>ai_batch</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>source_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Scheduled Scan</label>
-            <language>en</language>
-            <name>x_1868112_aayos_prediction</name>
-            <sequence>3</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:57:06</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:57:06</sys_updated_on>
-            <value>scheduled_scan</value>
+            <sys_updated_on>2025-11-28 11:52:13</sys_updated_on>
+            <value>imported</value>
         </sys_choice>
     </sys_choice>
 </record_update>

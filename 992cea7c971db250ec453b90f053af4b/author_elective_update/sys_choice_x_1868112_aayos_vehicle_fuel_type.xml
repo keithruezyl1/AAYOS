@@ -20,19 +20,19 @@
             <element>fuel_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Petrol</label>
+            <label>Gasoline</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:04</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>petrol</value>
+            <sys_updated_on>2025-11-28 11:06:04</sys_updated_on>
+            <value>gasoline</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -45,12 +45,12 @@
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:04</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:04</sys_updated_on>
             <value>diesel</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -64,12 +64,12 @@
             <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:04</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:04</sys_updated_on>
             <value>hybrid</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -83,51 +83,32 @@
             <sequence>3</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:04</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>ev</value>
+            <sys_updated_on>2025-11-28 11:06:04</sys_updated_on>
+            <value>electric_vehicle_ev</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>fuel_type</element>
             <hint/>
             <inactive>false</inactive>
-            <label>CNG</label>
+            <label>Other</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>4</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:04</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>cng</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>fuel_type</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>LPG</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>5</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>lpg</value>
+            <sys_updated_on>2025-11-28 11:06:04</sys_updated_on>
+            <value>other</value>
         </sys_choice>
     </sys_choice>
 </record_update>

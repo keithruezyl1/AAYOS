@@ -26,12 +26,12 @@
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:01</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:01</sys_updated_on>
             <value>active</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -45,12 +45,12 @@
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:01</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:01</sys_updated_on>
             <value>inactive</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -58,19 +58,19 @@
             <element>vehicle_status</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Sold</label>
+            <label>Decommisioned</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:01</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>sold</value>
+            <sys_updated_on>2025-11-28 11:06:01</sys_updated_on>
+            <value>decommisioned</value>
         </sys_choice>
     </sys_choice>
 </record_update>

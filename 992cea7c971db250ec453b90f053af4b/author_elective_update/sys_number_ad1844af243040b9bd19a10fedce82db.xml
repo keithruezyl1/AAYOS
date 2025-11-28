@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+  <sys_number action="DELETE">
+    <sys_id>ad1844af243040b9bd19a10fedce82db</sys_id>
+    <sys_scope display_value="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_scope>
+    <category>x_1868112_aayos_prediction</category>
+    <maximum_digits>7</maximum_digits>
+    <number>1000</number>
+    <prefix>PRD</prefix>
+  </sys_number>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sys_number_ad1844af243040b9bd19a10fedce82db</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update>
+  <sys_number action="INSERT_OR_UPDATE">
+    <sys_id>ad1844af243040b9bd19a10fedce82db</sys_id>
+    <sys_scope display_value="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_scope>
+    <category>x_1868112_aayos_prediction</category>
+    <maximum_digits>7</maximum_digits>
+    <number>1000</number>
+    <prefix>PRD</prefix>
+  </sys_number>
+</record_update>]]></payload>
+        <payload_hash>-1040652290</payload_hash>
+        <record_name>PRD</record_name>
+        <reverted_from/>
+        <source>3a6eaab0975db250ec453b90f053af41</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 16:57:07</sys_created_on>
+        <sys_id>be6eaab0975db250ec453b90f053af48</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19a8d99539f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 16:57:07</sys_updated_on>
+        <type>Number</type>
+        <update_guid>7e6eaab0e85db250de173ab423a2cd48</update_guid>
+        <update_guid_history>7e6eaab0e85db250de173ab423a2cd48:-1040652290</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:40:27</sys_created_on>
+        <sys_db_object display_value="" name="sys_number">sys_number</sys_db_object>
+        <sys_id>3b3a579fa8e34d58837d24d0330a5590</sys_id>
+        <sys_metadata>ad1844af243040b9bd19a10fedce82db</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>PRD</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent display_value="">1e6ea270975db250ec453b90f053af8a</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sys_number_ad1844af243040b9bd19a10fedce82db</sys_update_name>
+        <sys_update_version display_value="sys_number_ad1844af243040b9bd19a10fedce82db">be6eaab0975db250ec453b90f053af48</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:40:27</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

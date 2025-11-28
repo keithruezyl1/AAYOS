@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="124ff22097a5fe90ec453b90f053afed" label="AAYOS Customer" max_length="40" name="x_1868112_aayos_customer" type="collection">
+        <element label="City" max_length="100" name="city" type="string"/>
+        <element label="Country" max_length="100" name="country" type="string"/>
+        <element label="Postal Code" max_length="10" name="postal_code" type="string"/>
+        <element label="Email" mandatory="true" max_length="100" name="email" type="string"/>
+        <element label="State/Province" max_length="100" name="state_province" type="string"/>
+        <element display="true" label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Customer ID" mandatory="true" max_length="40" name="number" type="string"/>
+        <element label="Phone" mandatory="true" max_length="40" name="phone" type="string"/>
+        <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element label="Addres Line 2" max_length="255" name="addres_line_2" type="string"/>
+        <element label="Address Line 1" max_length="255" name="address_line_1" type="string"/>
+        <index name="index">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

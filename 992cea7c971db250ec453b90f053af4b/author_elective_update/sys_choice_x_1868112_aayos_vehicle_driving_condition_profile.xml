@@ -20,76 +20,38 @@
             <element>driving_condition_profile</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Tropical</label>
+            <label>Urban</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:02</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>tropical</value>
+            <sys_updated_on>2025-11-28 11:06:02</sys_updated_on>
+            <value>urban</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>driving_condition_profile</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Cold</label>
+            <label>Highway</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:02</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>cold</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>driving_condition_profile</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Desert</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>2</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>desert</value>
-        </sys_choice>
-        <sys_choice action="INSERT_OR_UPDATE">
-            <dependent_value/>
-            <element>driving_condition_profile</element>
-            <hint/>
-            <inactive>false</inactive>
-            <label>Rough Roads</label>
-            <language>en</language>
-            <name>x_1868112_aayos_vehicle</name>
-            <sequence>3</sequence>
-            <synonyms/>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_domain>global</sys_domain>
-            <sys_domain_path>/</sys_domain_path>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
-            <value>rough_roads</value>
+            <sys_updated_on>2025-11-28 11:06:02</sys_updated_on>
+            <value>highway</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -99,16 +61,35 @@
             <label>Mixed</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
-            <sequence>4</sequence>
+            <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:02</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:02</sys_updated_on>
             <value>mixed</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>driving_condition_profile</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>Off Road</label>
+            <language>en</language>
+            <name>x_1868112_aayos_vehicle</name>
+            <sequence>3</sequence>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 11:06:02</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 11:06:02</sys_updated_on>
+            <value>off_road</value>
         </sys_choice>
     </sys_choice>
 </record_update>

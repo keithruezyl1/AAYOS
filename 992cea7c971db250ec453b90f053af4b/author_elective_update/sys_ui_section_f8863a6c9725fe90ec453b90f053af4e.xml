@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_section action="DELETE" caption="" section_id="f8863a6c9725fe90ec453b90f053af4e" sys_domain="global" table="x_1868112_aayos_service_ticket" version="3" view="">
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ticket_id</element>
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>bc863a6c9725fe90ec453b90f053af53</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>issue_summary</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>78863a6c9725fe90ec453b90f053af54</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>urgency_level</element>
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>34863a6c9725fe90ec453b90f053af55</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>cancellation_reason</element>
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>fc863a6c9725fe90ec453b90f053af55</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b8863a6c9725fe90ec453b90f053af56</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>checkin_datetime</element>
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>74863a6c9725fe90ec453b90f053af57</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>technician</element>
+            <position>6</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>30863a6c9725fe90ec453b90f053af58</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>last_assignment_time</element>
+            <position>7</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f8863a6c9725fe90ec453b90f053af58</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>prediction_match_result</element>
+            <position>8</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>7c863a6c9725fe90ec453b90f053af65</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>9</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>38863a6c9725fe90ec453b90f053af66</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>is_warranty</element>
+            <position>10</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f0863a6c9725fe90ec453b90f053af67</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>vehicle</element>
+            <position>11</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>bc863a6c9725fe90ec453b90f053af67</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>issue_category</element>
+            <position>12</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>78863a6c9725fe90ec453b90f053af68</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>source_type</element>
+            <position>13</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>34863a6c9725fe90ec453b90f053af69</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>14</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>fc863a6c9725fe90ec453b90f053af69</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>resolution_summary</element>
+            <position>15</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b8863a6c9725fe90ec453b90f053af6a</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>16</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>74863a6c9725fe90ec453b90f053af6b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>checkout_datetime</element>
+            <position>17</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>30863a6c9725fe90ec453b90f053af6c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>assignment_method</element>
+            <position>18</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f8863a6c9725fe90ec453b90f053af6c</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>19</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b4863a6c9725fe90ec453b90f053af6d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>reassignment_count</element>
+            <position>20</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>70863a6c9725fe90ec453b90f053af6e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>21</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>3c863a6c9725fe90ec453b90f053af6e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>ai_notes</element>
+            <position>22</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f4863a6c9725fe90ec453b90f053af6f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>prediction</element>
+            <position>23</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b0863a6c9725fe90ec453b90f053af70</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>issue_detail</element>
+            <position>24</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>7c863a6c9725fe90ec453b90f053af70</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.begin_split</element>
+            <position>25</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>38863a6c9725fe90ec453b90f053af71</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.begin_split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>status</element>
+            <position>26</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b8863a6c9725fe90ec453b90f053af7e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>preferred_service_date</element>
+            <position>27</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>74863a6c9725fe90ec453b90f053af7f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>estimated_duration_hours</element>
+            <position>28</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>30863a6c9725fe90ec453b90f053af80</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>tech_response_status</element>
+            <position>29</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f8863a6c9725fe90ec453b90f053af80</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>prediction_confidence</element>
+            <position>30</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b4863a6c9725fe90ec453b90f053af81</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>estimated_cost</element>
+            <position>31</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>70863a6c9725fe90ec453b90f053af82</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>created_by_source</element>
+            <position>32</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>3c863a6c9725fe90ec453b90f053af82</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.split</element>
+            <position>33</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f4863a6c9725fe90ec453b90f053af83</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.split</type>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>severity_level</element>
+            <position>34</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>b0863a6c9725fe90ec453b90f053af84</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>customer_response</element>
+            <position>35</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>7c863a6c9725fe90ec453b90f053af84</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>confirmed_service_date</element>
+            <position>36</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>38863a6c9725fe90ec453b90f053af85</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>actual_duration_hours</element>
+            <position>37</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>f0863a6c9725fe90ec453b90f053af86</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>tech_response_deadline</element>
+            <position>38</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>bc863a6c9725fe90ec453b90f053af86</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>prediction_severity</element>
+            <position>39</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>78863a6c9725fe90ec453b90f053af87</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>final_cost</element>
+            <position>40</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>34863a6c9725fe90ec453b90f053af88</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>.end_split</element>
+            <position>41</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_id>fc863a6c9725fe90ec453b90f053af88</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <type>.end_split</type>
+        </sys_ui_element>
+        <sys_ui_section action="DELETE">
+            <caption/>
+            <header>false</header>
+            <name>x_1868112_aayos_service_ticket</name>
+            <roles/>
+            <sys_class_name>sys_ui_section</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f8863a6c9725fe90ec453b90f053af4e</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1868112_aayos_service_ticket</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_ui_section_f8863a6c9725fe90ec453b90f053af4e</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+            <sys_user/>
+            <title>true</title>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_section>
+    </sys_ui_section>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sys_ui_section_f8863a6c9725fe90ec453b90f053af4e</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update><sys_ui_section caption="" section_id="f8863a6c9725fe90ec453b90f053af4e" sys_domain="global" table="x_1868112_aayos_service_ticket" version="3" view=""><sys_ui_element action="INSERT_OR_UPDATE"><element>ticket_id</element><position>0</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>bc863a6c9725fe90ec453b90f053af53</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>issue_summary</element><position>1</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>78863a6c9725fe90ec453b90f053af54</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>urgency_level</element><position>2</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>34863a6c9725fe90ec453b90f053af55</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>cancellation_reason</element><position>3</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>fc863a6c9725fe90ec453b90f053af55</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.begin_split</element><position>4</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b8863a6c9725fe90ec453b90f053af56</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.begin_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>checkin_datetime</element><position>5</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>74863a6c9725fe90ec453b90f053af57</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>technician</element><position>6</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>30863a6c9725fe90ec453b90f053af58</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>last_assignment_time</element><position>7</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f8863a6c9725fe90ec453b90f053af58</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>prediction_match_result</element><position>8</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>7c863a6c9725fe90ec453b90f053af65</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>9</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>38863a6c9725fe90ec453b90f053af66</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>is_warranty</element><position>10</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f0863a6c9725fe90ec453b90f053af67</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>vehicle</element><position>11</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>bc863a6c9725fe90ec453b90f053af67</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>issue_category</element><position>12</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>78863a6c9725fe90ec453b90f053af68</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>source_type</element><position>13</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>34863a6c9725fe90ec453b90f053af69</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.end_split</element><position>14</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>fc863a6c9725fe90ec453b90f053af69</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.end_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>resolution_summary</element><position>15</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b8863a6c9725fe90ec453b90f053af6a</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.begin_split</element><position>16</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>74863a6c9725fe90ec453b90f053af6b</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.begin_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>checkout_datetime</element><position>17</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>30863a6c9725fe90ec453b90f053af6c</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>assignment_method</element><position>18</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f8863a6c9725fe90ec453b90f053af6c</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>19</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b4863a6c9725fe90ec453b90f053af6d</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>reassignment_count</element><position>20</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>70863a6c9725fe90ec453b90f053af6e</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.end_split</element><position>21</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>3c863a6c9725fe90ec453b90f053af6e</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.end_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>ai_notes</element><position>22</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f4863a6c9725fe90ec453b90f053af6f</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>prediction</element><position>23</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b0863a6c9725fe90ec453b90f053af70</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>issue_detail</element><position>24</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>7c863a6c9725fe90ec453b90f053af70</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.begin_split</element><position>25</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>38863a6c9725fe90ec453b90f053af71</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.begin_split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>status</element><position>26</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b8863a6c9725fe90ec453b90f053af7e</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>preferred_service_date</element><position>27</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>74863a6c9725fe90ec453b90f053af7f</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>estimated_duration_hours</element><position>28</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>30863a6c9725fe90ec453b90f053af80</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>tech_response_status</element><position>29</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f8863a6c9725fe90ec453b90f053af80</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>prediction_confidence</element><position>30</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b4863a6c9725fe90ec453b90f053af81</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>estimated_cost</element><position>31</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>70863a6c9725fe90ec453b90f053af82</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>created_by_source</element><position>32</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>3c863a6c9725fe90ec453b90f053af82</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.split</element><position>33</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f4863a6c9725fe90ec453b90f053af83</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.split</type></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>severity_level</element><position>34</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>b0863a6c9725fe90ec453b90f053af84</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>customer_response</element><position>35</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>7c863a6c9725fe90ec453b90f053af84</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>confirmed_service_date</element><position>36</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>38863a6c9725fe90ec453b90f053af85</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>actual_duration_hours</element><position>37</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>f0863a6c9725fe90ec453b90f053af86</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>tech_response_deadline</element><position>38</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>bc863a6c9725fe90ec453b90f053af86</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>prediction_severity</element><position>39</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>78863a6c9725fe90ec453b90f053af87</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>final_cost</element><position>40</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>34863a6c9725fe90ec453b90f053af88</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type/></sys_ui_element><sys_ui_element action="INSERT_OR_UPDATE"><element>.end_split</element><position>41</position><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_id>fc863a6c9725fe90ec453b90f053af88</sys_id><sys_mod_count>0</sys_mod_count><sys_ui_formatter/><sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_service_ticket" sys_domain="global" view="Default view">f8863a6c9725fe90ec453b90f053af4e</sys_ui_section><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><type>.end_split</type></sys_ui_element><sys_ui_section action="INSERT_OR_UPDATE"><caption/><header>false</header><name>x_1868112_aayos_service_ticket</name><roles/><sys_class_name>sys_ui_section</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:09:42</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>f8863a6c9725fe90ec453b90f053af4e</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1868112_aayos_service_ticket</sys_name><sys_overrides/><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sys_ui_section_f8863a6c9725fe90ec453b90f053af4e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:09:42</sys_updated_on><sys_user/><title>true</title><view display_value="Default view" name="NULL">Default view</view><view_name/></sys_ui_section></sys_ui_section></record_update>]]></payload>
+        <payload_hash>1083161776</payload_hash>
+        <record_name>Service Ticket</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:09:42</sys_created_on>
+        <sys_id>f0863a6c9725fe90ec453b90f053af91</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ac9b9b55f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:09:42</sys_updated_on>
+        <type>Form Layout</type>
+        <update_guid>34863a6cb325fe90d371b75b0a8da290</update_guid>
+        <update_guid_history>34863a6cb325fe90d371b75b0a8da290:1083161776,70863a6c8625fe90bbf3d205ac266f53:286596935</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:40:43</sys_created_on>
+        <sys_db_object display_value="" name="sys_ui_section">sys_ui_section</sys_db_object>
+        <sys_id>050241bf8a454ad0ad1f38d7e16a5c40</sys_id>
+        <sys_metadata>f8863a6c9725fe90ec453b90f053af4e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos_service_ticket</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent display_value="">3badaaf8971db250ec453b90f053af90</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sys_ui_section_f8863a6c9725fe90ec453b90f053af4e</sys_update_name>
+        <sys_update_version display_value="sys_ui_section_f8863a6c9725fe90ec453b90f053af4e">f0863a6c9725fe90ec453b90f053af91</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:40:43</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

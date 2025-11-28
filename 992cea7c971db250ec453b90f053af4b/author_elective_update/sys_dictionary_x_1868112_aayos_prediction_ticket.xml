@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_dictionary action="DELETE" element="ticket" table="x_1868112_aayos_prediction">
+        <active>true</active>
+        <array>false</array>
+        <attributes>encode_utf8=false</attributes>
+        <audit>false</audit>
+        <calculation/>
+        <choice>0</choice>
+        <choice_field/>
+        <choice_table/>
+        <column_label>Ticket</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>ticket</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="Reference">reference</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>32</max_length>
+        <name>x_1868112_aayos_prediction</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference display_value="" name="x_1868112_aayos_service_ticket">x_1868112_aayos_service_ticket</reference>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 16:57:05</sys_created_on>
+        <sys_name>Ticket</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_dictionary_x_1868112_aayos_prediction_ticket</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 16:57:05</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+<sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sys_dictionary_x_1868112_aayos_prediction_ticket</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_dictionary action="INSERT_OR_UPDATE" element="ticket" table="x_1868112_aayos_prediction">
+        <active>true</active>
+        <array>false</array>
+        <attributes>encode_utf8=false</attributes>
+        <audit>false</audit>
+        <calculation/>
+        <choice>0</choice>
+        <choice_field/>
+        <choice_table/>
+        <column_label>Ticket</column_label>
+        <comments/>
+        <create_roles/>
+        <default_value/>
+        <defaultsort/>
+        <delete_roles/>
+        <dependent/>
+        <dependent_on_field/>
+        <display>false</display>
+        <dynamic_creation>false</dynamic_creation>
+        <dynamic_creation_script/>
+        <dynamic_default_value/>
+        <dynamic_ref_qual/>
+        <element>ticket</element>
+        <element_reference>false</element_reference>
+        <foreign_database/>
+        <formula/>
+        <function_definition/>
+        <function_field>false</function_field>
+        <internal_type display_value="Reference">reference</internal_type>
+        <mandatory>false</mandatory>
+        <max_length>32</max_length>
+        <name>x_1868112_aayos_prediction</name>
+        <next_element/>
+        <primary>false</primary>
+        <read_only>false</read_only>
+        <read_roles/>
+        <reference display_value="" name="x_1868112_aayos_service_ticket">x_1868112_aayos_service_ticket</reference>
+        <reference_cascade_rule/>
+        <reference_floats>false</reference_floats>
+        <reference_key/>
+        <reference_qual/>
+        <reference_qual_condition/>
+        <reference_type/>
+        <spell_check>false</spell_check>
+        <staged>false</staged>
+        <sys_class_name>sys_dictionary</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 16:57:05</sys_created_on>
+        <sys_name>Ticket</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_dictionary_x_1868112_aayos_prediction_ticket</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 16:57:05</sys_updated_on>
+        <table_reference>false</table_reference>
+        <text_index>false</text_index>
+        <unique>false</unique>
+        <use_dependent_field>false</use_dependent_field>
+        <use_dynamic_default>false</use_dynamic_default>
+        <use_reference_qualifier>simple</use_reference_qualifier>
+        <virtual>false</virtual>
+        <virtual_type>script</virtual_type>
+        <widget/>
+        <write_roles/>
+        <xml_view>false</xml_view>
+    </sys_dictionary>
+</record_update>]]></payload>
+        <payload_hash>-1829453795</payload_hash>
+        <record_name>AAYOS Prediction.Ticket</record_name>
+        <reverted_from/>
+        <source>c04ec7709751f250ec453b90f053af2c</source>
+        <source_table>sys_upgrade_history</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 19:16:30</sys_created_on>
+        <sys_id>a05e03b09751f250ec453b90f053affb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19a8e18f1870000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 19:16:30</sys_updated_on>
+        <type>Dictionary</type>
+        <update_guid>e85e03b0cd51f250efa5b8e3128e63fa</update_guid>
+        <update_guid_history>e85e03b0cd51f250efa5b8e3128e63fa:0,e05e03b0f051f250fe7dd111634ea6f4:913227715</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete/>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:40:29</sys_created_on>
+        <sys_db_object display_value="" name="sys_dictionary">sys_dictionary</sys_db_object>
+        <sys_id>572492486a01471194e15fc43f584509</sys_id>
+        <sys_metadata>9a6e6ab0975db250ec453b90f053af6d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Ticket</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent display_value="">1e6ea270975db250ec453b90f053af8a</sys_parent>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sys_dictionary_x_1868112_aayos_prediction_ticket</sys_update_name>
+        <sys_update_version display_value="sys_dictionary_x_1868112_aayos_prediction_ticket">a05e03b09751f250ec453b90f053affb</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:40:29</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

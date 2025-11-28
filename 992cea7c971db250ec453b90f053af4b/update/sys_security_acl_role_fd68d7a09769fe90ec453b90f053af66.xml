@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 11:37:46</sys_created_on>
+        <sys_id>fd68d7a09769fe90ec453b90f053af66</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos_prediction.x_1868112_aayos.ai_engine</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_security_acl display_value="x_1868112_aayos_prediction">b568d7a09769fe90ec453b90f053af55</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_fd68d7a09769fe90ec453b90f053af66</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 11:37:46</sys_updated_on>
+        <sys_user_role display_value="x_1868112_aayos.ai_engine" name="x_1868112_aayos.ai_engine">e968d7a09769fe90ec453b90f053af36</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

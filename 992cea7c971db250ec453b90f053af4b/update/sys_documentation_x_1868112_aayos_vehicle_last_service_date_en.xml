@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_documentation element="last_service_date" label="Last General Service Date" language="en" table="x_1868112_aayos_vehicle">
+    <sys_documentation element="last_service_date" label="Last Service Date" language="en" table="x_1868112_aayos_vehicle">
         <sys_documentation action="INSERT_OR_UPDATE">
             <element>last_service_date</element>
             <help/>
             <hint/>
-            <label>Last General Service Date</label>
+            <label>Last Service Date</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
-            <plural>Last General Service Dates</plural>
+            <plural/>
             <sys_class_name>sys_documentation</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 16:51:49</sys_created_on>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_name>Last General Service Date</sys_name>
+            <sys_created_on>2025-11-28 11:05:55</sys_created_on>
+            <sys_mod_count>5</sys_mod_count>
+            <sys_name>Last Service Date</sys_name>
             <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
             <sys_policy/>
             <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
             <sys_update_name>sys_documentation_x_1868112_aayos_vehicle_last_service_date_en</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 16:51:49</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:53:29</sys_updated_on>
             <url/>
             <url_target/>
         </sys_documentation>

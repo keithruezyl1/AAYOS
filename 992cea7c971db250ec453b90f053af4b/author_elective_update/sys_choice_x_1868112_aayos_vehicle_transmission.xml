@@ -20,38 +20,38 @@
             <element>transmission</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Manual</label>
+            <label>Automatic</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>0</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>manual</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>automatic</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
             <element>transmission</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Automatic</label>
+            <label>Manual</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>1</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>automatic</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>manual</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
             <dependent_value/>
@@ -64,12 +64,12 @@
             <sequence>2</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
             <value>cvt</value>
         </sys_choice>
         <sys_choice action="INSERT_OR_UPDATE">
@@ -77,19 +77,19 @@
             <element>transmission</element>
             <hint/>
             <inactive>false</inactive>
-            <label>Semi-Automatic</label>
+            <label>Other</label>
             <language>en</language>
             <name>x_1868112_aayos_vehicle</name>
             <sequence>3</sequence>
             <synonyms/>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-16 17:49:57</sys_created_on>
+            <sys_created_on>2025-11-28 11:06:03</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
             <sys_mod_count>0</sys_mod_count>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-16 17:49:57</sys_updated_on>
-            <value>semi_automatic</value>
+            <sys_updated_on>2025-11-28 11:06:03</sys_updated_on>
+            <value>other</value>
         </sys_choice>
     </sys_choice>
 </record_update>
