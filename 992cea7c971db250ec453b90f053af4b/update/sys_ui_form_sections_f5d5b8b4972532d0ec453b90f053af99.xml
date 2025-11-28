@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="f5d5b8b4972532d0ec453b90f053af99" sys_domain="global" table="x_1868112_aayos_prediction" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b9d5b8b4972532d0ec453b90f053afaa</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_prediction" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">f5d5b8b4972532d0ec453b90f053af99</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">196897a09769fe90ec453b90f053afab</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fdd5b8b4972532d0ec453b90f053afab</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_prediction" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">f5d5b8b4972532d0ec453b90f053af99</sys_ui_form>
+            <sys_ui_section caption="Prediction Details" display_value="Prediction Details" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">b1d5b8b4972532d0ec453b90f053af93</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f9d5b8b4972532d0ec453b90f053afb2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_prediction" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">f5d5b8b4972532d0ec453b90f053af99</sys_ui_form>
+            <sys_ui_section caption="Links" display_value="Links" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">3dd5b8b4972532d0ec453b90f053af94</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f9d5b8b4972532d0ec453b90f053afb9</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_prediction" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">f5d5b8b4972532d0ec453b90f053af99</sys_ui_form>
+            <sys_ui_section caption="AI Explaination" display_value="AI Explaination" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">b5d5b8b4972532d0ec453b90f053af96</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f1d5b8b4972532d0ec453b90f053afc1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_prediction" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">f5d5b8b4972532d0ec453b90f053af99</sys_ui_form>
+            <sys_ui_section caption="Raw Response" display_value="Raw Response" name="x_1868112_aayos_prediction" sys_domain="global" view="Default view">31d5b8b4972532d0ec453b90f053af98</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_1868112_aayos_prediction</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:26:00</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>f5d5b8b4972532d0ec453b90f053af99</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1868112_aayos_prediction</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_ui_form_sections_f5d5b8b4972532d0ec453b90f053af99</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:26:00</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

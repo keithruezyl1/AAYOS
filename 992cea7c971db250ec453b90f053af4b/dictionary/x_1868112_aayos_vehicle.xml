@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="26f2072897a5fe90ec453b90f053afc0" label="AAYOS Vehicle" max_length="40" name="x_1868112_aayos_vehicle" type="collection">
+        <element label="Last Prediction Run" max_length="255" name="last_prediction_run" type="glide_date_time"/>
+        <element choice="3" default="active" label="Vehicle Status" mandatory="true" max_length="40" name="vehicle_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Decommisioned" sequence="2" value="decommisioned"/>
+                <element inactive_on_update="false" label="Active" sequence="0" value="active"/>
+                <element inactive_on_update="false" label="Inactive" sequence="1" value="inactive"/>
+            </choice>
+        </element>
+        <element label="Plate" mandatory="true" max_length="40" name="plate" type="string"/>
+        <element label="Last Oil Change Odometer" max_length="255" name="last_oil_change_odometer" type="integer"/>
+        <element default="1" label="Last Service Odometer" max_length="255" name="last_service_odometer" type="integer"/>
+        <element label="Last Oil Change Date" max_length="255" name="last_oil_change_date" type="glide_date"/>
+        <element label="Last Tire Service Odometer" max_length="255" name="last_tire_service_odometer" type="integer"/>
+        <element label="Last Battery Service Odometer" max_length="255" name="last_battery_service_odometer" type="integer"/>
+        <element default="1" label="Estimated Monthly Mileage" mandatory="true" max_length="255" name="estimated_monthly_mileage" type="integer"/>
+        <element label="Model Year" mandatory="true" max_length="255" name="model_year" type="integer"/>
+        <element label="Has TCU" max_length="255" name="has_tcu" type="boolean"/>
+        <element choice="3" default="light" label="Load Type" max_length="40" name="load_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Passenger" sequence="3" value="passenger"/>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+                <element inactive_on_update="false" label="Heavy" sequence="2" value="heavy"/>
+                <element inactive_on_update="false" label="Light" sequence="0" value="light"/>
+                <element inactive_on_update="false" label="Other" sequence="4" value="other"/>
+            </choice>
+        </element>
+        <element choice="3" default="low" label="Last Risk Level" mandatory="true" max_length="40" name="last_risk_level" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Critical" sequence="3" value="critical"/>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+            </choice>
+        </element>
+        <element label="Last Battery Service Date" max_length="255" name="last_battery_service_date" type="glide_date"/>
+        <element choice="3" default="gasoline" label="Fuel Type" mandatory="true" max_length="40" name="fuel_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Diesel" sequence="1" value="diesel"/>
+                <element inactive_on_update="false" label="Electric Vehicle (EV)" sequence="3" value="electric_vehicle_ev"/>
+                <element inactive_on_update="false" label="Other" sequence="4" value="other"/>
+                <element inactive_on_update="false" label="Hybrid" sequence="2" value="hybrid"/>
+                <element inactive_on_update="false" label="Gasoline" sequence="0" value="gasoline"/>
+            </choice>
+        </element>
+        <element label="Model" mandatory="true" max_length="80" name="model" type="string"/>
+        <element choice="3" default="personal" label="Usage Type" mandatory="true" max_length="40" name="usage_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Personal" sequence="0" value="personal"/>
+                <element inactive_on_update="false" label="Fleet" sequence="2" value="fleet"/>
+                <element inactive_on_update="false" label="Commercial" sequence="1" value="commercial"/>
+                <element inactive_on_update="false" label="Other" sequence="3" value="other"/>
+            </choice>
+        </element>
+        <element label="Last Brake Service Date" max_length="255" name="last_brake_service_date" type="glide_date"/>
+        <element label="Last Tire Service Date" max_length="255" name="last_tire_service_date" type="glide_date"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Vehicle ID" max_length="40" name="number" type="string"/>
+        <element display="true" label="Make" mandatory="true" max_length="80" name="make" type="string"/>
+        <element label="Customer" mandatory="true" max_length="32" name="customer" reference="x_1868112_aayos_customer" type="reference"/>
+        <element choice="3" default="urban" label="Driving Condition Profile" mandatory="true" max_length="40" name="driving_condition_profile" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Urban" sequence="0" value="urban"/>
+                <element inactive_on_update="false" label="Mixed" sequence="2" value="mixed"/>
+                <element inactive_on_update="false" label="Off Road" sequence="3" value="off_road"/>
+                <element inactive_on_update="false" label="Highway" sequence="1" value="highway"/>
+            </choice>
+        </element>
+        <element label="Last Service Date" max_length="255" name="last_service_date" type="glide_date"/>
+        <element default="1" label="Current Mileage" mandatory="true" max_length="255" name="current_mileage" type="integer"/>
+        <element label="VIN" max_length="40" name="vin" type="string"/>
+        <element choice="3" default="automatic" label="Transmission" mandatory="true" max_length="40" name="transmission" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Other" sequence="3" value="other"/>
+                <element inactive_on_update="false" label="Manual" sequence="1" value="manual"/>
+                <element inactive_on_update="false" label="CVT" sequence="2" value="cvt"/>
+                <element inactive_on_update="false" label="Automatic" sequence="0" value="automatic"/>
+            </choice>
+        </element>
+        <index name="index">
+            <element name="customer"/>
+        </index>
+    </element>
+</database>

@@ -9,7 +9,7 @@
         <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Customer ID" mandatory="true" max_length="40" name="number" type="string"/>
         <element label="Phone" mandatory="true" max_length="40" name="phone" type="string"/>
         <element label="Name" mandatory="true" max_length="100" name="name" type="string"/>
-        <element label="Addres Line 2" max_length="255" name="addres_line_2" type="string"/>
+        <element label="Address Line 2" max_length="255" name="addres_line_2" type="string"/>
         <element label="Address Line 1" max_length="255" name="address_line_1" type="string"/>
         <index name="index">
             <element name="user"/>

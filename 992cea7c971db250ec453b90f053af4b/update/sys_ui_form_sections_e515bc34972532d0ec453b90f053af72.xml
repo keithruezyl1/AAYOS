@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="e515bc34972532d0ec453b90f053af72" sys_domain="global" table="x_1868112_aayos_ticket" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e115bc34972532d0ec453b90f053af77</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">f69b5b289769fe90ec453b90f053af0d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>2915bc34972532d0ec453b90f053af78</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="Summary" display_value="Summary" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">6515bc34972532d0ec453b90f053af2c</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e915bc34972532d0ec453b90f053af8b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="Prediction" display_value="Prediction" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">ed15bc34972532d0ec453b90f053af2d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e915bc34972532d0ec453b90f053af92</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="Customer Decision" display_value="Customer Decision" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">6915bc34972532d0ec453b90f053af2f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a915bc34972532d0ec453b90f053afa6</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="Technician Assignment" display_value="Technician Assignment" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e115bc34972532d0ec453b90f053af31</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>5</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a915bc34972532d0ec453b90f053afae</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_1868112_aayos_ticket" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">e515bc34972532d0ec453b90f053af72</sys_ui_form>
+            <sys_ui_section caption="Lifecycle" display_value="Lifecycle" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">2115bc34972532d0ec453b90f053af71</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_1868112_aayos_ticket</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-11-28 18:22:42</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>e515bc34972532d0ec453b90f053af72</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_1868112_aayos_ticket</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_ui_form_sections_e515bc34972532d0ec453b90f053af72</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-11-28 18:22:42</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>

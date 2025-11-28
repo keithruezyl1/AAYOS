@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
-    <sys_ui_section caption="" section_id="4ff24fec9725fe90ec453b90f053af34" sys_domain="global" table="x_1868112_aayos_vehicle" version="3" view="">
+    <sys_ui_section caption="Contact" section_id="839ee03897e132d0ec453b90f053afeb" sys_domain="global" table="x_1868112_aayos_customer" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>number</element>
+            <element>email</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 18:13:46</sys_created_on>
-            <sys_id>2a037c30972532d0ec453b90f053af9e</sys_id>
+            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
+            <sys_id>cf9e243897e132d0ec453b90f053af0d</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_vehicle" sys_domain="global" view="Default view">4ff24fec9725fe90ec453b90f053af34</sys_ui_section>
+            <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 18:13:46</sys_updated_on>
+            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>plate</element>
+            <element>phone</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 18:13:46</sys_created_on>
-            <sys_id>e2037c30972532d0ec453b90f053af9f</sys_id>
+            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
+            <sys_id>8b9e243897e132d0ec453b90f053af0e</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_vehicle" sys_domain="global" view="Default view">4ff24fec9725fe90ec453b90f053af34</sys_ui_section>
+            <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 18:13:46</sys_updated_on>
+            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>customer</element>
+            <element>user</element>
             <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 18:13:46</sys_created_on>
-            <sys_id>66037c30972532d0ec453b90f053afac</sys_id>
+            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
+            <sys_id>479e243897e132d0ec453b90f053af0f</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
-            <sys_ui_section caption="NULL" display_value="" name="x_1868112_aayos_vehicle" sys_domain="global" view="Default view">4ff24fec9725fe90ec453b90f053af34</sys_ui_section>
+            <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 18:13:46</sys_updated_on>
+            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_section action="INSERT_OR_UPDATE">
-            <caption/>
+            <caption>Contact</caption>
             <header>false</header>
-            <name>x_1868112_aayos_vehicle</name>
+            <name>x_1868112_aayos_customer</name>
             <roles/>
             <sys_class_name>sys_ui_section</sys_class_name>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 10:04:12</sys_created_on>
+            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
             <sys_domain>global</sys_domain>
             <sys_domain_path>/</sys_domain_path>
-            <sys_id>4ff24fec9725fe90ec453b90f053af34</sys_id>
+            <sys_id>839ee03897e132d0ec453b90f053afeb</sys_id>
             <sys_mod_count>0</sys_mod_count>
-            <sys_name>x_1868112_aayos_vehicle</sys_name>
+            <sys_name>x_1868112_aayos_customer</sys_name>
             <sys_overrides/>
             <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
             <sys_policy/>
             <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
-            <sys_update_name>sys_ui_section_4ff24fec9725fe90ec453b90f053af34</sys_update_name>
+            <sys_update_name>sys_ui_section_839ee03897e132d0ec453b90f053afeb</sys_update_name>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 10:04:12</sys_updated_on>
+            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
             <sys_user/>
-            <title>true</title>
+            <title>false</title>
             <view display_value="Default view" name="NULL">Default view</view>
             <view_name/>
         </sys_ui_section>
