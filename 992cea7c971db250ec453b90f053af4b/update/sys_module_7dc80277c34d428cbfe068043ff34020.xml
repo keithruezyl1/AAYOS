@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[// AAYOS Daily Prediction Run
+// This script runs once per day to generate AI predictions for vehicles
+
+try {
+    gs.info('AAYOS: Starting daily prediction run');
+    
+    // Load vehicles that need prediction updates
+    var vehicleGR = new GlideRecord('x_1868112_aayos_vehicle');
+    vehicleGR.addQuery('vehicle_status', '!=', 'sold'); // Exclude retired vehicles
+    
+    // Add condition for vehicles that haven't had predictions in 20+ hours
+    var twentyHoursAgo = new GlideDateTime();
+    twentyHoursAgo.addSeconds(-20 * 60 * 60); // 20 hours ago
+    
+    var condition = vehicleGR.addNullQuery('last_prediction_run');
+    condition.addOrCondition('last_prediction_run', '<', twentyHoursAgo.getDisplayValue());
+    
+    vehicleGR.query();
+    
+    var vehicleCount = vehicleGR.getRowCount();
+    gs.info('AAYOS: Found ' + vehicleCount + ' vehicles requiring prediction updates');
+    
+    var predictionEngine = new PredictionEngine();
+    var successCount = 0;
+    var ticketCount = 0;
+    
+    while (vehicleGR.next()) {
+        try {
+            gs.info('AAYOS: Processing vehicle ' + vehicleGR.getValue('plate_number'));
+            
+            // Generate prediction
+            var predictionRecord = predictionEngine.predictForVehicle(vehicleGR);
+            
+            if (predictionRecord) {
+                successCount++;
+                
+                // Attempt to create ticket if prediction warrants it
+                var ticketRecord = predictionEngine.createTicketFromPrediction(predictionRecord);
+                
+                if (ticketRecord) {
+                    ticketCount++;
+                }
+            }
+            
+        } catch (vehicleError) {
+            gs.error('AAYOS: Error processing vehicle ' + vehicleGR.getValue('plate_number') + ': ' + vehicleError.message);
+        }
+    }
+    
+    gs.info('AAYOS: Daily prediction run completed. Processed ' + vehicleCount + ' vehicles, created ' + successCount + ' predictions, generated ' + ticketCount + ' tickets');
+    
+} catch (e) {
+    gs.error('AAYOS: Fatal error in daily prediction run: ' + e.message);
+}]]></content>
+        <external_source>false</external_source>
+        <path>x_1868112_aayos/x-1868112-aayos/1.0.0/src/server/scheduled-scripts/daily-prediction-run.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 21:08:15</sys_created_on>
+        <sys_id>7dc80277c34d428cbfe068043ff34020</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos/x-1868112-aayos/1.0.0/src/server/scheduled-scripts/daily-prediction-run.js</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_module_7dc80277c34d428cbfe068043ff34020</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 21:08:15</sys_updated_on>
+    </sys_module>
+</record_update>

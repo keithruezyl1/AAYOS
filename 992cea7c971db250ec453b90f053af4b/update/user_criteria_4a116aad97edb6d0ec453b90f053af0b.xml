@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="user_criteria">
+    <user_criteria action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <advanced>true</advanced>
+        <company/>
+        <department/>
+        <group name="AAYOS Admins">7829d5619725b6d0ec453b90f053af23</group>
+        <location/>
+        <match_all>false</match_all>
+        <name>AAYOS Admins</name>
+        <role name="x_1868112_aayos.aayos_admin">2626a80e97ad7ad0ec453b90f053afc6</role>
+        <script><![CDATA[answer = true;
+]]></script>
+        <short_description/>
+        <sys_class_name>user_criteria</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 10:10:49</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>4a116aad97edb6d0ec453b90f053af0b</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>AAYOS Admins</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>user_criteria_4a116aad97edb6d0ec453b90f053af0b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 05:37:23</sys_updated_on>
+        <user>5959dd619725b6d0ec453b90f053af57,6816f79cc0a8016401c5a33be04be441</user>
+    </user_criteria>
+    <sys_translated_text action="delete_multiple" query="documentkey=4a116aad97edb6d0ec453b90f053af0b"/>
+</record_update>

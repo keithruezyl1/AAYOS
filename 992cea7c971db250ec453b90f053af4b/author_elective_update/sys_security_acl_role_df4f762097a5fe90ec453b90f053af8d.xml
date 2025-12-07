@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="DELETE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:48:06</sys_created_on>
+        <sys_id>df4f762097a5fe90ec453b90f053af8d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos_customer.x_1868112_aayos.admin</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_security_acl display_value="x_1868112_aayos_customer">df4f762097a5fe90ec453b90f053af88</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_df4f762097a5fe90ec453b90f053af8d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:48:06</sys_updated_on>
+        <sys_user_role display_value="x_1868112_aayos.admin" name="x_1868112_aayos.admin">8655e3b82a5540ee87b0a20ce5bdff05</sys_user_role>
+    </sys_security_acl_role>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sys_security_acl_role_df4f762097a5fe90ec453b90f053af8d</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role"><sys_security_acl_role action="INSERT_OR_UPDATE"><sys_class_name>sys_security_acl_role</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-28 09:48:06</sys_created_on><sys_id>df4f762097a5fe90ec453b90f053af8d</sys_id><sys_mod_count>0</sys_mod_count><sys_name>x_1868112_aayos_customer.x_1868112_aayos.admin</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_security_acl display_value="x_1868112_aayos_customer">df4f762097a5fe90ec453b90f053af88</sys_security_acl><sys_update_name>sys_security_acl_role_df4f762097a5fe90ec453b90f053af8d</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-28 09:48:06</sys_updated_on><sys_user_role display_value="x_1868112_aayos.admin" name="x_1868112_aayos.admin">8655e3b82a5540ee87b0a20ce5bdff05</sys_user_role></sys_security_acl_role></record_update>]]></payload>
+        <payload_hash>1276536732</payload_hash>
+        <record_name>x_1868112_aayos_customer.x_1868112_aayos.admin</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-28 09:48:06</sys_created_on>
+        <sys_id>974f762097a5fe90ec453b90f053af9f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ac9dcde060000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-28 09:48:06</sys_updated_on>
+        <type>Access Roles</type>
+        <update_guid>574f762043a5fe905f8ee9e855cf799e</update_guid>
+        <update_guid_history>574f762043a5fe905f8ee9e855cf799e:1276536732</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="x_1868112_aayos_customer.x_1868112_aayos.admin">ed93e88f97697214ec453b90f053af49</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 16:52:35</sys_created_on>
+        <sys_db_object display_value="" name="sys_security_acl_role">sys_security_acl_role</sys_db_object>
+        <sys_id>7f891abe952c4cd888b7d6ac2dbd2c69</sys_id>
+        <sys_metadata>df4f762097a5fe90ec453b90f053af8d</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos_customer.x_1868112_aayos.admin</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sys_security_acl_role_df4f762097a5fe90ec453b90f053af8d</sys_update_name>
+        <sys_update_version display_value="sys_security_acl_role_df4f762097a5fe90ec453b90f053af8d">974f762097a5fe90ec453b90f053af9f</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 16:52:35</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

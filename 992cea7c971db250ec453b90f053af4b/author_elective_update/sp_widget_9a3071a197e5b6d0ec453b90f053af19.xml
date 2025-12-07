@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* ===== AAYOS KB Search ===== */&#13;
+&#13;
+.aayos-kb-search {&#13;
+  max-width: 900px;&#13;
+  margin: 0 auto 24px auto;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__bar {&#13;
+  display: flex;&#13;
+  gap: 8px;&#13;
+  align-items: stretch;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__input {&#13;
+  flex: 1;&#13;
+  border-radius: 4px;&#13;
+  border: 1px solid #ccc;&#13;
+  padding: 8px 10px;&#13;
+  font-size: 13px;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__btn {&#13;
+  padding: 8px 16px;&#13;
+  border-radius: 4px;&#13;
+  border: none;&#13;
+  background: #00a96e;&#13;
+  color: #fff;&#13;
+  font-size: 13px;&#13;
+  font-weight: 600;&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__btn:hover {&#13;
+  background: #008a5a;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__status {&#13;
+  margin-top: 8px;&#13;
+  font-size: 12px;&#13;
+  color: #555;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__results {&#13;
+  list-style: none;&#13;
+  padding: 0;&#13;
+  margin: 16px 0 0 0;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result {&#13;
+  padding: 10px 12px;&#13;
+  border-radius: 4px;&#13;
+  border: 1px solid #eee;&#13;
+  margin-bottom: 8px;&#13;
+  background-color: #fff;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result:hover {&#13;
+  border-color: #d0f0e4;&#13;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-title {&#13;
+  display: block;&#13;
+  font-size: 14px;&#13;
+  font-weight: 600;&#13;
+  color: #222;&#13;
+  text-decoration: none;&#13;
+  margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-title:hover {&#13;
+  color: #00a96e;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-meta {&#13;
+  display: flex;&#13;
+  flex-wrap: wrap;&#13;
+  gap: 6px;&#13;
+  align-items: center;&#13;
+  font-size: 11px;&#13;
+  color: #777;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__badge {&#13;
+  background: #eef9f5;&#13;
+  color: #007a4c;&#13;
+  padding: 2px 6px;&#13;
+  border-radius: 10px;&#13;
+  font-size: 10px;&#13;
+  text-transform: uppercase;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__meta-text {&#13;
+  font-size: 11px;&#13;
+}&#13;
+&#13;
+/* Small screens */&#13;
+@media (max-width: 768px) {&#13;
+  .aayos-kb-search__bar {&#13;
+    flex-direction: column;&#13;
+  }&#13;
+&#13;
+  .aayos-kb-search__btn {&#13;
+    width: 100%;&#13;
+  }&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>kb search widget for aayos</description>
+        <docs/>
+        <field_list>title</field_list>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Copy of AAYOS KB Search</name>
+        <option_schema>Name: kb_sys_id&#13;
+Label: Knowledge base&#13;
+Type: String&#13;
+Default value: 2a9ad1659725b6d0ec453b90f053af0a</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+    // AAYOS Admin Knowledge KB sys_id (hard-coded)
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.results = [];
+    data.query = (input && input.q) ? ("" + input.q).trim() : "";
+    data.kb_sys_id = kbId;
+
+    if (!kbId) {
+        data.error = "KB sys_id is not configured.";
+        return;
+    }
+
+    // Require at least 2 characters
+    if (!data.query || data.query.length < 2) {
+        return;
+    }
+
+    var gr = new GlideRecord("kb_knowledge");
+    gr.addActiveQuery();
+    gr.addQuery("workflow_state", "published");
+    gr.addQuery("kb_knowledge_base", kbId);
+
+    // Search in short_description OR article body
+    var qc = gr.addQuery("short_description", "CONTAINS", data.query);
+    qc.addOrCondition("text", "CONTAINS", data.query);
+
+    gr.orderByDesc("sys_updated_on");
+    gr.setLimit(20);
+    gr.query();
+
+    while (gr.next()) {
+        data.results.push({
+            sys_id: gr.getUniqueValue(),
+            number: gr.getValue("number"),
+            short_description: gr.getValue("short_description"),
+            category: gr.kb_category.getDisplayValue(),
+            updated_on: gr.getDisplayValue("sys_updated_on")
+        });
+    }
+
+    data.hasResults = data.results.length > 0;
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:36:31</sys_created_on>
+        <sys_id>9a3071a197e5b6d0ec453b90f053af19</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Search</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_9a3071a197e5b6d0ec453b90f053af19</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 06:36:31</sys_updated_on>
+        <template><![CDATA[<div class="aayos-kb-search">
+  <form ng-submit="c.doSearch()" class="aayos-kb-search__form">
+    <input type="text"
+           class="form-control"
+           ng-model="c.query"
+           placeholder="Search AAYOS admin documentation and FAQs…" />
+    <button class="btn btn-primary" type="submit">Search</button>
+  </form>
+
+  <div class="aayos-kb-search__status"
+       ng-if="data.query && !data.hasResults">
+    No results found for "<strong>{{data.query}}</strong>" in AAYOS Admin Knowledge.
+  </div>
+
+  <ul class="list-unstyled aayos-kb-search__results"
+      ng-if="data.hasResults">
+    <li ng-repeat="r in data.results">
+      <a ng-href="/sp?id=kb_article&sys_id={{r.sys_id}}">
+        <strong>{{r.short_description}}</strong>
+      </a>
+      <div class="text-muted">
+        {{r.category}} · Updated {{r.updated_on}}
+      </div>
+    </li>
+  </ul>
+</div>
+]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_widget_9a3071a197e5b6d0ec453b90f053af19</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;/* ===== AAYOS KB Search ===== */&amp;#13;
+&amp;#13;
+.aayos-kb-search {&amp;#13;
+  max-width: 900px;&amp;#13;
+  margin: 0 auto 24px auto;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__bar {&amp;#13;
+  display: flex;&amp;#13;
+  gap: 8px;&amp;#13;
+  align-items: stretch;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__input {&amp;#13;
+  flex: 1;&amp;#13;
+  border-radius: 4px;&amp;#13;
+  border: 1px solid #ccc;&amp;#13;
+  padding: 8px 10px;&amp;#13;
+  font-size: 13px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__btn {&amp;#13;
+  padding: 8px 16px;&amp;#13;
+  border-radius: 4px;&amp;#13;
+  border: none;&amp;#13;
+  background: #00a96e;&amp;#13;
+  color: #fff;&amp;#13;
+  font-size: 13px;&amp;#13;
+  font-weight: 600;&amp;#13;
+  cursor: pointer;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__btn:hover {&amp;#13;
+  background: #008a5a;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__status {&amp;#13;
+  margin-top: 8px;&amp;#13;
+  font-size: 12px;&amp;#13;
+  color: #555;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__results {&amp;#13;
+  list-style: none;&amp;#13;
+  padding: 0;&amp;#13;
+  margin: 16px 0 0 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__result {&amp;#13;
+  padding: 10px 12px;&amp;#13;
+  border-radius: 4px;&amp;#13;
+  border: 1px solid #eee;&amp;#13;
+  margin-bottom: 8px;&amp;#13;
+  background-color: #fff;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__result:hover {&amp;#13;
+  border-color: #d0f0e4;&amp;#13;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__result-title {&amp;#13;
+  display: block;&amp;#13;
+  font-size: 14px;&amp;#13;
+  font-weight: 600;&amp;#13;
+  color: #222;&amp;#13;
+  text-decoration: none;&amp;#13;
+  margin-bottom: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__result-title:hover {&amp;#13;
+  color: #00a96e;&amp;#13;
+  text-decoration: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__result-meta {&amp;#13;
+  display: flex;&amp;#13;
+  flex-wrap: wrap;&amp;#13;
+  gap: 6px;&amp;#13;
+  align-items: center;&amp;#13;
+  font-size: 11px;&amp;#13;
+  color: #777;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__badge {&amp;#13;
+  background: #eef9f5;&amp;#13;
+  color: #007a4c;&amp;#13;
+  padding: 2px 6px;&amp;#13;
+  border-radius: 10px;&amp;#13;
+  font-size: 10px;&amp;#13;
+  text-transform: uppercase;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-search__meta-text {&amp;#13;
+  font-size: 11px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+/* Small screens */&amp;#13;
+@media (max-width: 768px) {&amp;#13;
+  .aayos-kb-search__bar {&amp;#13;
+    flex-direction: column;&amp;#13;
+  }&amp;#13;
+&amp;#13;
+  .aayos-kb-search__btn {&amp;#13;
+    width: 100%;&amp;#13;
+  }&amp;#13;
+}&amp;#13;
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;kb search widget for aayos&lt;/description&gt;&lt;docs/&gt;&lt;field_list&gt;title&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;Copy of AAYOS KB Search&lt;/name&gt;&lt;option_schema&gt;Name: kb_sys_id&amp;#13;
+Label: Knowledge base&amp;#13;
+Type: String&amp;#13;
+Default value: 2a9ad1659725b6d0ec453b90f053af0a&lt;/option_schema&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function () {
+    // AAYOS Admin Knowledge KB sys_id (hard-coded)
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.results = [];
+    data.query = (input &amp;&amp; input.q) ? ("" + input.q).trim() : "";
+    data.kb_sys_id = kbId;
+
+    if (!kbId) {
+        data.error = "KB sys_id is not configured.";
+        return;
+    }
+
+    // Require at least 2 characters
+    if (!data.query || data.query.length &lt; 2) {
+        return;
+    }
+
+    var gr = new GlideRecord("kb_knowledge");
+    gr.addActiveQuery();
+    gr.addQuery("workflow_state", "published");
+    gr.addQuery("kb_knowledge_base", kbId);
+
+    // Search in short_description OR article body
+    var qc = gr.addQuery("short_description", "CONTAINS", data.query);
+    qc.addOrCondition("text", "CONTAINS", data.query);
+
+    gr.orderByDesc("sys_updated_on");
+    gr.setLimit(20);
+    gr.query();
+
+    while (gr.next()) {
+        data.results.push({
+            sys_id: gr.getUniqueValue(),
+            number: gr.getValue("number"),
+            short_description: gr.getValue("short_description"),
+            category: gr.kb_category.getDisplayValue(),
+            updated_on: gr.getDisplayValue("sys_updated_on")
+        });
+    }
+
+    data.hasResults = data.results.length &gt; 0;
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-01 06:36:31&lt;/sys_created_on&gt;&lt;sys_id&gt;9a3071a197e5b6d0ec453b90f053af19&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Copy of AAYOS KB Search&lt;/sys_name&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_9a3071a197e5b6d0ec453b90f053af19&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-01 06:36:31&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="aayos-kb-search"&gt;
+  &lt;form ng-submit="c.doSearch()" class="aayos-kb-search__form"&gt;
+    &lt;input type="text"
+           class="form-control"
+           ng-model="c.query"
+           placeholder="Search AAYOS admin documentation and FAQs…" /&gt;
+    &lt;button class="btn btn-primary" type="submit"&gt;Search&lt;/button&gt;
+  &lt;/form&gt;
+
+  &lt;div class="aayos-kb-search__status"
+       ng-if="data.query &amp;&amp; !data.hasResults"&gt;
+    No results found for "&lt;strong&gt;{{data.query}}&lt;/strong&gt;" in AAYOS Admin Knowledge.
+  &lt;/div&gt;
+
+  &lt;ul class="list-unstyled aayos-kb-search__results"
+      ng-if="data.hasResults"&gt;
+    &lt;li ng-repeat="r in data.results"&gt;
+      &lt;a ng-href="/sp?id=kb_article&amp;sys_id={{r.sys_id}}"&gt;
+        &lt;strong&gt;{{r.short_description}}&lt;/strong&gt;
+      &lt;/a&gt;
+      &lt;div class="text-muted"&gt;
+        {{r.category}} · Updated {{r.updated_on}}
+      &lt;/div&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>1551707660</payload_hash>
+        <record_name>Copy of AAYOS KB Search</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:36:32</sys_created_on>
+        <sys_id>d23071a197e5b6d0ec453b90f053af1d</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8a08dc00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 06:36:32</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>923071a127e5b6d05ba5bf5271f2c01c</update_guid>
+        <update_guid_history>923071a127e5b6d05ba5bf5271f2c01c:1551707660</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of AAYOS KB Search">c2b3f16997e5b6d0ec453b90f053af9c</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:51:48</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>4b8a4815f2fd48faa7a5f2e4e4a0c8a4</sys_id>
+        <sys_metadata>9a3071a197e5b6d0ec453b90f053af19</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Search</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_widget_9a3071a197e5b6d0ec453b90f053af19</sys_update_name>
+        <sys_update_version display_value="sp_widget_9a3071a197e5b6d0ec453b90f053af19">d23071a197e5b6d0ec453b90f053af1d</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 06:51:48</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

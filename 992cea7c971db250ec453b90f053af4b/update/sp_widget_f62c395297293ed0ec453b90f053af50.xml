@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope, $window) {
+  var c = this;
+
+  // Default filters
+  c.stateFilter    = 'active';
+  c.statusFilter   = 'all';
+  c.responseFilter = 'all';
+
+  // Options from server
+  c.stateOptions    = c.data.state_options    || [];
+  c.statusOptions   = c.data.status_options   || [];
+  c.responseOptions = c.data.response_options || [];
+  c.predictionValidityOptions = c.data.prediction_validity_options || [];
+
+  var TERMINAL_STATES = ['closed', 'completed', 'resolved', 'cancelled'];
+
+  c.isTerminalStatus = function(t) {
+    return TERMINAL_STATES.indexOf((t.status_value || '').toLowerCase()) !== -1;
+  };
+
+  // FILTERING
+  c.getFilteredTickets = function() {
+    if (!c.data || !c.data.tickets)
+      return [];
+
+    return c.data.tickets.filter(function(t) {
+      var statusValue   = (t.status_value || '').toLowerCase();
+      var responseValue = (t.technician_response_value || '').toLowerCase();
+
+      // Active / Closed / All
+      var closed = TERMINAL_STATES.indexOf(statusValue) !== -1;
+      if (c.stateFilter === 'active' && closed) return false;
+      if (c.stateFilter === 'closed' && !closed) return false;
+
+      // Status filter
+      if (c.statusFilter !== 'all' &&
+          statusValue !== c.statusFilter.toLowerCase())
+        return false;
+
+      // Technician response filter
+      if (c.responseFilter !== 'all' &&
+          responseValue !== c.responseFilter.toLowerCase())
+        return false;
+
+      return true;
+    });
+  };
+
+  // ACTION RUNNER
+  c.actionInProgress = false;
+
+  function runAction(t, action, extraData) {
+    if (!t || !t.sys_id) return;
+
+    c.actionInProgress = true;
+
+    c.data.action = action;
+    c.data.sys_id = t.sys_id;
+
+    if (extraData) {
+      for (var k in extraData) {
+        if (extraData.hasOwnProperty(k)) {
+          c.data[k] = extraData[k];
+        }
+      }
+    }
+
+    return c.server.update().then(function(response) {
+      if (response && response.data) {
+        c.data = response.data;
+
+        // Rebind dropdowns
+        c.stateOptions    = c.data.state_options    || [];
+        c.statusOptions   = c.data.status_options   || [];
+        c.responseOptions = c.data.response_options || [];
+        c.predictionValidityOptions = c.data.prediction_validity_options || [];
+      }
+    }).finally(function() {
+      c.actionInProgress = false;
+      delete c.data.action;
+      delete c.data.sys_id;
+
+      if (extraData) {
+        for (var k in extraData) {
+          if (extraData.hasOwnProperty(k)) {
+            delete c.data[k];
+          }
+        }
+      }
+    });
+  }
+
+  // PUBLIC ACTIONS
+  c.acceptTicket  = function(t) { runAction(t, 'accept'); };
+  c.declineTicket = function(t) { runAction(t, 'decline'); };
+  c.startTicket   = function(t) { runAction(t, 'start'); };
+
+  c.setOnHold     = function(t) { runAction(t, 'set_on_hold'); };
+  // legacy resolve if you still want it
+  c.resolveTicket = function(t) { runAction(t, 'set_resolved'); };
+  c.cancelTicket  = function(t) { runAction(t, 'set_cancelled'); };
+
+  // ------------------------------------------------------------
+  // Close modal state
+  // ------------------------------------------------------------
+  c.showCloseModal = false;
+  c.modalTicket = null;
+  c.closeForm = {
+    prediction_validity: '',
+    resolution_summary: '',
+    confirmed: false
+  };
+
+  c.openCloseModal = function(t) {
+    c.modalTicket = t;
+    c.closeForm = {
+      prediction_validity: '',
+      resolution_summary: '',
+      confirmed: false
+    };
+    c.showCloseModal = true;
+  };
+
+  c.cancelCloseModal = function() {
+    c.showCloseModal = false;
+    c.modalTicket = null;
+  };
+
+  c.submitClose = function() {
+    if (!c.modalTicket || !c.closeForm.confirmed) return;
+
+    var payload = {
+      prediction_validity: c.closeForm.prediction_validity,
+      resolution_summary: c.closeForm.resolution_summary
+    };
+
+    runAction(c.modalTicket, 'close_with_summary', payload).then(function() {
+      c.showCloseModal = false;
+      c.modalTicket = null;
+      c.closeForm = {
+        prediction_validity: '',
+        resolution_summary: '',
+        confirmed: false
+      };
+    });
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/* ============================================================&#13;
+   DARK MODE – PANEL + BODY SCOPE&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets {&#13;
+  background-color: #101010;&#13;
+  color: #f5f5f5;&#13;
+  border-color: #303030;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .panel-body {&#13;
+  background-color: #101010;&#13;
+  color: #f5f5f5;&#13;
+}&#13;
+&#13;
+/* Labels / helper text */&#13;
+.aayos-tech-tickets .control-label {&#13;
+  color: #e5e5e5;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .text-muted {&#13;
+  color: #9e9e9e;&#13;
+}&#13;
+&#13;
+/* Links */&#13;
+.aayos-tech-tickets a {&#13;
+  color: #4dd2ff;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets a:hover {&#13;
+  color: #80e5ff;&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   DARK MODE – FORM CONTROLS (FILTER ROW, ETC.)&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .form-control {&#13;
+  background-color: #202020;&#13;
+  color: #f5f5f5;&#13;
+  border: 1px solid #444;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .form-control:focus {&#13;
+  background-color: #262626;&#13;
+  color: #ffffff;&#13;
+  border-color: #00e68a;&#13;
+  box-shadow: 0 0 0 1px #00e68a;&#13;
+}&#13;
+&#13;
+/* Compact selects in header row keep dark background */&#13;
+.aayos-tech-tickets select.form-control.input-sm {&#13;
+  padding-right: 24px;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   DARK MODE – TABLE&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .table {&#13;
+  background-color: #161616;&#13;
+  color: #f0f0f0;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .table &gt; thead &gt; tr &gt; th {&#13;
+  background-color: #141414;&#13;
+  color: #e0e0e0;&#13;
+  border-bottom: 1px solid #333;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .table &gt; tbody &gt; tr &gt; td {&#13;
+  border-top: 1px solid #262626;&#13;
+}&#13;
+&#13;
+/* Striped rows */&#13;
+.aayos-tech-tickets .table-striped &gt; tbody &gt; tr:nth-of-type(odd) {&#13;
+  background-color: #181818;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .table-striped &gt; tbody &gt; tr:nth-of-type(even) {&#13;
+  background-color: #121212;&#13;
+}&#13;
+&#13;
+/* Hover */&#13;
+.aayos-tech-tickets .table-hover &gt; tbody &gt; tr:hover {&#13;
+  background-color: #222222;&#13;
+}&#13;
+&#13;
+/* Condensed stays tight but respects dark colors */&#13;
+.aayos-tech-tickets .table-condensed &gt; thead &gt; tr &gt; th,&#13;
+.aayos-tech-tickets .table-condensed &gt; tbody &gt; tr &gt; td {&#13;
+  padding: 6px 8px;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   DARK MODE – BUTTONS (SCOPED)&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .btn {&#13;
+  border-radius: 4px;&#13;
+  border-width: 1px;&#13;
+}&#13;
+&#13;
+/* Success */&#13;
+.aayos-tech-tickets .btn-success {&#13;
+  background-color: #00b36b;&#13;
+  border-color: #00b36b;&#13;
+  color: #ffffff;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .btn-success:hover:enabled {&#13;
+  background-color: #00cc7a;&#13;
+  border-color: #00cc7a;&#13;
+}&#13;
+&#13;
+/* Danger */&#13;
+.aayos-tech-tickets .btn-danger {&#13;
+  background-color: #e24343;&#13;
+  border-color: #e24343;&#13;
+  color: #ffffff;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .btn-danger:hover:enabled {&#13;
+  background-color: #ff5555;&#13;
+}&#13;
+&#13;
+/* Primary */&#13;
+.aayos-tech-tickets .btn-primary {&#13;
+  background-color: #00a3e6;&#13;
+  border-color: #00a3e6;&#13;
+  color: #0b0b0b;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .btn-primary:hover:enabled {&#13;
+  background-color: #12b7f7;&#13;
+}&#13;
+&#13;
+/* Warning */&#13;
+.aayos-tech-tickets .btn-warning {&#13;
+  background-color: #f0a500;&#13;
+  border-color: #f0a500;&#13;
+  color: #0b0b0b;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .btn-warning:hover:enabled {&#13;
+  background-color: #ffb722;&#13;
+}&#13;
+&#13;
+/* Default */&#13;
+.aayos-tech-tickets .btn-default {&#13;
+  background-color: #262626;&#13;
+  border-color: #444;&#13;
+  color: #e0e0e0;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .btn-default:hover:enabled {&#13;
+  background-color: #333333;&#13;
+}&#13;
+&#13;
+/* Disabled state stays muted on dark bg */&#13;
+.aayos-tech-tickets .btn[disabled],&#13;
+.aayos-tech-tickets .btn.disabled {&#13;
+  opacity: 0.6;&#13;
+  cursor: not-allowed;&#13;
+}&#13;
+&#13;
+/* Extra small sizing remains */&#13;
+.aayos-tech-tickets .btn-xs {&#13;
+  padding: 3px 6px;&#13;
+  font-size: 11px;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   EMPTY STATE&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .text-center p.small {&#13;
+  color: #a0a0a0;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   MODAL BACKDROP&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .aayos-modal-backdrop {&#13;
+  position: fixed;&#13;
+  inset: 0; /* shorthand for top/left/right/bottom = 0 */&#13;
+  width: 100%;&#13;
+  height: 100%;&#13;
+  background: rgba(0, 0, 0, 0.75);  /* darker for stronger focus */&#13;
+  z-index: 1050;&#13;
+  display: flex;&#13;
+  align-items: center;&#13;
+  justify-content: center;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   MODAL DIALOG BOX&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .aayos-modal-dialog {&#13;
+  background-color: #181818;        /* matches widget panel body */&#13;
+  color: #e0e0e0;&#13;
+  padding: 22px 26px;&#13;
+  border-radius: 12px;&#13;
+  max-width: 480px;&#13;
+  width: 90%;&#13;
+  border: 1px solid #333;&#13;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.65);&#13;
+}&#13;
+&#13;
+/* Title */&#13;
+.aayos-tech-tickets .aayos-modal-title {&#13;
+  margin: 0 0 18px 0;&#13;
+  font-size: 18px;&#13;
+  font-weight: 600;&#13;
+  color: #ffffff;&#13;
+}&#13;
+&#13;
+/* Labels */&#13;
+.aayos-tech-tickets .aayos-modal-dialog label {&#13;
+  font-weight: 500;&#13;
+  color: #f5f5f5;&#13;
+  margin-bottom: 6px;&#13;
+  display: block;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   FORM CONTROLS (MODAL)&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .aayos-modal-dialog .form-control {&#13;
+  background-color: #262626;&#13;
+  color: #ffffff;&#13;
+  border: 1px solid #555;&#13;
+  border-radius: 6px;&#13;
+  padding: 8px 10px;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .aayos-modal-dialog .form-control:focus {&#13;
+  outline: none;&#13;
+  border-color: #00e68a;&#13;
+  box-shadow: 0 0 0 1px #00e68a;&#13;
+}&#13;
+&#13;
+/* Textarea */&#13;
+.aayos-tech-tickets .aayos-modal-dialog textarea {&#13;
+  resize: vertical;&#13;
+  min-height: 80px;&#13;
+}&#13;
+&#13;
+/* Checkbox */&#13;
+.aayos-tech-tickets .aayos-modal-dialog .checkbox label {&#13;
+  color: #e0e0e0;&#13;
+  font-weight: 500;&#13;
+}&#13;
+&#13;
+/* ============================================================&#13;
+   ACTION BUTTONS (MODAL)&#13;
+   ============================================================ */&#13;
+.aayos-tech-tickets .aayos-modal-actions {&#13;
+  margin-top: 20px;&#13;
+  text-align: right;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn {&#13;
+  border-radius: 6px;&#13;
+  padding: 6px 14px;&#13;
+  font-weight: 600;&#13;
+  margin-left: 8px;&#13;
+}&#13;
+&#13;
+/* Submit (Primary) */&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn-primary {&#13;
+  background-color: #00e68a;&#13;
+  border-color: #00e68a;&#13;
+  color: #0d0d0d;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn-primary:hover:enabled {&#13;
+  background-color: #00c978;&#13;
+}&#13;
+&#13;
+/* Disabled submit */&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn-primary:disabled {&#13;
+  background-color: #444;&#13;
+  border-color: #444;&#13;
+  color: #888;&#13;
+  cursor: not-allowed;&#13;
+}&#13;
+&#13;
+/* Cancel */&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn-default {&#13;
+  background-color: #333;&#13;
+  border-color: #555;&#13;
+  color: #e0e0e0;&#13;
+}&#13;
+&#13;
+.aayos-tech-tickets .aayos-modal-actions .btn-default:hover {&#13;
+  background-color: #444;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>widget for technician current tickets</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>aayos_technician_tickets</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAYOS Technician Tickets</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+  // ============================================================
+  // 1. HANDLE ACTIONS SENT FROM CLIENT
+  // ============================================================
+  if (input && input.action && input.sys_id) {
+
+    var ticketGr = new GlideRecord('x_1868112_aayos_ticket');
+    if (ticketGr.get(input.sys_id)) {
+
+      // ACCEPT ----------------------------------------------------
+      if (input.action === 'accept') {
+        ticketGr.setValue('technician_response', 'accepted');
+        ticketGr.update();
+      }
+
+      // DECLINE ---------------------------------------------------
+      if (input.action === 'decline') {
+        ticketGr.setValue('technician_response', 'declined');
+
+        // Find another active technician (simple fallback)
+        var currentTech = String(ticketGr.getValue('assigned_technician') || '');
+        var techGr = new GlideRecord('x_1868112_aayos_technician');
+        techGr.addActiveQuery();
+        techGr.orderBy('sys_created_on');
+        techGr.query();
+
+        var newTechId = '';
+        while (techGr.next()) {
+          var candidateId = String(techGr.getUniqueValue());
+          if (candidateId !== currentTech) {
+            newTechId = candidateId;
+            break;
+          }
+        }
+
+        if (newTechId)
+          ticketGr.setValue('assigned_technician', newTechId);
+
+        ticketGr.update();
+      }
+
+      // START = In Progress ---------------------------------------
+      if (input.action === 'start') {
+        if (String(ticketGr.getValue('technician_response')) === 'accepted') {
+          ticketGr.setValue('status', 'in_progress');
+          // set actual_service_date when work starts
+          ticketGr.setValue('actual_service_date', new GlideDateTime());
+          ticketGr.update();
+        }
+      }
+
+      // SET ON HOLD ----------------------------------------------
+      if (input.action === 'set_on_hold') {
+        ticketGr.setValue('status', 'on_hold');
+        ticketGr.update();
+      }
+
+      // RESOLVE (legacy, if still used anywhere) -----------------
+      if (input.action === 'set_resolved') {
+        ticketGr.setValue('status', 'resolved');
+        ticketGr.update();
+      }
+
+      // CANCEL ----------------------------------------------------
+      if (input.action === 'set_cancelled') {
+        ticketGr.setValue('status', 'cancelled');
+        ticketGr.update();
+      }
+
+      // CLOSE WITH SUMMARY + PREDICTION VALIDITY -----------------
+      if (input.action === 'close_with_summary') {
+
+        if (input.prediction_validity)
+          ticketGr.setValue('prediction_validity', String(input.prediction_validity));
+
+        if (typeof input.resolution_summary === 'string')
+          ticketGr.setValue('resolution_summary', input.resolution_summary);
+
+        ticketGr.setValue('status', 'closed');
+        ticketGr.setValue('closed_date', new GlideDateTime());
+        ticketGr.update();
+      }
+    }
+  }
+
+
+  // ============================================================
+  // 2. RELOAD DATA FOR UI
+  // ============================================================
+
+  data.state = 'active';
+  data.tickets = [];
+
+  var CLOSED_STATES = ['closed', 'completed', 'resolved', 'cancelled'];
+
+  var gr = new GlideRecord('x_1868112_aayos_ticket');
+  if (!gr.isValid())
+    return;
+
+  // Only tickets assigned to this logged-in user
+  var userId = gs.getUserID();
+  gr.addQuery('assigned_technician.user', userId);
+  gr.orderByDesc('sys_created_on');
+  gr.query();
+
+  while (gr.next()) {
+
+    var statusValue   = String(gr.getValue('status') || '').toLowerCase();
+    var techRespValue = String(gr.getValue('technician_response') || '').toLowerCase();
+
+    data.tickets.push({
+      sys_id: String(gr.getUniqueValue()),
+      number: String(gr.getValue('number') || ''),
+
+      customer: String(gr.getDisplayValue('customer') || ''),
+      vehicle: String(gr.getDisplayValue('vehicle') || ''),
+      ticket_type: String(gr.getDisplayValue('ticket_type') || ''),
+
+      status_display: String(gr.getDisplayValue('status') || ''),
+      status_value: statusValue,
+
+      severity: String(gr.getDisplayValue('severity') || ''),
+      target_service_date: String(gr.getDisplayValue('target_service_date') || ''),
+
+      technician_response_display: String(gr.getDisplayValue('technician_response') || ''),
+      technician_response_value: techRespValue,
+
+      created: String(gr.getDisplayValue('sys_created_on') || ''),
+      updated: String(gr.getDisplayValue('sys_updated_on') || '')
+    });
+  }
+
+  // Dropdown data
+  data.state_options = [
+    { value: 'active', label: 'Active tickets' },
+    { value: 'all',    label: 'All tickets' },
+    { value: 'closed', label: 'Closed / completed' }
+  ];
+
+  data.status_options = [
+    { value: 'all',         label: 'All statuses' },
+    { value: 'new',         label: 'New' },
+    { value: 'in_progress', label: 'In progress' },
+    { value: 'on_hold',     label: 'On hold' },
+    { value: 'resolved',    label: 'Resolved' },
+    { value: 'closed',      label: 'Closed' },
+    { value: 'cancelled',   label: 'Cancelled' }
+  ];
+
+  data.response_options = [
+    { value: 'all',      label: 'All responses' },
+    { value: 'pending',  label: 'Pending' },
+    { value: 'accepted', label: 'Accepted' },
+    { value: 'declined', label: 'Declined' }
+  ];
+
+  // Prediction validity options for modal
+  data.prediction_validity_options = [
+    { value: 'correct',           label: 'Correct' },
+    { value: 'partially_correct', label: 'Partially Correct' },
+    { value: 'incorrect',         label: 'Incorrect' },
+    { value: 'not_applicable',    label: 'Not Applicable' }
+  ];
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-03 15:24:46</sys_created_on>
+        <sys_id>f62c395297293ed0ec453b90f053af50</sys_id>
+        <sys_mod_count>19</sys_mod_count>
+        <sys_name>AAYOS Technician Tickets</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_f62c395297293ed0ec453b90f053af50</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-07 14:16:40</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default aayos-tech-tickets">
+
+  <div class="panel-body">
+
+    <!-- Filter row -->
+    <div class="row m-b-md">
+      <!-- Active / Closed / All -->
+      <div class="col-sm-4">
+        <label class="control-label m-r-sm">Show</label>
+        <select class="form-control input-sm"
+                style="display:inline-block; width:auto;"
+                ng-model="c.stateFilter"
+                ng-options="opt.value as opt.label for opt in c.stateOptions">
+        </select>
+      </div>
+
+      <!-- Status filter -->
+      <div class="col-sm-4">
+        <label class="control-label m-r-sm">Status</label>
+        <select class="form-control input-sm"
+                style="display:inline-block; width:auto;"
+                ng-model="c.statusFilter"
+                ng-options="opt.value as opt.label for opt in c.statusOptions">
+        </select>
+      </div>
+
+      <!-- Technician response filter -->
+      <div class="col-sm-4">
+        <label class="control-label m-r-sm">Technician response</label>
+        <select class="form-control input-sm"
+                style="display:inline-block; width:auto;"
+                ng-model="c.responseFilter"
+                ng-options="opt.value as opt.label for opt in c.responseOptions">
+        </select>
+      </div>
+    </div>
+
+    <!-- Tickets table -->
+    <div ng-if="c.getFilteredTickets().length">
+      <table class="table table-hover table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Customer</th>
+            <th>Vehicle</th>
+            <th>Ticket type</th>
+            <th>Severity</th>
+            <th>Status</th>
+            <th>Technician response</th>
+            <th>Target service date</th>
+            <th style="width:260px;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="t in c.getFilteredTickets()">
+            <td>
+              <a ng-href="/x_1868112_aayos_ticket.do?sys_id={{t.sys_id}}" target="_blank">
+                {{t.number || '(no number)'}}
+              </a>
+            </td>
+
+            <td>{{t.customer || '(none)'}}</td>
+            <td>{{t.vehicle || '(none)'}}</td>
+            <td>{{t.ticket_type || '(none)'}}</td>
+            <td>{{t.severity || '(none)'}}</td>
+            <td>{{t.status_display || '(none)'}}</td>
+            <td>{{t.technician_response_display || '(none)'}}</td>
+            <td>{{t.target_service_date || '(none)'}}</td>
+
+            <!-- ACTIONS -->
+            <td>
+              <div ng-if="!c.isTerminalStatus(t)">
+
+                <!-- 1. Pending -> Accept / Decline -->
+                <div ng-if="t.technician_response_value === 'pending'">
+                  <button class="btn btn-xs btn-success m-r-xs"
+                          ng-click="c.acceptTicket(t)"
+                          ng-disabled="c.actionInProgress">
+                    Accept
+                  </button>
+
+                  <button class="btn btn-xs btn-danger"
+                          ng-click="c.declineTicket(t)"
+                          ng-disabled="c.actionInProgress">
+                    Decline
+                  </button>
+                </div>
+
+                <!-- 2. Accepted but NOT yet in progress -->
+                <div ng-if="t.technician_response_value === 'accepted' &&
+                            t.status_value !== 'in_progress'">
+                  <button class="btn btn-xs btn-primary"
+                          ng-click="c.startTicket(t)"
+                          ng-disabled="c.actionInProgress">
+                    Change to in progress
+                  </button>
+                </div>
+
+                <!-- 3. Accepted AND In progress -->
+                <div ng-if="t.technician_response_value === 'accepted' &&
+                            t.status_value === 'in_progress'">
+
+                  <button class="btn btn-xs btn-warning m-r-xs"
+                          ng-click="c.setOnHold(t)"
+                          ng-disabled="c.actionInProgress">
+                    On hold
+                  </button>
+
+                  <!-- Close button opens modal -->
+                  <button class="btn btn-xs btn-success m-r-xs"
+                          ng-click="c.openCloseModal(t)"
+                          ng-disabled="c.actionInProgress">
+                    Close
+                  </button>
+
+                  <button class="btn btn-xs btn-default"
+                          ng-click="c.cancelTicket(t)"
+                          ng-disabled="c.actionInProgress">
+                    Cancel
+                  </button>
+
+                </div>
+
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty -->
+    <div class="text-muted text-center m-t-md m-b-md"
+         ng-if="!c.getFilteredTickets().length">
+      <p class="small" style="margin-top: 20px;">
+        No tickets found for this filter. Try switching filters above.
+      </p>
+    </div>
+
+    <!-- CLOSE TICKET MODAL -->
+    <div class="aayos-modal-backdrop"
+         ng-if="c.showCloseModal">
+      <div class="aayos-modal-dialog" role="dialog" aria-modal="true">
+        <h4 class="aayos-modal-title">
+          Close ticket {{c.modalTicket.number || ''}}
+        </h4>
+
+        <!-- Prediction validity -->
+        <div class="form-group">
+          <label>Is prediction correct?</label>
+          <select class="form-control input-sm"
+                  ng-model="c.closeForm.prediction_validity"
+                  ng-options="opt.value as opt.label for opt in c.predictionValidityOptions">
+            <option value="">-- Select an option --</option>
+          </select>
+        </div>
+
+        <!-- Resolution summary -->
+        <div class="form-group">
+          <label>Write resolution summary</label>
+          <textarea class="form-control"
+                    rows="4"
+                    ng-model="c.closeForm.resolution_summary"
+                    placeholder="Describe the work performed and final outcome...">
+          </textarea>
+        </div>
+
+        <!-- Confirmation checkbox -->
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" ng-model="c.closeForm.confirmed">
+            By checking this, you have confirmed to finish the service required
+            and finalizing the ticket details
+          </label>
+        </div>
+
+        <!-- Modal actions -->
+        <div class="aayos-modal-actions">
+          <button class="btn btn-default btn-sm"
+                  ng-click="c.cancelCloseModal()"
+                  ng-disabled="c.actionInProgress">
+            Cancel
+          </button>
+
+          <button class="btn btn-primary btn-sm"
+                  ng-click="c.submitClose()"
+                  ng-disabled="!c.closeForm.confirmed || c.actionInProgress">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

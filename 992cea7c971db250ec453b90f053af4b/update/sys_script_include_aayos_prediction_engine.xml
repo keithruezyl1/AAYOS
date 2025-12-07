@@ -2,11 +2,13 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>public</access>
         <active>true</active>
-        <api_name>AAYOSPredictionEngine</api_name>
+        <api_name/>
         <caller_access/>
         <client_callable>false</client_callable>
         <description>Main prediction engine for AAYOS. Handles vehicle data collection, AI integration, prediction creation, and ticket auto-generation.</description>
-        <display_name>AAYOS Prediction Engine</display_name>
+        <mobile_callable>false</mobile_callable>
+        <name/>
+        <sandbox_callable>false</sandbox_callable>
         <script><![CDATA[var AAYOSPredictionEngine = Class.create();
 AAYOSPredictionEngine.prototype = {
     initialize: function() {
@@ -396,4 +398,3 @@ AAYOSPredictionEngine.prototype = {
         <sys_updated_on>2025-11-16 18:00:00</sys_updated_on>
     </sys_script_include>
 </record_update>
-

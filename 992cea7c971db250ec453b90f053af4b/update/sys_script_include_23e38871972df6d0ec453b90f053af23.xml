@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1868112_aayos.PredictionService</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>PredictionService</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var x_1868112_aayos = x_1868112_aayos || {};
+
+x_1868112_aayos.PredictionService = Class.create();
+x_1868112_aayos.PredictionService.prototype = {
+
+    initialize: function () {},
+
+    // Entry point for the scheduled job (daily/weekly scan)
+    runDailyVehicleScan: function () {
+        var vehGR = new GlideRecord('x_1868112_aayos_vehicle');
+        vehGR.addQuery('vehicle_status', 'active'); // only active vehicles
+        vehGR.query();
+
+        gs.info('PredictionService: Starting vehicle scan.');
+
+        var count = vehGR.getRowCount();
+        gs.info('PredictionService: Found ' + count + ' active vehicles.');
+
+        while (vehGR.next()) {
+            var vehicleNumber = vehGR.getDisplayValue('number');
+            var vehicleSysId = vehGR.getUniqueValue();
+
+            gs.info('PredictionService: Processing vehicle ' + vehicleNumber +
+                    ' (sys_id=' + vehicleSysId + ')');
+
+            // Prepare vehicle data for the AI engine
+            var vehicleDataForAI = this._prepareVehicleDataForAI(vehGR);
+
+            // Call the AI engine (Scripted REST API) and get the response
+            var aiResponse = this._callAIEngine(vehicleDataForAI, vehicleSysId);
+
+            if (!aiResponse) {
+                gs.error('PredictionService: No AI response for vehicle ' + vehicleNumber);
+                continue;
+            }
+
+            gs.info('PredictionService: AI response for vehicle ' + vehicleNumber +
+                    ' -> ' + JSON.stringify(aiResponse));
+
+            // Parse AI response
+            var evalResult = this._parseAIResponse(aiResponse);
+
+            // Log evaluation result
+            gs.info('PredictionService: Eval result for vehicle ' + vehicleNumber +
+                    ' -> severity=' + evalResult.severity +
+                    ', confidenceScore=' + evalResult.confidenceScore +
+                    ', needsPrediction=' + evalResult.needsPrediction +
+                    ', shouldCreateTicket=' + evalResult.shouldCreateTicket +
+                    ', issues=' + evalResult.issues);
+
+            if (!evalResult.needsPrediction) {
+                continue;
+            }
+
+            // Create prediction
+            var predSysId = this._createPrediction(vehGR, evalResult);
+            gs.info('PredictionService: Created prediction ' + predSysId +
+                    ' for vehicle ' + vehicleNumber);
+
+            // If warranted, create ticket and link it
+            if (evalResult.shouldCreateTicket) {
+                var ticketSysId = this._createTicketFromPrediction(vehGR, evalResult, predSysId);
+                this._linkPredictionToTicket(predSysId, ticketSysId);
+                gs.info('PredictionService: Created ticket ' + ticketSysId +
+                        ' linked to prediction ' + predSysId +
+                        ' for vehicle ' + vehicleNumber);
+            } else {
+                gs.info('PredictionService: No ticket created for vehicle ' + vehicleNumber);
+            }
+        }
+    },
+
+    // Prepare vehicle data for AI
+    _prepareVehicleDataForAI: function (vehGR) {
+        return {
+            current_mileage:             vehGR.getValue('current_mileage'),
+            estimated_monthly_mileage:   vehGR.getValue('estimated_monthly_mileage'),
+            driving_condition_profile:   vehGR.getValue('driving_condition_profile'),
+            usage_type:                  vehGR.getValue('usage_type'),
+            load_type:                   vehGR.getValue('load_type'),
+            last_oil_change_date:        vehGR.getValue('last_oil_change_date'),
+            last_oil_change_odometer:    vehGR.getValue('last_oil_change_odometer'),
+            last_brake_service_date:     vehGR.getValue('last_brake_service_date'),
+            last_brake_service_odometer: vehGR.getValue('last_brake_service_odometer'),
+            last_tire_service_date:      vehGR.getValue('last_tire_service_date'),
+            last_tire_service_odometer:  vehGR.getValue('last_tire_service_odometer'),
+            last_battery_service_date:   vehGR.getValue('last_battery_service_date'),
+            last_battery_service_odometer: vehGR.getValue('last_battery_service_odometer'),
+            make:                        vehGR.getValue('make'),
+            model:                       vehGR.getValue('model'),
+            model_year:                  vehGR.getValue('model_year'),
+            has_tcu:                     vehGR.getValue('has_tcu')
+        };
+    },
+
+    // Call the Scripted REST API (Vehicle Prediction) as the AI engine
+    _callAIEngine: function (vehicleData, vehicleSysId) {
+        try {
+            var baseUrl = gs.getProperty('glide.servlet.uri'); // e.g. https://devXXXXX.service-now.com/
+            var apiEndpoint = baseUrl + 'api/x_1868112_aayos/openai_vehicle_prediction/predict';
+
+            var requestBody = JSON.stringify({ data: vehicleData });
+
+            var request = new sn_ws.RESTMessageV2();
+            request.setHttpMethod('POST');
+            request.setEndpoint(apiEndpoint);
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.setRequestBody(requestBody);
+
+            var response = request.execute();
+            var statusCode = response.getStatusCode();
+            var responseBody = response.getBody();
+
+            gs.info('PredictionService: AI engine HTTP status for vehicle ' +
+                    vehicleSysId + ' = ' + statusCode);
+
+            if (statusCode === 200 && responseBody) {
+                var parsed = JSON.parse(responseBody);
+                // keep a copy of the raw JSON for storage on prediction
+                parsed._raw = responseBody;
+                return parsed;
+            }
+
+            gs.error('PredictionService: Error from AI engine (status=' +
+                     statusCode + '): ' + responseBody);
+            return null;
+
+        } catch (e) {
+            gs.error('PredictionService: Exception calling AI engine for vehicle ' +
+                     vehicleSysId + ': ' + e);
+            return null;
+        }
+    },
+
+    // Interpret the AI response (supports {result:{...}}, {result:{result:{...}}}, or plain {...})
+    _parseAIResponse: function (aiResponse) {
+        var result = aiResponse;
+
+        // Unwrap one or two nested "result" envelopes
+        if (result && result.result) {
+            result = result.result;
+        }
+        if (result && result.result) {
+            result = result.result;
+        }
+        if (!result || typeof result !== 'object') {
+            result = {};
+        }
+
+        // Severity
+        var severity = (result.severity || '').toLowerCase(); // low|medium|high|critical
+
+        // Predicted date: prefer what came back, otherwise "today"
+        var predictedDate = result.predictedDate;
+        if (!predictedDate) {
+            var gd = new GlideDateTime();
+            predictedDate = gd.getLocalDate().toString(); // yyyy-MM-dd
+        }
+
+        // Issues
+        var issues = result.issues || '';
+
+        // Confidence
+        var confidence = parseInt(result.confidenceScore, 10);
+        if (isNaN(confidence)) {
+            confidence = 0;
+        }
+
+        // Optional explanation
+        var aiExplanation = result.aiExplanation || '';
+
+        // Decide if we should create a ticket
+        var shouldCreateTicket =
+            (severity === 'high' || severity === 'critical') ||
+            (severity === 'medium' && confidence >= 70);
+
+        return {
+            severity: severity,
+            predictedDate: predictedDate,
+            issues: issues,
+            confidenceScore: confidence,
+            aiExplanation: aiExplanation,
+            // we will derive dataInputsUsed from the vehicle record itself
+            rawAIResponse: aiResponse._raw || JSON.stringify(aiResponse),
+            needsPrediction: true,          // every vehicle gets a prediction
+            shouldCreateTicket: shouldCreateTicket
+        };
+    },
+
+    // Create prediction record in x_1868112_aayos_prediction
+    _createPrediction: function (vehGR, evalResult) {
+        var predGR = new GlideRecord('x_1868112_aayos_prediction');
+        predGR.initialize();
+
+        // Vehicle & customer
+        predGR.setValue('vehicle', vehGR.getUniqueValue());
+        if (vehGR.isValidField('customer') && vehGR.getValue('customer')) {
+            predGR.setValue('customer', vehGR.getValue('customer'));
+        }
+
+        // Severity & urgency
+        predGR.setValue('severity', evalResult.severity);
+
+        var urgency = 'low';
+        if (evalResult.severity === 'high' || evalResult.severity === 'critical') {
+            urgency = 'high';
+        } else if (evalResult.severity === 'medium') {
+            urgency = 'medium';
+        }
+        if (predGR.isValidField('urgency')) {
+            predGR.setValue('urgency', urgency);
+        }
+
+        // Core prediction fields
+        predGR.setValue('predicted_date', evalResult.predictedDate);
+        predGR.setValue('predicted_issue', evalResult.issues);
+        predGR.setValue('system_confidence_score', evalResult.confidenceScore);
+        predGR.setValue('source_type', 'daily_job');
+
+        // AI explanation
+        if (predGR.isValidField('ai_explanation')) {
+            predGR.setValue('ai_explanation', evalResult.aiExplanation);
+        }
+
+        // Data inputs used – always store the vehicle data that was sent to AI
+        var inputsToStore = this._prepareVehicleDataForAI(vehGR);
+        predGR.setValue('data_inputs_used', JSON.stringify(inputsToStore));
+
+        // Raw AI response (useful for auditing)
+        if (predGR.isValidField('raw_ai_response')) {
+            predGR.setValue('raw_ai_response', evalResult.rawAIResponse);
+        }
+
+        var predSysId = predGR.insert();
+        gs.info('PredictionService: _createPrediction inserted sys_id=' + predSysId);
+        return predSysId;
+    },
+
+    // Create ticket from prediction
+    _createTicketFromPrediction: function (vehGR, evalResult, predSysId) {
+        var ticketGR = new GlideRecord('x_1868112_aayos_ticket');
+        ticketGR.initialize();
+
+        ticketGR.setValue('vehicle', vehGR.getUniqueValue());
+        ticketGR.setValue('prediction', predSysId);
+        ticketGR.setValue('ticket_type', 'predicted_maintenance');
+        ticketGR.setValue('source', 'ai');
+        ticketGR.setValue('status', 'new');
+
+        // Copy customer from vehicle if present
+        if (vehGR.isValidField('customer') && vehGR.getValue('customer')) {
+            ticketGR.setValue('customer', vehGR.getValue('customer'));
+        }
+
+        ticketGR.setValue('severity', evalResult.severity);
+
+        // Urgency from severity
+        var ticketUrgency = 'low';
+        if (evalResult.severity === 'high' || evalResult.severity === 'critical') {
+            ticketUrgency = 'high';
+        } else if (evalResult.severity === 'medium') {
+            ticketUrgency = 'medium';
+        }
+        ticketGR.setValue('urgency', ticketUrgency);
+
+        // -------------------------------------------------------------------
+        // Scheduling logic
+        //  - target_service_date: within 7 days based on severity/urgency
+        //  - service_window_start: now
+        //  - service_window_end: later based on severity/urgency
+        // -------------------------------------------------------------------
+        var nowGdt = new GlideDateTime();
+
+        // Target service date (date field, yyyy-MM-dd)
+        var targetDateStr = this._computeTargetServiceDate(evalResult.severity, ticketUrgency, nowGdt);
+        ticketGR.setValue('target_service_date', targetDateStr);
+
+        // Service window start: current date/time
+        ticketGR.setValue('service_window_start', nowGdt);
+
+        // Service window end: severity/urgency dependent
+        var windowEndGdt = this._computeServiceWindowEnd(nowGdt, evalResult.severity, ticketUrgency);
+        ticketGR.setValue('service_window_end', windowEndGdt);
+        // -------------------------------------------------------------------
+
+        // Technician response due in +6 hours
+        var due = new GlideDateTime();
+        due.addSeconds(6 * 60 * 60);
+        ticketGR.setValue('technician_response_due', due);
+
+        // Round-robin technician assignment with capacity check
+        var techId = this._pickNextTechnician();
+        if (techId) {
+            ticketGR.setValue('assigned_technician', techId);
+        }
+
+        // Automatically mark customer_notified = true
+        if (ticketGR.isValidField('customer_notified')) {
+            ticketGR.setValue('customer_notified', true);
+        }
+
+        // Initial customer decision = pending
+        if (ticketGR.isValidField('customer_decision')) {
+            ticketGR.setValue('customer_decision', 'pending');
+        }
+
+        var ticketSysId = ticketGR.insert();
+
+        // Update technician's open ticket count if a tech was assigned
+        if (techId) {
+            this._updateTechnicianOpenTickets(techId);
+        }
+
+        return ticketSysId;
+    },
+
+    // Compute target service date (must be within 7 days of "now")
+    _computeTargetServiceDate: function (severity, urgency, baseGdt) {
+        var sev = (severity || '').toLowerCase();
+        var urg = (urgency || '').toLowerCase();
+
+        // Default offsets in days (all <= 7)
+        var offsetDays = 5; // low default
+
+        if (sev === 'high' || sev === 'critical' || urg === 'high') {
+            offsetDays = 1; // very soon
+        } else if (sev === 'medium' || urg === 'medium') {
+            offsetDays = 3;
+        }
+
+        var gdt = new GlideDateTime(baseGdt);
+        gdt.addDaysUTC(offsetDays);
+
+        // Return only the date part for a Date field
+        return gdt.getLocalDate().toString();
+    },
+
+    // Compute service_window_end based on severity/urgency
+    _computeServiceWindowEnd: function (startGdt, severity, urgency) {
+        var sev = (severity || '').toLowerCase();
+        var urg = (urgency || '').toLowerCase();
+
+        // Offsets in days for window end
+        var offsetDays = 14; // low/low → 2 weeks (per example)
+
+        if (sev === 'high' || sev === 'critical' || urg === 'high') {
+            offsetDays = 3; // tight window
+        } else if (sev === 'medium' || urg === 'medium') {
+            offsetDays = 7; // about a week
+        }
+
+        var end = new GlideDateTime(startGdt);
+        end.addDaysUTC(offsetDays);
+        return end;
+    },
+
+    // Link prediction to ticket
+    _linkPredictionToTicket: function (predSysId, ticketSysId) {
+        if (!predSysId || !ticketSysId) return;
+
+        var predGR = new GlideRecord('x_1868112_aayos_prediction');
+        if (predGR.get(predSysId)) {
+            if (predGR.isValidField('linked_ticket')) {
+                predGR.setValue('linked_ticket', ticketSysId);
+            }
+            predGR.update();
+        }
+    },
+
+    // Round-robin technician selection using max_concurrent_tickets
+    // and current_open_tickets (maintained by your BR).
+    // First pass respects capacity; if nobody has capacity, we still
+    // assign the technician with the lowest open_count so the ticket
+    // never stays unassigned.
+    _pickNextTechnician: function () {
+        var lastTech = gs.getProperty('x_1868112.aayos.last_tech', '');
+        var techGR = new GlideRecord('x_1868112_aayos_technician');
+        techGR.addActiveQuery();              // respect the Active flag
+        techGR.orderBy('sys_id');             // stable ordering for round-robin
+        techGR.query();
+
+        var techs = [];
+        while (techGR.next()) {
+            var techId = techGR.getUniqueValue();
+
+            // max concurrent tickets per tech
+            var maxConc = 5; // default
+            if (techGR.isValidField('max_concurrent_tickets')) {
+                var m = parseInt(techGR.getValue('max_concurrent_tickets'), 10);
+                if (!isNaN(m) && m > 0) {
+                    maxConc = m;
+                } else {
+                    maxConc = 999999; // treat 0/blank as effectively unlimited
+                }
+            }
+
+            // current open tickets (kept in sync by BRs)
+            var openCount = 0;
+            if (techGR.isValidField('current_open_tickets')) {
+                var c = parseInt(techGR.getValue('current_open_tickets'), 10);
+                if (!isNaN(c)) {
+                    openCount = c;
+                }
+            }
+
+            techs.push({
+                id: techId,
+                maxConcurrent: maxConc,
+                openCount: openCount
+            });
+        }
+
+        if (techs.length === 0) {
+            gs.warn('PredictionService: No active technicians found.');
+            return '';
+        }
+
+        // Determine starting index based on last assigned tech
+        var startIdx = 0;
+        if (lastTech) {
+            for (var i = 0; i < techs.length; i++) {
+                if (techs[i].id === lastTech) {
+                    startIdx = (i + 1) % techs.length; // start AFTER last tech
+                    break;
+                }
+            }
+        }
+
+        // ---------- First pass: respect capacity ----------
+        var chosen = '';
+        for (var offset = 0; offset < techs.length; offset++) {
+            var idx1 = (startIdx + offset) % techs.length;
+            var t1 = techs[idx1];
+
+            if (t1.openCount < t1.maxConcurrent) {
+                chosen = t1.id;
+                break;
+            }
+        }
+
+        // ---------- Fallback: ignore capacity, pick lowest openCount ----------
+        if (!chosen) {
+            var bestId = '';
+            var bestCount = Number.MAX_VALUE;
+
+            for (var offset2 = 0; offset2 < techs.length; offset2++) {
+                var idx2 = (startIdx + offset2) % techs.length;
+                var t2 = techs[idx2];
+
+                if (t2.openCount < bestCount) {
+                    bestCount = t2.openCount;
+                    bestId = t2.id;
+                }
+            }
+
+            chosen = bestId;
+            gs.warn('PredictionService: All technicians at capacity; assigning lowest-load technician ' + chosen);
+        }
+
+        if (chosen) {
+            gs.setProperty('x_1868112.aayos.last_tech', chosen);
+        }
+
+        return chosen;
+    },
+
+    // Recalculate and store technician's current open ticket count
+    // (fallback – your BR already does this, but this keeps things in sync)
+    _updateTechnicianOpenTickets: function (techSysId) {
+        if (!techSysId)
+            return;
+
+        var OPEN_STATES = ['new', 'in_progress', 'on_hold'];
+
+        var ga = new GlideAggregate('x_1868112_aayos_ticket');
+        ga.addAggregate('COUNT');
+        ga.addQuery('assigned_technician', techSysId);
+        ga.addQuery('status', 'IN', OPEN_STATES.join(','));
+        ga.query();
+
+        var openCount = 0;
+        if (ga.next()) {
+            var raw = ga.getAggregate('COUNT');
+            openCount = parseInt(raw, 10);
+            if (isNaN(openCount))
+                openCount = 0;
+        }
+
+        var techGR = new GlideRecord('x_1868112_aayos_technician');
+        if (techGR.get(techSysId) && techGR.isValidField('current_open_tickets')) {
+            techGR.setValue('current_open_tickets', openCount);
+            techGR.update();
+        }
+    },
+
+    type: 'x_1868112_aayos.PredictionService'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 17:22:27</sys_created_on>
+        <sys_id>23e38871972df6d0ec453b90f053af23</sys_id>
+        <sys_mod_count>29</sys_mod_count>
+        <sys_name>PredictionService</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_script_include_23e38871972df6d0ec453b90f053af23</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-07 13:03:42</sys_updated_on>
+    </sys_script_include>
+</record_update>

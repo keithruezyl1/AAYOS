@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="DELETE">
+        <sp_angular_provider display_value="spAttachmentManager">06e836f0d722120023c84f80de6103a1</sp_angular_provider>
+        <sp_widget display_value="Copy of AAYOS KB Article Page">2976c2e197e9b6d0ec453b90f053af65</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:13:41</sys_created_on>
+        <sys_id>6d76c6e197e9b6d0ec453b90f053af7e</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>spAttachmentManager.Copy of AAYOS KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_6d76c6e197e9b6d0ec453b90f053af7e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:13:41</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>m2m_sp_ng_pro_sp_widget_6d76c6e197e9b6d0ec453b90f053af7e</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget"><m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE"><sp_angular_provider display_value="spAttachmentManager">06e836f0d722120023c84f80de6103a1</sp_angular_provider><sp_widget display_value="Copy of AAYOS KB Article Page">2976c2e197e9b6d0ec453b90f053af65</sp_widget><sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-01 08:13:41</sys_created_on><sys_id>6d76c6e197e9b6d0ec453b90f053af7e</sys_id><sys_mod_count>0</sys_mod_count><sys_name>spAttachmentManager.Copy of AAYOS KB Article Page</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>m2m_sp_ng_pro_sp_widget_6d76c6e197e9b6d0ec453b90f053af7e</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-01 08:13:41</sys_updated_on></m2m_sp_ng_pro_sp_widget></record_update>]]></payload>
+        <payload_hash>-648595268</payload_hash>
+        <record_name>spAttachmentManager.Copy of AAYOS KB Article Page</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:13:41</sys_created_on>
+        <sys_id>a576c6e197e9b6d0ec453b90f053af82</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8f9809b0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:13:41</sys_updated_on>
+        <type>Angular Providers</type>
+        <update_guid>6576c6e19ee9b6d0f9c9204caee10a81</update_guid>
+        <update_guid_history>6576c6e19ee9b6d0f9c9204caee10a81:-648595268</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="spAttachmentManager.Copy of AAYOS KB Article Page">be8e5e2997edb6d0ec453b90f053af1f</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 09:58:54</sys_created_on>
+        <sys_db_object display_value="" name="m2m_sp_ng_pro_sp_widget">m2m_sp_ng_pro_sp_widget</sys_db_object>
+        <sys_id>27e5c0e385224610b5c0fc5a4dab6a40</sys_id>
+        <sys_metadata>6d76c6e197e9b6d0ec453b90f053af7e</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>spAttachmentManager.Copy of AAYOS KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_6d76c6e197e9b6d0ec453b90f053af7e</sys_update_name>
+        <sys_update_version display_value="m2m_sp_ng_pro_sp_widget_6d76c6e197e9b6d0ec453b90f053af7e">a576c6e197e9b6d0ec453b90f053af82</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 09:58:54</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

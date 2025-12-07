@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_module">
+    <sys_module action="INSERT_OR_UPDATE">
+        <content><![CDATA[var PredictionEngine = Class.create();
+
+PredictionEngine.prototype = {
+    initialize: function() {
+        this.API_KEY = gs.getProperty('x_1868112_aayos.gemini.api_key', '');
+        this.ENDPOINT_URL = gs.getProperty('x_1868112_aayos.gemini.endpoint_url', '');
+    },
+
+    predictForVehicle: function(vehicleRecord) {
+        try {
+            // Build vehicle profile JSON
+            var vehicleProfile = this._buildVehicleProfile(vehicleRecord);
+            
+            // Call Gemini API
+            var geminiResponse = this._callGeminiAPI(vehicleProfile);
+            
+            if (!geminiResponse) {
+                gs.error('AAYOS: Failed to get response from Gemini API for vehicle ' + vehicleRecord.getUniqueValue());
+                return null;
+            }
+            
+            // Create prediction record
+            var predictionRecord = this._createPredictionRecord(vehicleRecord, geminiResponse, vehicleProfile);
+            
+            // Update vehicle with prediction run info
+            this._updateVehiclePredictionInfo(vehicleRecord, predictionRecord);
+            
+            return predictionRecord;
+            
+        } catch (e) {
+            gs.error('AAYOS PredictionEngine Error: ' + e.message);
+            return null;
+        }
+    },
+
+    _buildVehicleProfile: function(vehicleRecord) {
+        return {
+            make: vehicleRecord.getValue('make') || '',
+            model: vehicleRecord.getValue('model') || '',
+            model_year: vehicleRecord.getValue('model_year') || '',
+            fuel_type: vehicleRecord.getValue('fuel_type') || '',
+            transmission: vehicleRecord.getValue('transmission') || '',
+            current_mileage: parseInt(vehicleRecord.getValue('current_mileage')) || 0,
+            estimated_monthly_mileage: parseInt(vehicleRecord.getValue('estimated_monthly_mileage')) || 0,
+            last_service_date: vehicleRecord.getValue('last_service_date') || '',
+            last_oil_change_date: vehicleRecord.getValue('last_oil_change_date') || '',
+            last_brake_service_date: vehicleRecord.getValue('last_brake_service_date') || '',
+            last_tire_service_date: vehicleRecord.getValue('last_tire_service_date') || '',
+            last_battery_service_date: vehicleRecord.getValue('last_battery_service_date') || '',
+            usage_type: vehicleRecord.getValue('usage_type') || '',
+            load_type: vehicleRecord.getValue('load_type') || '',
+            driving_condition_profile: vehicleRecord.getValue('driving_condition_profile') || '',
+            has_tcu: vehicleRecord.getValue('has_tcu') === 'true'
+        };
+    },
+
+    _callGeminiAPI: function(vehicleProfile) {
+        try {
+            if (!this.API_KEY || !this.ENDPOINT_URL) {
+                gs.warn('AAYOS: Gemini API key or endpoint not configured');
+                return this._getMockResponse(vehicleProfile); // Fallback to mock for development
+            }
+
+            var request = new sn_ws.RESTMessageV2();
+            request.setEndpoint(this.ENDPOINT_URL);
+            request.setHttpMethod('POST');
+            request.setRequestHeader('Content-Type', 'application/json');
+            request.setRequestHeader('Authorization', 'Bearer ' + this.API_KEY);
+
+            var payload = {
+                vehicle_profile: vehicleProfile,
+                instruction: "Predict upcoming service issues for this vehicle. Consider mileage, service history, usage patterns, and environmental factors. Estimate risk level, urgency, recommend specific maintenance actions, and provide a brief technical explanation. Return predictions in JSON format."
+            };
+
+            request.setRequestBody(JSON.stringify(payload));
+            
+            var response = request.execute();
+            var responseBody = response.getBody();
+            
+            if (response.getStatusCode() != 200) {
+                gs.error('AAYOS: Gemini API returned status ' + response.getStatusCode() + ': ' + responseBody);
+                return this._getMockResponse(vehicleProfile);
+            }
+
+            return JSON.parse(responseBody);
+            
+        } catch (e) {
+            gs.error('AAYOS: Gemini API call failed: ' + e.message);
+            return this._getMockResponse(vehicleProfile);
+        }
+    },
+
+    _getMockResponse: function(vehicleProfile) {
+        // Mock response for development/testing when API is not available
+        var mileage = vehicleProfile.current_mileage;
+        var lastOilChange = vehicleProfile.last_oil_change_date;
+        
+        // Simple rule-based prediction logic
+        var mockResponse = {
+            predicted_issue: "Oil change recommended based on mileage",
+            severity: "medium",
+            urgency: "routine",
+            recommended_action: "Schedule oil change service",
+            explanation: "Vehicle has reached recommended oil change interval",
+            confidence: 0.75
+        };
+
+        if (mileage > 150000) {
+            mockResponse.predicted_issue = "High mileage vehicle may need comprehensive inspection";
+            mockResponse.severity = "high";
+            mockResponse.urgency = "soon";
+            mockResponse.confidence = 0.85;
+        }
+
+        if (vehicleProfile.usage_type === 'heavy_duty' || vehicleProfile.load_type === 'heavy_load') {
+            mockResponse.predicted_issue = "Heavy usage pattern indicates brake system inspection needed";
+            mockResponse.severity = "high";
+            mockResponse.urgency = "soon";
+            mockResponse.confidence = 0.80;
+        }
+
+        return mockResponse;
+    },
+
+    _createPredictionRecord: function(vehicleRecord, geminiResponse, vehicleProfile) {
+        var predictionGR = new GlideRecord('x_1868112_aayos_prediction');
+        predictionGR.initialize();
+        
+        predictionGR.setValue('vehicle', vehicleRecord.getUniqueValue());
+        predictionGR.setValue('predicted_issue', geminiResponse.predicted_issue || '');
+        
+        // Map severity
+        var severityMap = {
+            'critical': 'critical',
+            'high': 'high',
+            'medium': 'medium',
+            'low': 'low'
+        };
+        predictionGR.setValue('severity_level', severityMap[geminiResponse.severity] || 'medium');
+        
+        predictionGR.setValue('confidence_score', geminiResponse.confidence || 0.5);
+        
+        // Calculate risk score (0-100 scale)
+        var riskScore = (geminiResponse.confidence || 0.5) * 100;
+        if (geminiResponse.severity === 'critical') riskScore += 20;
+        else if (geminiResponse.severity === 'high') riskScore += 10;
+        predictionGR.setValue('risk_score', Math.min(riskScore, 100));
+        
+        // Set timing
+        var now = new GlideDateTime();
+        predictionGR.setValue('prediction_date', now.getDisplayValue());
+        
+        // Calculate predicted service date based on urgency
+        var serviceDate = new GlideDateTime();
+        switch (geminiResponse.urgency) {
+            case 'immediate':
+                serviceDate.addDaysLocalTime(1);
+                predictionGR.setValue('est_ttf_days', 1);
+                break;
+            case 'soon':
+            case 'next_7_days':
+                serviceDate.addDaysLocalTime(7);
+                predictionGR.setValue('est_ttf_days', 7);
+                break;
+            case 'routine':
+            default:
+                serviceDate.addDaysLocalTime(14);
+                predictionGR.setValue('est_ttf_days', 14);
+                break;
+        }
+        predictionGR.setValue('predicted_service_date', serviceDate.getDisplayValue().split(' ')[0]);
+        
+        // Set validity period (30 days from now)
+        var validUntil = new GlideDateTime();
+        validUntil.addDaysLocalTime(30);
+        predictionGR.setValue('valid_until', validUntil.getDisplayValue());
+        
+        // Set source and metadata
+        predictionGR.setValue('source_type', 'ai_batch');
+        predictionGR.setValue('created_by_source', 'ai_model');
+        predictionGR.setValue('prediction_status', 'new');
+        predictionGR.setValue('input_snapshot', JSON.stringify(vehicleProfile));
+        predictionGR.setValue('issue_details', geminiResponse.explanation || '');
+        
+        // Infer issue category
+        predictionGR.setValue('issue_category', this._inferIssueCategory(geminiResponse.predicted_issue));
+        
+        var predictionSysId = predictionGR.insert();
+        
+        if (!predictionSysId) {
+            gs.error('AAYOS: Failed to create prediction record for vehicle ' + vehicleRecord.getValue('plate_number'));
+            return null;
+        }
+        
+        return predictionGR;
+    },
+
+    _inferIssueCategory: function(predictedIssue) {
+        var issue = (predictedIssue || '').toLowerCase();
+        
+        if (issue.includes('oil')) return 'oil';
+        if (issue.includes('brake')) return 'brakes';
+        if (issue.includes('tire') || issue.includes('tyre')) return 'tires';
+        if (issue.includes('battery')) return 'battery';
+        if (issue.includes('engine')) return 'engine';
+        if (issue.includes('inspect')) return 'inspection';
+        
+        return 'other';
+    },
+
+    _updateVehiclePredictionInfo: function(vehicleRecord, predictionRecord) {
+        try {
+            var now = new GlideDateTime();
+            vehicleRecord.setValue('last_prediction_run', now.getDisplayValue());
+            vehicleRecord.setValue('last_risk_level', predictionRecord.getValue('severity_level'));
+            vehicleRecord.update();
+        } catch (e) {
+            gs.error('AAYOS: Failed to update vehicle prediction info: ' + e.message);
+        }
+    },
+
+    createTicketFromPrediction: function(predictionRecord) {
+        try {
+            var severityLevel = predictionRecord.getValue('severity_level');
+            
+            // Only create tickets for medium/high/critical severity
+            if (!severityLevel || (severityLevel !== 'medium' && severityLevel !== 'high' && severityLevel !== 'critical')) {
+                gs.info('AAYOS: Skipping ticket creation for low severity prediction ' + predictionRecord.getUniqueValue());
+                return null;
+            }
+            
+            // Check for existing open tickets for this vehicle and similar issue
+            if (this._hasExistingOpenTicket(predictionRecord)) {
+                gs.info('AAYOS: Existing open ticket found for vehicle, skipping ticket creation');
+                return null;
+            }
+            
+            // Create the ticket
+            var ticketRecord = this._createTicketRecord(predictionRecord);
+            
+            if (ticketRecord) {
+                // Link prediction to ticket
+                predictionRecord.setValue('ticket', ticketRecord.getUniqueValue());
+                predictionRecord.setValue('ticket_created', 'true');
+                predictionRecord.setValue('ticket_creation_date', new GlideDateTime().getDisplayValue());
+                predictionRecord.setValue('prediction_status', 'used');
+                predictionRecord.update();
+                
+                // Auto-assign technician
+                this._autoAssignTechnician(ticketRecord);
+                
+                gs.info('AAYOS: Created ticket ' + ticketRecord.getValue('number') + ' from prediction ' + predictionRecord.getValue('number'));
+            }
+            
+            return ticketRecord;
+            
+        } catch (e) {
+            gs.error('AAYOS: Error creating ticket from prediction: ' + e.message);
+            return null;
+        }
+    },
+
+    _hasExistingOpenTicket: function(predictionRecord) {
+        var ticketGR = new GlideRecord('x_1868112_aayos_service_ticket');
+        ticketGR.addQuery('vehicle', predictionRecord.getValue('vehicle'));
+        ticketGR.addQuery('status', 'NOT IN', 'closed,cancelled,resolved');
+        ticketGR.addQuery('issue_category', predictionRecord.getValue('issue_category'));
+        ticketGR.query();
+        
+        return ticketGR.hasNext();
+    },
+
+    _createTicketRecord: function(predictionRecord) {
+        var ticketGR = new GlideRecord('x_1868112_aayos_service_ticket');
+        ticketGR.initialize();
+        
+        ticketGR.setValue('vehicle', predictionRecord.getValue('vehicle'));
+        ticketGR.setValue('prediction', predictionRecord.getUniqueValue());
+        ticketGR.setValue('issue_summary', predictionRecord.getValue('predicted_issue'));
+        ticketGR.setValue('issue_category', predictionRecord.getValue('issue_category'));
+        ticketGR.setValue('severity_level', predictionRecord.getValue('severity_level'));
+        ticketGR.setValue('created_by_source', 'ai_prediction');
+        ticketGR.setValue('status', 'new');
+        ticketGR.setValue('assignment_method', 'auto_ai');
+        ticketGR.setValue('preferred_service_date', predictionRecord.getValue('predicted_service_date'));
+        ticketGR.setValue('prediction_confidence', predictionRecord.getValue('confidence_score'));
+        ticketGR.setValue('prediction_severity', predictionRecord.getValue('severity_level'));
+        ticketGR.setValue('source_type', 'historical_ai');
+        ticketGR.setValue('issue_detail', predictionRecord.getValue('issue_details'));
+        
+        // Set urgency based on severity
+        var urgencyMap = {
+            'critical': 'immediate',
+            'high': 'soon',
+            'medium': 'routine',
+            'low': 'routine'
+        };
+        ticketGR.setValue('urgency_level', urgencyMap[predictionRecord.getValue('severity_level')] || 'routine');
+        
+        var ticketSysId = ticketGR.insert();
+        
+        return ticketSysId ? ticketGR : null;
+    },
+
+    _autoAssignTechnician: function(ticketRecord) {
+        try {
+            var issueCategory = ticketRecord.getValue('issue_category');
+            
+            // Find available technicians with matching skills
+            var techGR = new GlideRecord('x_1868112_aayos_technician');
+            techGR.addQuery('tech_status', 'active');
+            techGR.addQuery('available_auto_assign', 'true');
+            
+            // Map issue categories to technician skills
+            var skillMap = {
+                'brakes': 'brakes',
+                'engine': 'engine',
+                'tires': 'tires',
+                'battery': 'electrical',
+                'oil': 'general',
+                'inspection': 'diagnostics'
+            };
+            
+            var preferredSkill = skillMap[issueCategory] || 'general';
+            
+            // First try: find technicians with matching primary skill and available capacity
+            techGR.addQuery('primary_skill', preferredSkill);
+            techGR.addEncodedQuery('current_workload<max_jobs');
+            techGR.orderBy('current_workload');
+            techGR.orderBy('last_assignment_time');
+            techGR.setLimit(1);
+            techGR.query();
+            
+            var selectedTechnician = null;
+            
+            if (techGR.hasNext()) {
+                techGR.next();
+                selectedTechnician = techGR;
+            } else {
+                // Fallback: any available technician with capacity
+                techGR = new GlideRecord('x_1868112_aayos_technician');
+                techGR.addQuery('tech_status', 'active');
+                techGR.addQuery('available_auto_assign', 'true');
+                techGR.addEncodedQuery('current_workload<max_jobs');
+                techGR.orderBy('current_workload');
+                techGR.orderBy('last_assignment_time');
+                techGR.setLimit(1);
+                techGR.query();
+                
+                if (techGR.hasNext()) {
+                    techGR.next();
+                    selectedTechnician = techGR;
+                }
+            }
+            
+            if (selectedTechnician) {
+                // Assign technician to ticket
+                var now = new GlideDateTime();
+                ticketRecord.setValue('technician', selectedTechnician.getUniqueValue());
+                ticketRecord.setValue('last_assignment_time', now.getDisplayValue());
+                ticketRecord.setValue('tech_response_status', 'pending');
+                
+                // Set response deadline (6 hours from now)
+                var deadline = new GlideDateTime();
+                deadline.addSeconds(6 * 60 * 60); // 6 hours
+                ticketRecord.setValue('tech_response_deadline', deadline.getDisplayValue());
+                
+                ticketRecord.setValue('status', 'awaiting_customer');
+                ticketRecord.setValue('reassignment_count', 0);
+                ticketRecord.update();
+                
+                // Update technician workload
+                var currentWorkload = parseInt(selectedTechnician.getValue('current_workload')) || 0;
+                selectedTechnician.setValue('current_workload', currentWorkload + 1);
+                selectedTechnician.setValue('last_assigned_ticket', ticketRecord.getUniqueValue());
+                selectedTechnician.setValue('last_assignment_time', now.getDisplayValue());
+                selectedTechnician.update();
+                
+                gs.info('AAYOS: Assigned ticket ' + ticketRecord.getValue('number') + ' to technician ' + selectedTechnician.getValue('full_name'));
+            } else {
+                gs.warn('AAYOS: No available technicians found for ticket assignment - ticket ' + ticketRecord.getValue('number'));
+                // Set ticket to new status for manual assignment
+                ticketRecord.setValue('status', 'new');
+                ticketRecord.setValue('assignment_method', 'manual_admin');
+                ticketRecord.update();
+            }
+            
+        } catch (e) {
+            gs.error('AAYOS: Auto-assign technician failed: ' + e.message);
+        }
+    },
+
+    type: 'PredictionEngine'
+};]]></content>
+        <external_source>false</external_source>
+        <path>x_1868112_aayos/x-1868112-aayos/1.0.0/src/server/script-includes/prediction-engine.js</path>
+        <sys_class_name>sys_module</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-16 21:08:15</sys_created_on>
+        <sys_id>477e4812318b4b92bc59f9bda5207144</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>x_1868112_aayos/x-1868112-aayos/1.0.0/src/server/script-includes/prediction-engine.js</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_module_477e4812318b4b92bc59f9bda5207144</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-16 21:08:15</sys_updated_on>
+    </sys_module>
+</record_update>

@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($scope) {
+    var c = this;
+
+    c.data = {};
+    c.isEditing = false;  // Track if we are in edit mode
+    c.customerToEdit = {}; // Store the customer data for editing
+
+    // Load customers data
+    c.$onInit = function () {
+        c.server.get().then(function (response) {
+            console.log(response);  // Log the response for debugging
+            c.data.customers = response.data.customers || [];  // Ensure customers are loaded from the server
+        });
+    };
+
+    // Edit Customer
+    c.editCustomer = function (customerSysId) {
+        console.log('Editing customer with sys_id:', customerSysId);
+        // Find the customer by sys_id and copy the customer data into the editable object
+        c.customerToEdit = angular.copy(c.data.customers.find(customer => customer.sys_id === customerSysId));
+        c.isEditing = true;  // Turn on edit mode
+    };
+
+    // Save updated Customer
+    c.saveCustomer = function () {
+        console.log("Saving customer:", c.customerToEdit); // For debugging, log the updated customer data
+
+        // Prepare the updated customer object from the form values
+        var updatedCustomer = {
+            sys_id: c.customerToEdit.sys_id,
+            name: c.customerToEdit.name,
+            email: c.customerToEdit.email,
+            phone: c.customerToEdit.phone,
+            city: c.customerToEdit.city,
+            address_line_1: c.customerToEdit.address_line_1,
+            address_line_2: c.customerToEdit.address_line_2,
+            country: c.customerToEdit.country,
+            postal_code: c.customerToEdit.postal_code,
+            state_province: c.customerToEdit.state_province
+        };
+
+        // Ensure we are passing the correct action and customer data to the backend
+        c.server.update({
+            action: 'update_customer',  // This is the action that signals the backend to update the customer
+            customer: updatedCustomer    // The updated customer object
+        }).then(function (response) {
+            console.log("Customer updated successfully:", response);
+            // Update the frontend list with the updated customer data
+            var index = c.data.customers.findIndex(customer => customer.sys_id === updatedCustomer.sys_id);
+            if (index !== -1) {
+                c.data.customers[index] = updatedCustomer;
+            }
+            c.isEditing = false;  // Exit edit mode
+        }).catch(function (error) {
+            console.error('Error saving customer:', error);
+        });
+    };
+
+    // Cancel edit
+    c.cancelEdit = function () {
+        c.isEditing = false;  // Cancel edit mode
+    };
+
+    // Delete Customer
+    c.deleteCustomer = function (customerSysId) {
+        c.server.update({
+            action: 'delete_customer',  // Action to delete customer
+            sys_id: customerSysId       // The sys_id of the customer to delete
+        }).then(function (response) {
+            console.log("Customer deleted successfully:", response);
+            // Remove the customer from the list after deletion
+            c.data.customers = c.data.customers.filter(function (customer) {
+                return customer.sys_id !== customerSysId;
+            });
+        }).catch(function (error) {
+            console.error('Error deleting customer:', error);
+        });
+    };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-view-customer-widget {&#13;
+  max-width: 1200px;&#13;
+  margin: 0 auto;&#13;
+  padding: 24px;&#13;
+  font-family: "Segoe UI", Roboto, sans-serif;&#13;
+}&#13;
+&#13;
+/* Titles */&#13;
+.aayos-view-customer-widget .aayos-title {&#13;
+  font-size: 26px;&#13;
+  font-weight: 700;&#13;
+  margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+/* Card container */&#13;
+.aayos-view-customer-widget .aayos-card {&#13;
+  background: #ffffff;&#13;
+  border-radius: 10px;&#13;
+  padding: 20px;&#13;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);&#13;
+  border: 1px solid #ececec;&#13;
+  margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+/* Button styles */&#13;
+.aayos-view-customer-widget .btn {&#13;
+  padding: 6px 12px;&#13;
+  border: none;&#13;
+  border-radius: 5px;&#13;
+  cursor: pointer;&#13;
+}&#13;
+&#13;
+.aayos-view-customer-widget .btn-edit {&#13;
+  background-color: #000000;&#13;
+  color: white;&#13;
+  margin-right: 8px;&#13;
+}&#13;
+&#13;
+.aayos-view-customer-widget .btn-edit:hover {&#13;
+  background-color: #00e68a;&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+.aayos-view-customer-widget .btn-delete {&#13;
+  background-color: #e64a19;&#13;
+  color: white;&#13;
+}&#13;
+&#13;
+.aayos-view-customer-widget .btn-delete:hover {&#13;
+  background-color: #ff5722;&#13;
+}&#13;
+&#13;
+/* Table styles */&#13;
+table {&#13;
+  width: 100%;&#13;
+  margin-top: 20px;&#13;
+  border-collapse: collapse;&#13;
+}&#13;
+&#13;
+table th, table td {&#13;
+  padding: 12px;&#13;
+  text-align: left;&#13;
+}&#13;
+&#13;
+table th {&#13;
+  background-color: #f4f4f4;&#13;
+}&#13;
+&#13;
+table tr:hover {&#13;
+  background-color: #f9f9f9;&#13;
+}&#13;
+&#13;
+.search-container {&#13;
+  margin-bottom: 20px;&#13;
+}&#13;
+&#13;
+.search-bar {&#13;
+  width: 100%;&#13;
+  padding: 8px;&#13;
+  font-size: 14px;&#13;
+  border: 1px solid #ccc;&#13;
+  border-radius: 4px;&#13;
+}&#13;
+&#13;
+.search-bar:focus {&#13;
+  border-color: #00c978;&#13;
+  outline: none;&#13;
+}&#13;
+&#13;
+.aayos-form .form-group {&#13;
+  margin-bottom: 15px;&#13;
+}&#13;
+&#13;
+.aayos-form .form-control {&#13;
+  width: 100%;&#13;
+  padding: 8px;&#13;
+  border: 1px solid #ccc;&#13;
+  border-radius: 4px;&#13;
+}&#13;
+&#13;
+.aayos-form .form-control:focus {&#13;
+  border-color: #00c978;&#13;
+  outline: none;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>aayos_customer</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAYOS Customer </name>
+        <option_schema/>
+        <public>true</public>
+        <roles>x_1868112_aayos.aayos_admin,x_1868112_aayos.admin,x_1868112_aayos.aayos_technician,x_1868112_aayos.technician</roles>
+        <script><![CDATA[(function () {
+    // Fetch all customers
+    var customerGR = new GlideRecord('x_1868112_aayos_customer');
+    customerGR.query();
+    data.customers = [];
+
+    while (customerGR.next()) {
+        var customer = {
+            sys_id: customerGR.getUniqueValue(),
+            name: customerGR.getValue('name'),
+            email: customerGR.getValue('email'),
+            phone: customerGR.getValue('phone'),
+            address_line_1: customerGR.getValue('address_line_1'),
+            address_line_2: customerGR.getValue('address_line_2'),
+            city: customerGR.getValue('city'),
+            country: customerGR.getValue('country'),
+            postal_code: customerGR.getValue('postal_code'),
+            state_province: customerGR.getValue('state_province')
+        };
+        data.customers.push(customer);
+    }
+
+    // Update customer logic
+    if (input.action === 'update_customer' && input.customer) {
+        var customerGR = new GlideRecord('x_1868112_aayos_customer');
+        if (customerGR.get(input.customer.sys_id)) {
+            customerGR.name = input.customer.name;
+            customerGR.email = input.customer.email;
+            customerGR.phone = input.customer.phone;
+            customerGR.address_line_1 = input.customer.address_line_1;
+            customerGR.address_line_2 = input.customer.address_line_2;
+            customerGR.city = input.customer.city;
+            customerGR.country = input.customer.country;
+            customerGR.postal_code = input.customer.postal_code;
+            customerGR.state_province = input.customer.state_province;
+            customerGR.update();  // Save changes to the customer record
+        }
+    }
+
+    // Handle customer deletion logic
+    if (input.action === 'delete_customer' && input.sys_id) {
+        var customerGR = new GlideRecord('x_1868112_aayos_customer');
+        if (customerGR.get(input.sys_id)) {
+            customerGR.deleteRecord();  // Delete the customer record
+        }
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 15:41:27</sys_created_on>
+        <sys_id>da03904f97e57214ec453b90f053af84</sys_id>
+        <sys_mod_count>40</sys_mod_count>
+        <sys_name>AAYOS Customer </sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_da03904f97e57214ec453b90f053af84</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-06 03:45:25</sys_updated_on>
+        <template><![CDATA[<div class="aayos-view-customer-widget">
+  <!-- Not authorized -->
+  <div ng-if="c.data.error == 'not_authorized'" class="alert alert-danger mt-20">
+    You are not authorized to access the AAYOS Customer Management page.
+  </div>
+
+  <!-- Main content -->
+  <div ng-if="!c.data.error || c.data.error != 'not_authorized'">
+
+    <!-- Customer List -->
+    <div class="aayos-card">
+      <h2 class="aayos-title">All Customers</h2>
+
+      <!-- Search Bar -->
+      <input type="text" ng-model="searchQuery" class="search-bar" placeholder="Search by Name">
+
+      <!-- Customer List Table -->
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Address Line 1</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="customer in c.data.customers | filter:searchQuery">
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>{{ customer.phone }}</td>
+            <td>{{ customer.address_line_1 }}</td>
+            <td>{{ customer.city }}</td>
+            <td>{{ customer.country }}</td>
+            <td>
+              <button class="btn btn-edit" ng-click="c.editCustomer(customer.sys_id)">Edit</button>
+              <button class="btn btn-delete" ng-click="c.deleteCustomer(customer.sys_id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Edit Customer Form -->
+      <div ng-if="c.isEditing">
+        <h3>Edit Customer</h3>
+        <form ng-submit="c.saveCustomer()">
+          <div>
+            <label>Name</label>
+            <input type="text" ng-model="c.customerToEdit.name">
+          </div>
+          <div>
+            <label>Email</label>
+            <input type="email" ng-model="c.customerToEdit.email">
+          </div>
+          <div>
+            <label>Phone</label>
+            <input type="text" ng-model="c.customerToEdit.phone">
+          </div>
+          <div>
+            <label>Address Line 1</label>
+            <input type="text" ng-model="c.customerToEdit.address_line_1">
+          </div>
+          <div>
+            <label>Address Line 2</label>
+            <input type="text" ng-model="c.customerToEdit.address_line_2">
+          </div>
+          <div>
+            <label>City</label>
+            <input type="text" ng-model="c.customerToEdit.city">
+          </div>
+          <div>
+            <label>Country</label>
+            <input type="text" ng-model="c.customerToEdit.country">
+          </div>
+          <div>
+            <label>Postal Code</label>
+            <input type="text" ng-model="c.customerToEdit.postal_code">
+          </div>
+          <div>
+            <label>State/Province</label>
+            <input type="text" ng-model="c.customerToEdit.state_province">
+          </div>
+          <button type="submit">Save</button>
+        </form>
+        <button ng-click="c.cancelEdit()">Cancel</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

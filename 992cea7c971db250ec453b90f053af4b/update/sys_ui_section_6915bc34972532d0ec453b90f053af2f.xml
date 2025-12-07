@@ -1,30 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?><record_update>
     <sys_ui_section caption="Customer Decision" section_id="6915bc34972532d0ec453b90f053af2f" sys_domain="global" table="x_1868112_aayos_ticket" version="3" view="">
         <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>customer_decision</element>
+            <element>customer_notified</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
-            <sys_id>fd15bc34972532d0ec453b90f053afd1</sys_id>
+            <sys_created_on>2025-12-01 16:07:25</sys_created_on>
+            <sys_id>41e2b72197a9f6d0ec453b90f053af91</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Customer Decision" display_value="Customer Decision" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">6915bc34972532d0ec453b90f053af2f</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+            <sys_updated_on>2025-12-01 16:07:25</sys_updated_on>
+            <sys_user/>
+            <type/>
+        </sys_ui_element>
+        <sys_ui_element action="INSERT_OR_UPDATE">
+            <element>customer_decision</element>
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 16:07:25</sys_created_on>
+            <sys_id>cde2b72197a9f6d0ec453b90f053af91</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_ui_formatter/>
+            <sys_ui_section caption="Customer Decision" display_value="Customer Decision" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">6915bc34972532d0ec453b90f053af2f</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 16:07:25</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
         <sys_ui_element action="INSERT_OR_UPDATE">
             <element>customer_decision_date</element>
-            <position>1</position>
+            <position>2</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 18:22:43</sys_created_on>
-            <sys_id>b915bc34972532d0ec453b90f053afd2</sys_id>
+            <sys_created_on>2025-12-01 16:07:25</sys_created_on>
+            <sys_id>4de2b72197a9f6d0ec453b90f053af92</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Customer Decision" display_value="Customer Decision" name="x_1868112_aayos_ticket" sys_domain="global" view="Default view">6915bc34972532d0ec453b90f053af2f</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 18:22:43</sys_updated_on>
+            <sys_updated_on>2025-12-01 16:07:25</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

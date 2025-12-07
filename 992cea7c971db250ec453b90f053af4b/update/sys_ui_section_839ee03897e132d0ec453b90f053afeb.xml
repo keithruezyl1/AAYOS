@@ -4,13 +4,13 @@
             <element>email</element>
             <position>0</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
-            <sys_id>cf9e243897e132d0ec453b90f053af0d</sys_id>
+            <sys_created_on>2025-11-29 14:04:27</sys_created_on>
+            <sys_id>8c93c5859725b2d0ec453b90f053afce</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
+            <sys_updated_on>2025-11-29 14:04:27</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>
@@ -18,27 +18,13 @@
             <element>phone</element>
             <position>1</position>
             <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
-            <sys_id>8b9e243897e132d0ec453b90f053af0e</sys_id>
+            <sys_created_on>2025-11-29 14:04:27</sys_created_on>
+            <sys_id>8093c5859725b2d0ec453b90f053afd0</sys_id>
             <sys_mod_count>0</sys_mod_count>
             <sys_ui_formatter/>
             <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
             <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
-            <sys_user/>
-            <type/>
-        </sys_ui_element>
-        <sys_ui_element action="INSERT_OR_UPDATE">
-            <element>user</element>
-            <position>2</position>
-            <sys_created_by>admin</sys_created_by>
-            <sys_created_on>2025-11-28 17:54:25</sys_created_on>
-            <sys_id>479e243897e132d0ec453b90f053af0f</sys_id>
-            <sys_mod_count>0</sys_mod_count>
-            <sys_ui_formatter/>
-            <sys_ui_section caption="Contact" display_value="Contact" name="x_1868112_aayos_customer" sys_domain="global" view="Default view">839ee03897e132d0ec453b90f053afeb</sys_ui_section>
-            <sys_updated_by>admin</sys_updated_by>
-            <sys_updated_on>2025-11-28 17:54:25</sys_updated_on>
+            <sys_updated_on>2025-11-29 14:04:27</sys_updated_on>
             <sys_user/>
             <type/>
         </sys_ui_element>

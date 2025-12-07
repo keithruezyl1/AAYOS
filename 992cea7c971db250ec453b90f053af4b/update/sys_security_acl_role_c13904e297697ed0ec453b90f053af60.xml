@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_security_acl_role">
+    <sys_security_acl_role action="INSERT_OR_UPDATE">
+        <sys_class_name>sys_security_acl_role</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-04 01:40:36</sys_created_on>
+        <sys_id>c13904e297697ed0ec453b90f053af60</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>.x_1868112_aayos.technician</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_security_acl display_value="x_1868112_aayos_technician.primary_skill_category">6729c0e297697ed0ec453b90f053afa8</sys_security_acl>
+        <sys_update_name>sys_security_acl_role_c13904e297697ed0ec453b90f053af60</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-04 01:40:36</sys_updated_on>
+        <sys_user_role display_value="x_1868112_aayos.technician" name="x_1868112_aayos.technician">b9d197649729fe90ec453b90f053afe6</sys_user_role>
+    </sys_security_acl_role>
+</record_update>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_instance">
+    <sp_instance action="DELETE">
+        <active>true</active>
+        <advanced_placeholder_dimensions>false</advanced_placeholder_dimensions>
+        <async_load>false</async_load>
+        <async_load_device_type>desktop,tablet,mobile</async_load_device_type>
+        <async_load_trigger>viewport</async_load_trigger>
+        <class_name/>
+        <color>default</color>
+        <css/>
+        <glyph/>
+        <id/>
+        <order>1</order>
+        <placeholder_dimensions>{&#13;	"mobile": {&#13;		"height": "250px",&#13;		"width": "100%"&#13;	},&#13;	"desktop": {&#13;		"height": "250px",&#13;		"width": "100%"&#13;	},&#13;	"tablet": {&#13;		"height": "250px",&#13;		"width": "100%"&#13;	}&#13;}</placeholder_dimensions>
+        <placeholder_dimensions_script><![CDATA[function evaluateConfig(options) { return {	"mobile": {		"height": "250px",		"width": "100%"	},	"desktop": {		"height": "250px",		"width": "100%"	},	"tablet": {		"height": "250px",		"width": "100%"	}}; }]]></placeholder_dimensions_script>
+        <placeholder_template>&lt;!-- 
+	AngularJS template with configurable options.
+	Use the `options` object to control dynamic behavior.
+	Example: Display an element when max row count is 10:
+	&lt;div ng-if="options.maxRowCount === 10"&gt;&lt;/div&gt;
+	The `skeleton-container` class is used for loading placeholders.
+--&gt;
+	&lt;div class="skeleton-container"&gt;
+	&lt;!-- Header Skeleton --&gt;
+	&lt;div class="skeleton-box skeleton-header"&gt;&lt;/div&gt;
+	&lt;!-- Body Skeleton --&gt;
+	&lt;div class="skeleton-box skeleton-line"&gt;&lt;/div&gt;
+	&lt;div class="skeleton-box skeleton-line small"&gt;&lt;/div&gt;
+	&lt;div class="skeleton-box skeleton-line medium"&gt;&lt;/div&gt;
+&lt;/div&gt;</placeholder_template>
+        <preserve_placeholder_size>false</preserve_placeholder_size>
+        <roles/>
+        <short_description/>
+        <size>md</size>
+        <sp_column display_value="3">99fc40da97a9fad0ec453b90f053afe4</sp_column>
+        <sp_widget display_value="HTML">8679ef89cb21120000f8d856634c9c4f</sp_widget>
+        <sys_class_name>sp_instance</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-03 07:18:16</sys_created_on>
+        <sys_id>59fc40da97a9fad0ec453b90f053afe8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_instance_59fc40da97a9fad0ec453b90f053afe8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 07:18:16</sys_updated_on>
+        <title/>
+        <url/>
+        <widget_parameters><![CDATA[{
+	"html": {
+		"value": "<style>\r\n  .aayos-card-link {\r\n    display: block;\r\n    text-decoration: none;\r\n    color: inherit;\r\n  }\r\n\r\n  .aayos-card {\r\n    position: relative;\r\n    border-radius: 10px;\r\n    overflow: hidden;\r\n    min-height: 210px;\r\n    background-size: cover;\r\n    background-position: center;\r\n    box-shadow: 0 10px 20px rgba(0,0,0,0.3);\r\n    transition: transform .18s ease, box-shadow .18s ease;\r\n    margin-bottom: 30px;\r\n  }\r\n\r\n  /* Always-visible dark overlay */\r\n  .aayos-card__overlay {\r\n    position: absolute;\r\n    inset: 0;\r\n    background: rgba(0,0,0,0.55);\r\n    z-index: 1;\r\n  }\r\n\r\n  /* Gradient band – hidden by default */\r\n  .aayos-card__gradient {\r\n    position: absolute;\r\n    bottom: -100%;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 60%;\r\n    background: linear-gradient(\r\n      to top,\r\n      rgba(0,200,120,0.85),\r\n      rgba(0,200,120,0)\r\n    );\r\n    z-index: 2;\r\n    transition: bottom .35s ease-in-out;\r\n  }\r\n\r\n  /* Slide gradient upward on hover */\r\n  .aayos-card:hover .aayos-card__gradient {\r\n    bottom: 0;\r\n  }\r\n\r\n  .aayos-card__content {\r\n    position: relative;\r\n    z-index: 3;\r\n    height: 100%;\r\n    padding: 0 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    text-align: center;\r\n    color: #fff;\r\n  }\r\n\r\n  .aayos-card__title {\r\n    font-size: 26px;\r\n    margin: 0 0 6px;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .aayos-card__subtitle {\r\n    font-size: 15px;\r\n    margin: 0;\r\n    opacity: .95;\r\n  }\r\n\r\n  .aayos-card:hover {\r\n    transform: translateY(-4px);\r\n    box-shadow: 0 16px 28px rgba(0,0,0,0.35);\r\n  }\r\n\r\n  .aayos-card:hover .aayos-card__title,\r\n  .aayos-card:hover .aayos-card__subtitle {\r\n    color: #006a3a;\r\n  }\r\n</style>\r\n<!-- VEHICLES CARD --><a class=\"aayos-card-link\" href=\"/sp?id=aayos_vehicles\">\r\n<div class=\"aayos-card\" style=\"background-image: url('/sys_attachment.do?sys_id=7f5897d9972576d0ec453b90f053af86');\"><!-- Dark overlay -->\r\n<div class=\"aayos-card__overlay\">&nbsp;</div>\r\n<!-- Hover gradient -->\r\n<div class=\"aayos-card__gradient\">&nbsp;</div>\r\n<!-- Text -->\r\n<div class=\"aayos-card__content\">\r\n<h2 class=\"aayos-card__title\">&nbsp;</h2>\r\n<h2 class=\"aayos-card__title\">&nbsp;</h2>\r\n<h2 class=\"aayos-card__title\">Vehicles</h2>\r\n<p class=\"aayos-card__subtitle\">View all vehicles in the fleet</p>\r\n</div>\r\n</div>\r\n</a>",
+		"displayValue": "<style>\n  .aayos-card-link {\n    display: block;\n    text-decoration: none;\n    color: inherit;\n  }\n\n  .aayos-card {\n    position: relative;\n    border-radius: 10px;\n    overflow: hidden;\n    min-height: 210px;\n    background-size: cover;\n    background-position: center;\n    box-shadow: 0 10px 20px rgba(0,0,0,0.3);\n    transition: transform .18s ease, box-shadow .18s ease;\n    margin-bottom: 30px;\n  }\n\n  /* Always-visible dark overlay */\n  .aayos-card__overlay {\n    position: absolute;\n    inset: 0;\n    background: rgba(0,0,0,0.55);\n    z-index: 1;\n  }\n\n  /* Gradient band – hidden by default */\n  .aayos-card__gradient {\n    position: absolute;\n    bottom: -100%;\n    left: 0;\n    width: 100%;\n    height: 60%;\n    background: linear-gradient(\n      to top,\n      rgba(0,200,120,0.85),\n      rgba(0,200,120,0)\n    );\n    z-index: 2;\n    transition: bottom .35s ease-in-out;\n  }\n\n  /* Slide gradient upward on hover */\n  .aayos-card:hover .aayos-card__gradient {\n    bottom: 0;\n  }\n\n  .aayos-card__content {\n    position: relative;\n    z-index: 3;\n    height: 100%;\n    padding: 0 20px;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    text-align: center;\n    color: #fff;\n  }\n\n  .aayos-card__title {\n    font-size: 26px;\n    margin: 0 0 6px;\n    font-weight: 700;\n  }\n\n  .aayos-card__subtitle {\n    font-size: 15px;\n    margin: 0;\n    opacity: .95;\n  }\n\n  .aayos-card:hover {\n    transform: translateY(-4px);\n    box-shadow: 0 16px 28px rgba(0,0,0,0.35);\n  }\n\n  .aayos-card:hover .aayos-card__title,\n  .aayos-card:hover .aayos-card__subtitle {\n    color: #006a3a;\n  }\n</style>\n<!-- VEHICLES CARD --><a class=\"aayos-card-link\" href=\"/sp?id=aayos_vehicles\">\n<div class=\"aayos-card\" style=\"background-image: url('/sys_attachment.do?sys_id=7f5897d9972576d0ec453b90f053af86');\"><!-- Dark overlay -->\n<div class=\"aayos-card__overlay\">&nbsp;</div>\n<!-- Hover gradient -->\n<div class=\"aayos-card__gradient\">&nbsp;</div>\n<!-- Text -->\n<div class=\"aayos-card__content\">\n<h2 class=\"aayos-card__title\">&nbsp;</h2>\n<h2 class=\"aayos-card__title\">&nbsp;</h2>\n<h2 class=\"aayos-card__title\">Vehicles</h2>\n<p class=\"aayos-card__subtitle\">View all vehicles in the fleet</p>\n</div>\n</div>\n</a>"
+	}
+}]]></widget_parameters>
+    </sp_instance>
+    <sys_translated_text action="DELETE" query="documentkey=59fc40da97a9fad0ec453b90f053afe8"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_instance_59fc40da97a9fad0ec453b90f053afe8</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_instance"&gt;&lt;sp_instance action="INSERT_OR_UPDATE"&gt;&lt;active&gt;true&lt;/active&gt;&lt;advanced_placeholder_dimensions&gt;false&lt;/advanced_placeholder_dimensions&gt;&lt;async_load&gt;false&lt;/async_load&gt;&lt;async_load_device_type&gt;desktop,tablet,mobile&lt;/async_load_device_type&gt;&lt;async_load_trigger&gt;viewport&lt;/async_load_trigger&gt;&lt;class_name/&gt;&lt;color&gt;default&lt;/color&gt;&lt;css/&gt;&lt;glyph/&gt;&lt;id/&gt;&lt;order&gt;1&lt;/order&gt;&lt;placeholder_dimensions&gt;{&amp;#13;	"mobile": {&amp;#13;		"height": "250px",&amp;#13;		"width": "100%"&amp;#13;	},&amp;#13;	"desktop": {&amp;#13;		"height": "250px",&amp;#13;		"width": "100%"&amp;#13;	},&amp;#13;	"tablet": {&amp;#13;		"height": "250px",&amp;#13;		"width": "100%"&amp;#13;	}&amp;#13;}&lt;/placeholder_dimensions&gt;&lt;placeholder_dimensions_script&gt;&lt;![CDATA[function evaluateConfig(options) { return {	"mobile": {		"height": "250px",		"width": "100%"	},	"desktop": {		"height": "250px",		"width": "100%"	},	"tablet": {		"height": "250px",		"width": "100%"	}}; }]]&gt;&lt;/placeholder_dimensions_script&gt;&lt;placeholder_template&gt;&amp;lt;!-- 
+	AngularJS template with configurable options.
+	Use the `options` object to control dynamic behavior.
+	Example: Display an element when max row count is 10:
+	&amp;lt;div ng-if="options.maxRowCount === 10"&amp;gt;&amp;lt;/div&amp;gt;
+	The `skeleton-container` class is used for loading placeholders.
+--&amp;gt;
+	&amp;lt;div class="skeleton-container"&amp;gt;
+	&amp;lt;!-- Header Skeleton --&amp;gt;
+	&amp;lt;div class="skeleton-box skeleton-header"&amp;gt;&amp;lt;/div&amp;gt;
+	&amp;lt;!-- Body Skeleton --&amp;gt;
+	&amp;lt;div class="skeleton-box skeleton-line"&amp;gt;&amp;lt;/div&amp;gt;
+	&amp;lt;div class="skeleton-box skeleton-line small"&amp;gt;&amp;lt;/div&amp;gt;
+	&amp;lt;div class="skeleton-box skeleton-line medium"&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/placeholder_template&gt;&lt;preserve_placeholder_size&gt;false&lt;/preserve_placeholder_size&gt;&lt;roles/&gt;&lt;short_description/&gt;&lt;size&gt;md&lt;/size&gt;&lt;sp_column display_value="3"&gt;99fc40da97a9fad0ec453b90f053afe4&lt;/sp_column&gt;&lt;sp_widget display_value="HTML"&gt;8679ef89cb21120000f8d856634c9c4f&lt;/sp_widget&gt;&lt;sys_class_name&gt;sp_instance&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-03 07:18:16&lt;/sys_created_on&gt;&lt;sys_id&gt;59fc40da97a9fad0ec453b90f053afe8&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name/&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_instance_59fc40da97a9fad0ec453b90f053afe8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-03 07:18:16&lt;/sys_updated_on&gt;&lt;title/&gt;&lt;url/&gt;&lt;widget_parameters&gt;&lt;![CDATA[{
+	"html": {
+		"value": "&lt;style&gt;\r\n  .aayos-card-link {\r\n    display: block;\r\n    text-decoration: none;\r\n    color: inherit;\r\n  }\r\n\r\n  .aayos-card {\r\n    position: relative;\r\n    border-radius: 10px;\r\n    overflow: hidden;\r\n    min-height: 210px;\r\n    background-size: cover;\r\n    background-position: center;\r\n    box-shadow: 0 10px 20px rgba(0,0,0,0.3);\r\n    transition: transform .18s ease, box-shadow .18s ease;\r\n    margin-bottom: 30px;\r\n  }\r\n\r\n  /* Always-visible dark overlay */\r\n  .aayos-card__overlay {\r\n    position: absolute;\r\n    inset: 0;\r\n    background: rgba(0,0,0,0.55);\r\n    z-index: 1;\r\n  }\r\n\r\n  /* Gradient band – hidden by default */\r\n  .aayos-card__gradient {\r\n    position: absolute;\r\n    bottom: -100%;\r\n    left: 0;\r\n    width: 100%;\r\n    height: 60%;\r\n    background: linear-gradient(\r\n      to top,\r\n      rgba(0,200,120,0.85),\r\n      rgba(0,200,120,0)\r\n    );\r\n    z-index: 2;\r\n    transition: bottom .35s ease-in-out;\r\n  }\r\n\r\n  /* Slide gradient upward on hover */\r\n  .aayos-card:hover .aayos-card__gradient {\r\n    bottom: 0;\r\n  }\r\n\r\n  .aayos-card__content {\r\n    position: relative;\r\n    z-index: 3;\r\n    height: 100%;\r\n    padding: 0 20px;\r\n    display: flex;\r\n    flex-direction: column;\r\n    justify-content: center;\r\n    align-items: center;\r\n    text-align: center;\r\n    color: #fff;\r\n  }\r\n\r\n  .aayos-card__title {\r\n    font-size: 26px;\r\n    margin: 0 0 6px;\r\n    font-weight: 700;\r\n  }\r\n\r\n  .aayos-card__subtitle {\r\n    font-size: 15px;\r\n    margin: 0;\r\n    opacity: .95;\r\n  }\r\n\r\n  .aayos-card:hover {\r\n    transform: translateY(-4px);\r\n    box-shadow: 0 16px 28px rgba(0,0,0,0.35);\r\n  }\r\n\r\n  .aayos-card:hover .aayos-card__title,\r\n  .aayos-card:hover .aayos-card__subtitle {\r\n    color: #006a3a;\r\n  }\r\n&lt;/style&gt;\r\n&lt;!-- VEHICLES CARD --&gt;&lt;a class=\"aayos-card-link\" href=\"/sp?id=aayos_vehicles\"&gt;\r\n&lt;div class=\"aayos-card\" style=\"background-image: url('/sys_attachment.do?sys_id=7f5897d9972576d0ec453b90f053af86');\"&gt;&lt;!-- Dark overlay --&gt;\r\n&lt;div class=\"aayos-card__overlay\"&gt;&amp;nbsp;&lt;/div&gt;\r\n&lt;!-- Hover gradient --&gt;\r\n&lt;div class=\"aayos-card__gradient\"&gt;&amp;nbsp;&lt;/div&gt;\r\n&lt;!-- Text --&gt;\r\n&lt;div class=\"aayos-card__content\"&gt;\r\n&lt;h2 class=\"aayos-card__title\"&gt;&amp;nbsp;&lt;/h2&gt;\r\n&lt;h2 class=\"aayos-card__title\"&gt;&amp;nbsp;&lt;/h2&gt;\r\n&lt;h2 class=\"aayos-card__title\"&gt;Vehicles&lt;/h2&gt;\r\n&lt;p class=\"aayos-card__subtitle\"&gt;View all vehicles in the fleet&lt;/p&gt;\r\n&lt;/div&gt;\r\n&lt;/div&gt;\r\n&lt;/a&gt;",
+		"displayValue": "&lt;style&gt;\n  .aayos-card-link {\n    display: block;\n    text-decoration: none;\n    color: inherit;\n  }\n\n  .aayos-card {\n    position: relative;\n    border-radius: 10px;\n    overflow: hidden;\n    min-height: 210px;\n    background-size: cover;\n    background-position: center;\n    box-shadow: 0 10px 20px rgba(0,0,0,0.3);\n    transition: transform .18s ease, box-shadow .18s ease;\n    margin-bottom: 30px;\n  }\n\n  /* Always-visible dark overlay */\n  .aayos-card__overlay {\n    position: absolute;\n    inset: 0;\n    background: rgba(0,0,0,0.55);\n    z-index: 1;\n  }\n\n  /* Gradient band – hidden by default */\n  .aayos-card__gradient {\n    position: absolute;\n    bottom: -100%;\n    left: 0;\n    width: 100%;\n    height: 60%;\n    background: linear-gradient(\n      to top,\n      rgba(0,200,120,0.85),\n      rgba(0,200,120,0)\n    );\n    z-index: 2;\n    transition: bottom .35s ease-in-out;\n  }\n\n  /* Slide gradient upward on hover */\n  .aayos-card:hover .aayos-card__gradient {\n    bottom: 0;\n  }\n\n  .aayos-card__content {\n    position: relative;\n    z-index: 3;\n    height: 100%;\n    padding: 0 20px;\n    display: flex;\n    flex-direction: column;\n    justify-content: center;\n    align-items: center;\n    text-align: center;\n    color: #fff;\n  }\n\n  .aayos-card__title {\n    font-size: 26px;\n    margin: 0 0 6px;\n    font-weight: 700;\n  }\n\n  .aayos-card__subtitle {\n    font-size: 15px;\n    margin: 0;\n    opacity: .95;\n  }\n\n  .aayos-card:hover {\n    transform: translateY(-4px);\n    box-shadow: 0 16px 28px rgba(0,0,0,0.35);\n  }\n\n  .aayos-card:hover .aayos-card__title,\n  .aayos-card:hover .aayos-card__subtitle {\n    color: #006a3a;\n  }\n&lt;/style&gt;\n&lt;!-- VEHICLES CARD --&gt;&lt;a class=\"aayos-card-link\" href=\"/sp?id=aayos_vehicles\"&gt;\n&lt;div class=\"aayos-card\" style=\"background-image: url('/sys_attachment.do?sys_id=7f5897d9972576d0ec453b90f053af86');\"&gt;&lt;!-- Dark overlay --&gt;\n&lt;div class=\"aayos-card__overlay\"&gt;&amp;nbsp;&lt;/div&gt;\n&lt;!-- Hover gradient --&gt;\n&lt;div class=\"aayos-card__gradient\"&gt;&amp;nbsp;&lt;/div&gt;\n&lt;!-- Text --&gt;\n&lt;div class=\"aayos-card__content\"&gt;\n&lt;h2 class=\"aayos-card__title\"&gt;&amp;nbsp;&lt;/h2&gt;\n&lt;h2 class=\"aayos-card__title\"&gt;&amp;nbsp;&lt;/h2&gt;\n&lt;h2 class=\"aayos-card__title\"&gt;Vehicles&lt;/h2&gt;\n&lt;p class=\"aayos-card__subtitle\"&gt;View all vehicles in the fleet&lt;/p&gt;\n&lt;/div&gt;\n&lt;/div&gt;\n&lt;/a&gt;"
+	}
+}]]&gt;&lt;/widget_parameters&gt;&lt;/sp_instance&gt;&lt;sys_translated_text action="delete_multiple" query="documentkey=59fc40da97a9fad0ec453b90f053afe8"/&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>911556970</payload_hash>
+        <record_name/>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-03 07:18:16</sys_created_on>
+        <sys_id>d1fc40da97a9fad0ec453b90f053afec</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ae3137de00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 07:18:16</sys_updated_on>
+        <type>Instance</type>
+        <update_guid>91fc40da12a9fad05010bf48e0d8dbeb</update_guid>
+        <update_guid_history>91fc40da12a9fad05010bf48e0d8dbeb:911556970</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">6b9bd05a972dfad0ec453b90f053af45</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-03 08:22:19</sys_created_on>
+        <sys_db_object display_value="" name="sp_instance">sp_instance</sys_db_object>
+        <sys_id>1e0bd45cb22a4e5a8ae972648d34c3c4</sys_id>
+        <sys_metadata>59fc40da97a9fad0ec453b90f053afe8</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_instance_59fc40da97a9fad0ec453b90f053afe8</sys_update_name>
+        <sys_update_version display_value="sp_instance_59fc40da97a9fad0ec453b90f053afe8">d1fc40da97a9fad0ec453b90f053afec</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 08:22:19</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

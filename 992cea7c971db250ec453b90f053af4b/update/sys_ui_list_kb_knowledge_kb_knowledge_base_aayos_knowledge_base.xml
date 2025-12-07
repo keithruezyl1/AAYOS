@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_list parent="kb_knowledge_base" relationship="" sys_domain="global" table="kb_knowledge" version="2" view="aayos_knowledge_base">
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>number</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>0</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>c39c8eed97e9b6d0ec453b90f053afd1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>version</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>1</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>4b9c8eed97e9b6d0ec453b90f053afd1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>short_description</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>2</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>cf9c8eed97e9b6d0ec453b90f053afd1</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>author</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>3</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>479c8eed97e9b6d0ec453b90f053afd2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>kb_category</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>4</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>cb9c8eed97e9b6d0ec453b90f053afd2</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>workflow_state</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>5</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>439c8eed97e9b6d0ec453b90f053afd3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>sys_updated_on</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>6</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>c79c8eed97e9b6d0ec453b90f053afd3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>kb_knowledge_base</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>7</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>4f9c8eed97e9b6d0ec453b90f053afd3</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list_element action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element>text</element>
+            <list_id display_value="kb_knowledge" element="NULL" name="kb_knowledge" parent="kb_knowledge_base" relationship="NULL" sys_domain="global" view="568c4aed97e9b6d0ec453b90f053af15">079c8eed97e9b6d0ec453b90f053afd0</list_id>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <position>8</position>
+            <sum>false</sum>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_id>c39c8eed97e9b6d0ec453b90f053afd4</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+        </sys_ui_list_element>
+        <sys_ui_list action="INSERT_OR_UPDATE">
+            <average_value>false</average_value>
+            <element/>
+            <max_value>false</max_value>
+            <min_value>false</min_value>
+            <name>kb_knowledge</name>
+            <parent>kb_knowledge_base</parent>
+            <position/>
+            <relationship/>
+            <sum>false</sum>
+            <sys_class_name>sys_ui_list</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2025-12-01 08:40:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>079c8eed97e9b6d0ec453b90f053afd0</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>kb_knowledge</sys_name>
+            <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+            <sys_update_name>sys_ui_list_kb_knowledge_kb_knowledge_base_aayos_knowledge_base</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2025-12-01 08:40:32</sys_updated_on>
+            <sys_user/>
+            <view display_value="AAYOS Knowledge Base" name="aayos_knowledge_base">568c4aed97e9b6d0ec453b90f053af15</view>
+            <view_name/>
+        </sys_ui_list>
+    </sys_ui_list>
+</record_update>

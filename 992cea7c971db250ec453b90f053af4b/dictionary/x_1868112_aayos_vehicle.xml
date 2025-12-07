@@ -10,12 +10,12 @@
         </element>
         <element label="Plate" mandatory="true" max_length="40" name="plate" type="string"/>
         <element label="Last Oil Change Odometer" max_length="255" name="last_oil_change_odometer" type="integer"/>
-        <element default="1" label="Last Service Odometer" max_length="255" name="last_service_odometer" type="integer"/>
+        <element label="Last Service Odometer" max_length="255" name="last_service_odometer" type="integer"/>
         <element label="Last Oil Change Date" max_length="255" name="last_oil_change_date" type="glide_date"/>
         <element label="Last Tire Service Odometer" max_length="255" name="last_tire_service_odometer" type="integer"/>
         <element label="Last Battery Service Odometer" max_length="255" name="last_battery_service_odometer" type="integer"/>
-        <element default="1" label="Estimated Monthly Mileage" mandatory="true" max_length="255" name="estimated_monthly_mileage" type="integer"/>
-        <element label="Model Year" mandatory="true" max_length="255" name="model_year" type="integer"/>
+        <element label="Estimated Monthly Mileage" mandatory="true" max_length="255" name="estimated_monthly_mileage" type="integer"/>
+        <element label="Model Year" mandatory="true" max_length="255" name="model_year" type="string"/>
         <element label="Has TCU" max_length="255" name="has_tcu" type="boolean"/>
         <element choice="3" default="light" label="Load Type" max_length="40" name="load_type" type="choice">
             <choice>
@@ -67,7 +67,7 @@
             </choice>
         </element>
         <element label="Last Service Date" max_length="255" name="last_service_date" type="glide_date"/>
-        <element default="1" label="Current Mileage" mandatory="true" max_length="255" name="current_mileage" type="integer"/>
+        <element label="Current Mileage" mandatory="true" max_length="255" name="current_mileage" type="integer"/>
         <element label="VIN" max_length="40" name="vin" type="string"/>
         <element choice="3" default="automatic" label="Transmission" mandatory="true" max_length="40" name="transmission" type="choice">
             <choice>

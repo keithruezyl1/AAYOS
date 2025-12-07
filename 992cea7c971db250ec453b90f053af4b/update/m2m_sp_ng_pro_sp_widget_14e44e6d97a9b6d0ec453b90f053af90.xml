@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_ng_pro_sp_widget">
+    <m2m_sp_ng_pro_sp_widget action="INSERT_OR_UPDATE">
+        <sp_angular_provider display_value="spAttachmentManager">06e836f0d722120023c84f80de6103a1</sp_angular_provider>
+        <sp_widget display_value="AAYOS KB Article Page">54e44e6d97a9b6d0ec453b90f053af7f</sp_widget>
+        <sys_class_name>m2m_sp_ng_pro_sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:06:46</sys_created_on>
+        <sys_id>14e44e6d97a9b6d0ec453b90f053af90</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>spAttachmentManager.Copy of KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>m2m_sp_ng_pro_sp_widget_14e44e6d97a9b6d0ec453b90f053af90</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:06:46</sys_updated_on>
+    </m2m_sp_ng_pro_sp_widget>
+</record_update>

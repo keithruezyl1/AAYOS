@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone">
+    <sp_rel_widget_clone action="DELETE">
+        <child display_value="Copy of AAYOS KB Search">99d52de19765b6d0ec453b90f053afbf</child>
+        <cloned>2025-12-01 05:40:11</cloned>
+        <last_validated>2025-12-01 05:40:11</last_validated>
+        <parent display_value="KB Search">9b6187d0d7201200a9addd173e24d4dd</parent>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script/&gt;&lt;controller_as/&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;title&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link/&gt;&lt;name&gt;KB Search&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[data.typeahead = $sp.getWidgetFromInstance('typeahead_search_header');]]&gt;&lt;/script&gt;&lt;servicenow&gt;true&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-12-21 18:55:22&lt;/sys_created_on&gt;&lt;sys_id&gt;9b6187d0d7201200a9addd173e24d4dd&lt;/sys_id&gt;&lt;sys_mod_count&gt;8&lt;/sys_mod_count&gt;&lt;sys_name&gt;KB Search&lt;/sys_name&gt;&lt;sys_package display_value="Service Portal - Knowledge Base (do not activate...see plugin description)" source="com.glide.service-portal.knowledge-base"&gt;7a050b690ca432108bb2ce4d4ed10e14&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_9b6187d0d7201200a9addd173e24d4dd&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2021-02-19 15:44:04&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div id="homepage-search" class="wrapper"&gt;
+  &lt;div&gt;
+    &lt;sp-widget widget="data.typeahead"&gt;&lt;/sp-widget&gt;
+  &lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload>
+        <sys_class_name>sp_rel_widget_clone</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:51:08</sys_created_on>
+        <sys_id>95d5ad2d9765b6d0ec453b90f053afc3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>99d52de19765b6d0ec453b90f053afbf</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_rel_widget_clone_95d5ad2d9765b6d0ec453b90f053afc3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:51:08</sys_updated_on>
+    </sp_rel_widget_clone>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_rel_widget_clone_95d5ad2d9765b6d0ec453b90f053afc3</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone"><sp_rel_widget_clone action="INSERT_OR_UPDATE"><child display_value="Copy of AAYOS KB Search">99d52de19765b6d0ec453b90f053afbf</child><cloned>2025-12-01 05:40:11</cloned><last_validated>2025-12-01 05:40:11</last_validated><parent display_value="KB Search">9b6187d0d7201200a9addd173e24d4dd</parent><payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script/&gt;&lt;controller_as/&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;title&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link/&gt;&lt;name&gt;KB Search&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[data.typeahead = $sp.getWidgetFromInstance('typeahead_search_header');]]&gt;&lt;/script&gt;&lt;servicenow&gt;true&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-12-21 18:55:22&lt;/sys_created_on&gt;&lt;sys_id&gt;9b6187d0d7201200a9addd173e24d4dd&lt;/sys_id&gt;&lt;sys_mod_count&gt;8&lt;/sys_mod_count&gt;&lt;sys_name&gt;KB Search&lt;/sys_name&gt;&lt;sys_package display_value="Service Portal - Knowledge Base (do not activate...see plugin description)" source="com.glide.service-portal.knowledge-base"&gt;7a050b690ca432108bb2ce4d4ed10e14&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_9b6187d0d7201200a9addd173e24d4dd&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2021-02-19 15:44:04&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div id="homepage-search" class="wrapper"&gt;
+  &lt;div&gt;
+    &lt;sp-widget widget="data.typeahead"&gt;&lt;/sp-widget&gt;
+  &lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload><sys_class_name>sp_rel_widget_clone</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-01 05:51:08</sys_created_on><sys_id>95d5ad2d9765b6d0ec453b90f053afc3</sys_id><sys_mod_count>0</sys_mod_count><sys_name>99d52de19765b6d0ec453b90f053afbf</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_rel_widget_clone_95d5ad2d9765b6d0ec453b90f053afc3</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-01 05:51:08</sys_updated_on></sp_rel_widget_clone></record_update>]]></payload>
+        <payload_hash>1121526198</payload_hash>
+        <record_name>99d52de19765b6d0ec453b90f053afbf</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:51:08</sys_created_on>
+        <sys_id>9dd5ad2d9765b6d0ec453b90f053afc6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad876fd860000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:51:08</sys_updated_on>
+        <type>Widget Clone</type>
+        <update_guid>5dd5ad2dd765b6d031f05e80d2e7a6c5</update_guid>
+        <update_guid_history>5dd5ad2dd765b6d031f05e80d2e7a6c5:1121526198</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">0eb3f16997e5b6d0ec453b90f053af70</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:51:48</sys_created_on>
+        <sys_db_object display_value="" name="sp_rel_widget_clone">sp_rel_widget_clone</sys_db_object>
+        <sys_id>113ffd8ed0194b5e8c23293d154e1c09</sys_id>
+        <sys_metadata>95d5ad2d9765b6d0ec453b90f053afc3</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>99d52de19765b6d0ec453b90f053afbf</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_rel_widget_clone_95d5ad2d9765b6d0ec453b90f053afc3</sys_update_name>
+        <sys_update_version display_value="sp_rel_widget_clone_95d5ad2d9765b6d0ec453b90f053afc3">9dd5ad2d9765b6d0ec453b90f053afc6</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 06:51:48</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

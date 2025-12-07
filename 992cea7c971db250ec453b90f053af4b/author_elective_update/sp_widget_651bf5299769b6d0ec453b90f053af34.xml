@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-kb-categories {&#13;
+  margin-top: 0;&#13;
+}&#13;
+&#13;
+.aayos-kb-categories__list {&#13;
+  margin: 0;&#13;
+  padding-left: 0;&#13;
+}&#13;
+&#13;
+.aayos-kb-categories__list li + li {&#13;
+  margin-top: 4px;&#13;
+}&#13;
+&#13;
+.aayos-kb-categories__list a {&#13;
+  color: #0072c6;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.aayos-kb-categories__list a:hover,&#13;
+.aayos-kb-categories__list a:focus {&#13;
+  text-decoration: underline;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>aayos kb categories widget</description>
+        <docs/>
+        <field_list>color</field_list>
+        <has_preview>false</has_preview>
+        <id>aayos_kb_categories</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>AAYOS KB Categories</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+    // AAYOS Admin Knowledge base sys_id
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.categories = [];
+
+    var gr = new GlideRecord('kb_category');
+    gr.addQuery('kb_knowledge_base', kbId);
+    gr.addQuery('active', true);
+    gr.orderBy('label');
+    gr.query();
+
+    while (gr.next()) {
+        data.categories.push({
+            value: gr.getUniqueValue(),       // sys_id
+            label: gr.getValue('label')       // category name
+        });
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 07:23:59</sys_created_on>
+        <sys_id>651bf5299769b6d0ec453b90f053af34</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AAYOS KB Categories</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_651bf5299769b6d0ec453b90f053af34</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 07:36:00</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default aayos-kb-categories">
+  <div class="panel-heading">
+    <h4 class="panel-title">Categories</h4>
+  </div>
+
+  <!-- Category list -->
+  <div class="panel-body" ng-if="data.categories.length">
+    <ul class="list-unstyled aayos-kb-categories__list">
+      <li ng-repeat="cat in data.categories | orderBy:'label'">
+        <!-- Stay on the AAYOS KB page, pass kb_category in URL -->
+        <a href="?id=aayos_admin_kb&kb_category={{cat.value}}">
+          {{cat.label}}
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Empty state -->
+  <div class="panel-body" ng-if="!data.categories.length">
+    <span>No categories available.</span>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_widget_651bf5299769b6d0ec453b90f053af34</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.aayos-kb-categories {&amp;#13;
+  margin-top: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-categories__list {&amp;#13;
+  margin: 0;&amp;#13;
+  padding-left: 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-categories__list li + li {&amp;#13;
+  margin-top: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-categories__list a {&amp;#13;
+  color: #0072c6;&amp;#13;
+  text-decoration: none;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-categories__list a:hover,&amp;#13;
+.aayos-kb-categories__list a:focus {&amp;#13;
+  text-decoration: underline;&amp;#13;
+}&amp;#13;
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description&gt;aayos kb categories widget&lt;/description&gt;&lt;docs/&gt;&lt;field_list&gt;color&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;aayos_kb_categories&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;AAYOS KB Categories&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function () {
+    // AAYOS Admin Knowledge base sys_id
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.categories = [];
+
+    var gr = new GlideRecord('kb_category');
+    gr.addQuery('kb_knowledge_base', kbId);
+    gr.addQuery('active', true);
+    gr.orderBy('label');
+    gr.query();
+
+    while (gr.next()) {
+        data.categories.push({
+            value: gr.getUniqueValue(),       // sys_id
+            label: gr.getValue('label')       // category name
+        });
+    }
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-01 07:23:59&lt;/sys_created_on&gt;&lt;sys_id&gt;651bf5299769b6d0ec453b90f053af34&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;AAYOS KB Categories&lt;/sys_name&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_651bf5299769b6d0ec453b90f053af34&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-01 07:36:00&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="panel panel-default aayos-kb-categories"&gt;
+  &lt;div class="panel-heading"&gt;
+    &lt;h4 class="panel-title"&gt;Categories&lt;/h4&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Category list --&gt;
+  &lt;div class="panel-body" ng-if="data.categories.length"&gt;
+    &lt;ul class="list-unstyled aayos-kb-categories__list"&gt;
+      &lt;li ng-repeat="cat in data.categories | orderBy:'label'"&gt;
+        &lt;!-- Stay on the AAYOS KB page, pass kb_category in URL --&gt;
+        &lt;a href="?id=aayos_admin_kb&amp;kb_category={{cat.value}}"&gt;
+          {{cat.label}}
+        &lt;/a&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Empty state --&gt;
+  &lt;div class="panel-body" ng-if="!data.categories.length"&gt;
+    &lt;span&gt;No categories available.&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-1518398049</payload_hash>
+        <record_name>AAYOS KB Categories</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 07:36:00</sys_created_on>
+        <sys_id>25dd7d6d9769b6d0ec453b90f053af5a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8d6ff6e0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 07:36:00</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>61dd7d6db069b6d0edb0960b54cddb59</update_guid>
+        <update_guid_history>61dd7d6db069b6d0edb0960b54cddb59:-1518398049,a51bf5295269b6d095efa9f21f9c7337:-716095000</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="AAYOS KB Categories">d10ef1ad9769b6d0ec453b90f053afb6</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 07:36:48</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>450d25567ee9413e93efb35278db2739</sys_id>
+        <sys_metadata>651bf5299769b6d0ec453b90f053af34</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS KB Categories</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_widget_651bf5299769b6d0ec453b90f053af34</sys_update_name>
+        <sys_update_version display_value="sp_widget_651bf5299769b6d0ec453b90f053af34">25dd7d6d9769b6d0ec453b90f053af5a</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 07:36:48</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

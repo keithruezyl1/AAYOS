@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="DELETE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>AAYOS Admin Dashboard - Container 4</name>
+        <order>4</order>
+        <semantic_tag/>
+        <sp_page display_value="aayos_admin_home">b4c51a19972d36d0ec453b90f053af93</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 20:20:02</sys_created_on>
+        <sys_id>3b132f1197a576d0ec453b90f053afc3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Admin Dashboard - Container 4</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_container_3b132f1197a576d0ec453b90f053afc3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 20:20:02</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_container_3b132f1197a576d0ec453b90f053afc3</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container"><sp_container action="INSERT_OR_UPDATE"><background_color/><background_image/><background_style>default</background_style><bootstrap_alt>false</bootstrap_alt><class_name/><container_class_name/><name>AAYOS Admin Dashboard - Container 4</name><order>4</order><semantic_tag/><sp_page display_value="aayos_admin_home">b4c51a19972d36d0ec453b90f053af93</sp_page><subheader>false</subheader><sys_class_name>sp_container</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-30 20:20:02</sys_created_on><sys_id>3b132f1197a576d0ec453b90f053afc3</sys_id><sys_mod_count>0</sys_mod_count><sys_name>AAYOS Admin Dashboard - Container 4</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_container_3b132f1197a576d0ec453b90f053afc3</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-30 20:20:02</sys_updated_on><title/><width>container</width></sp_container></record_update>]]></payload>
+        <payload_hash>-554503686</payload_hash>
+        <record_name>AAYOS Admin Dashboard - Container 4</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 20:20:02</sys_created_on>
+        <sys_id>7b132f1197a576d0ec453b90f053aff8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad66c23b00000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 20:20:02</sys_updated_on>
+        <type>Container</type>
+        <update_guid>f7132f1135a576d0844198b86cf4fcf7</update_guid>
+        <update_guid_history>f7132f1135a576d0844198b86cf4fcf7:-554503686</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="AAYOS Admin Dashboard - Container 4">8483df4a97e1fad0ec453b90f053af22</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-03 03:07:14</sys_created_on>
+        <sys_db_object display_value="" name="sp_container">sp_container</sys_db_object>
+        <sys_id>2283bed3ec9841a3b46666b5c35d7229</sys_id>
+        <sys_metadata>3b132f1197a576d0ec453b90f053afc3</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Admin Dashboard - Container 4</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_container_3b132f1197a576d0ec453b90f053afc3</sys_update_name>
+        <sys_update_version display_value="sp_container_3b132f1197a576d0ec453b90f053afc3">7b132f1197a576d0ec453b90f053aff8</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 03:07:14</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

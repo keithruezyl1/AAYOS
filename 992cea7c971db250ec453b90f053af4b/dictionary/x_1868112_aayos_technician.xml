@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="b4d157649729fe90ec453b90f053afdf" label="AAYOS Technician" max_length="40" name="x_1868112_aayos_technician" type="collection">
+        <element display="true" label="Name" mandatory="true" max_length="100" name="name" type="string"/>
+        <element default="5" label="Max Concurrent Tickets" mandatory="true" max_length="255" name="max_concurrent_tickets" type="integer"/>
+        <element label="Email" mandatory="true" max_length="100" name="email" type="string"/>
+        <element choice="3" default="active" label="Status" mandatory="true" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="On Leave" sequence="1" value="on_leave"/>
+                <element inactive_on_update="false" label="Active" sequence="0" value="active"/>
+                <element inactive_on_update="false" label="Inactive" sequence="2" value="inactive"/>
+            </choice>
+        </element>
+        <element label="Phone" mandatory="true" max_length="40" name="phone" type="string"/>
+        <element label="Primary Skill Category" max_length="80" name="primary_skill_category" type="string"/>
+        <element label="Current Open Tickets" max_length="255" name="current_open_tickets" type="integer"/>
+        <element label="User" max_length="32" name="user" reference="sys_user" type="reference"/>
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Technician ID" max_length="40" name="number" type="string"/>
+        <index name="index">
+            <element name="user"/>
+        </index>
+    </element>
+</database>

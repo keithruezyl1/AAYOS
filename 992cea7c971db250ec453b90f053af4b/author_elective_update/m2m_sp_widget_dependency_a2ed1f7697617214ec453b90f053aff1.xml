@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_widget_dependency">
+    <m2m_sp_widget_dependency action="DELETE">
+        <sp_dependency display_value="AAYOS Technician Redirect">84e439f697253214ec453b90f053af30</sp_dependency>
+        <sp_widget display_value="AAYOS Role Login">831aaa3297e93214ec453b90f053afba</sp_widget>
+        <sys_class_name>m2m_sp_widget_dependency</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 11:48:10</sys_created_on>
+        <sys_id>a2ed1f7697617214ec453b90f053aff1</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Technician Redirect.AAYOS Role Login</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>m2m_sp_widget_dependency_a2ed1f7697617214ec453b90f053aff1</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 11:48:10</sys_updated_on>
+    </m2m_sp_widget_dependency>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>m2m_sp_widget_dependency_a2ed1f7697617214ec453b90f053aff1</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="m2m_sp_widget_dependency"><m2m_sp_widget_dependency action="INSERT_OR_UPDATE"><sp_dependency display_value="AAYOS Technician Redirect">84e439f697253214ec453b90f053af30</sp_dependency><sp_widget display_value="AAYOS Role Login">831aaa3297e93214ec453b90f053afba</sp_widget><sys_class_name>m2m_sp_widget_dependency</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-05 11:48:10</sys_created_on><sys_id>a2ed1f7697617214ec453b90f053aff1</sys_id><sys_mod_count>0</sys_mod_count><sys_name>AAYOS Technician Redirect.AAYOS Role Login</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>m2m_sp_widget_dependency_a2ed1f7697617214ec453b90f053aff1</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-05 11:48:10</sys_updated_on></m2m_sp_widget_dependency></record_update>]]></payload>
+        <payload_hash>962134125</payload_hash>
+        <record_name>AAYOS Technician Redirect.AAYOS Role Login</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 11:48:10</sys_created_on>
+        <sys_id>22ed1f7697617214ec453b90f053aff7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19aee574f5d0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 11:48:10</sys_updated_on>
+        <type>Widget Dependency</type>
+        <update_guid>eeed1f761e6172148e2e4a5abbb65ff5</update_guid>
+        <update_guid_history>eeed1f761e6172148e2e4a5abbb65ff5:962134125</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="AAYOS Technician Redirect.AAYOS Role Login">7b2e97b697617214ec453b90f053af75</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 11:49:22</sys_created_on>
+        <sys_db_object display_value="" name="m2m_sp_widget_dependency">m2m_sp_widget_dependency</sys_db_object>
+        <sys_id>1fd029381c3944c18bf0ce7a594923d1</sys_id>
+        <sys_metadata>a2ed1f7697617214ec453b90f053aff1</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Technician Redirect.AAYOS Role Login</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>m2m_sp_widget_dependency_a2ed1f7697617214ec453b90f053aff1</sys_update_name>
+        <sys_update_version display_value="m2m_sp_widget_dependency_a2ed1f7697617214ec453b90f053aff1">22ed1f7697617214ec453b90f053aff7</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 11:49:22</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

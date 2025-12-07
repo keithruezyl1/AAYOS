@@ -28,7 +28,7 @@
         <function_definition/>
         <function_field>false</function_field>
         <internal_type display_value="Integer">integer</internal_type>
-        <mandatory>true</mandatory>
+        <mandatory>false</mandatory>
         <max_length>255</max_length>
         <name>x_1868112_aayos_ticket</name>
         <next_element/>
@@ -53,7 +53,7 @@
         <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
         <sys_update_name>sys_dictionary_x_1868112_aayos_ticket_reassignment_count</sys_update_name>
         <sys_updated_by>admin</sys_updated_by>
-        <sys_updated_on>2025-11-28 12:10:36</sys_updated_on>
+        <sys_updated_on>2025-12-01 13:21:15</sys_updated_on>
         <table_reference>false</table_reference>
         <text_index>false</text_index>
         <unique>false</unique>

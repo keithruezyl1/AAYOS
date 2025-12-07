@@ -1,0 +1,3212 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone">
+    <sp_rel_widget_clone action="DELETE">
+        <child display_value="Copy of Portal Polaris Header">91cc1e95976d36d0ec453b90f053afb6</child>
+        <cloned>2025-11-30 15:12:41</cloned>
+        <last_validated>2025-11-30 15:12:41</last_validated>
+        <parent display_value="Portal Polaris Header">3552f974845a1110f87767389929c604</parent>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;standard&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function pspHeaderController($rootScope, $scope, $window, spUtil, $location, $uibModal, cabrillo, $timeout, i18n, spContextManager,spAriaUtil) {
+    var c = this;
+	var userOptionsMessage=i18n.getMessage('User options: {userName}');
+	c.userLabel = userOptionsMessage.replace('{userName}',$scope.user.name);
+    $scope.avatarProfile = {
+		userID: $scope.user.sys_id,
+		name: $scope.user.name,
+		initials: $window.NOW.user_initials
+	  };
+	  if ($window.NOW.user_avatar) {
+		$scope.avatarProfile.userImage = $window.NOW.user_avatar;
+	  }
+    // Events fired from/to $rootScope for responsive mobile view.
+    c.SHOW_MOBILE_MEGA_MENU = 'showMobileMegaMenu';
+    c.SHOW_MOBILE_MENU_ON_DESKTOP = 'showMobileMenuOnDesktop';
+    c.TOGGLE_MOBILE_MENU_VISIBILITY = 'toggleMobileMenuVisibility';
+
+    $scope.showSearchBar = true;
+    $scope.userID = $scope.user.sys_id;
+    $scope.popupType = c.data.isMobile ? 'collapse' : 'dropdown';
+    $scope.expanded = false;
+    $scope.isMobileViewOnDesktopExpanded = false;
+	var flag = 0;
+    // $scope.loadingIndicator = $rootScope.loadingIndicator;
+
+    /* Below 2 scope variables (showMobileMenuOnDesktop, showMobileMegaMenu) have counterparts in EC Navigation widget also.
+     So whenever we set these variables, make sure to emit an event on rootScope to update them in the former widget as well. */
+
+    // Determines whether to show mobile view on desktop due to oveflow of items in sub navigation bar of header.
+    $scope.showMobileMenuOnDesktop = false;
+    // Used to hide global navigation tools on mobile while showing mega menu topics in right panel.
+    $scope.showMobileMegaMenu = false;
+
+    c.MOBILE_DEVICE_SCREEN_WIDTH = 767;
+    $scope.mobileDevice = c.data.isMobile || ($window.innerWidth &lt;= c.MOBILE_DEVICE_SCREEN_WIDTH);
+
+    if (cabrillo.isNative())
+        $scope.isViewNative = true;
+
+    $scope.isCategorySelectedOnMobileMegaMenu = false;
+    $rootScope.$on('categorySelectedOnMobileMegaMenu', function(event, isCategorySelected) {
+        $scope.isCategorySelectedOnMobileMegaMenu = isCategorySelected;
+    });
+    $scope.newPageId = c.data.initialPageId;
+    $scope.showSearchbarOnMobile = false;
+    
+    c.getContainer = function(){
+		  return $("." + "instance" + "-" + c.data.instanceId);
+	  };
+
+    $scope.showSearchBarMobile = function(event) {
+		if (event.keyCode === 13 || event.keyCode === 32) {
+			event.preventDefault();
+		}
+      $scope.showSearchbarOnMobile = true;
+      $timeout(function() {
+        $scope.focusOnSearchBar();
+      });
+    };
+
+   	$scope.hideSearchBarMobile = function() {
+        $scope.showSearchbarOnMobile = false;
+		$timeout(function(){
+			 $scope.$apply();
+		},10);    
+    };
+
+
+    document.addEventListener('focus', (event) =&gt; {
+	var  currentlyFocusedElement = event.target;
+	if(flag ==1)
+	{
+		if(currentlyFocusedElement.name!= 'search' &amp;&amp;  currentlyFocusedElement!=c.getContainer().find('input[name="q"]')[0] &amp;&amp; currentlyFocusedElement!=c.getContainer().find('sn-search-combobox')[0]){
+			var typeaheadSearchDiv = c.getContainer().find('#searchBox');
+			typeaheadSearchDiv.removeClass("show-search").addClass('hide-search');
+			$timeout(function() {
+				// visibility should be hidden after the collapsing animation, hence the timeout
+				typeaheadSearchDiv.addClass('visibility-collapse');
+				c.getContainer().find('#searchbox-icon').removeClass('hidden');
+			}, 500);
+			if($scope.mobileDevice)
+				$scope.hideSearchBarMobile();
+			flag =0;
+		}
+	}
+    }, true);
+
+    $scope.focusOnSearchBar = function() {
+		flag=1;
+      // focus on the search widget input box, and add a blur event
+      if (c.data.aisEnabled) {
+        var searchBox = c.getContainer().find('sn-search-combobox')[0];
+		if ($scope.mobileDevice)
+        searchBox.addEventListener('blur', $scope.onSearchBoxBlur);
+        $timeout(function() {
+          searchBox.shadowRoot.childNodes[0].shadowRoot.childNodes[0].querySelector('input').focus();
+        }, 500);
+      } else {
+        var searchBox = c.getContainer().find('input[name="q"]')[0];
+		searchBox.addEventListener('keydown',(event)=&gt;$scope.onSearchBoxTab(event));
+        searchBox.focus();
+      }
+    };
+	
+		$scope.onSearchBoxTab = function(event){
+			$timeout(function() {
+				if(event.keyCode==9){
+            var searchIcon =  c.getContainer().find('#searchbox-icon');
+						searchIcon.focus();
+				}        
+        }, 525);
+		
+		};
+
+    $scope.showAndExpandSearch = function(event) {
+      // show typeahead search widget and hide search icon on Desktop view
+			spAriaUtil.sendLiveMessage(i18n.getMessage("button expanded"));
+      c.getContainer().find('#searchBox').removeClass('hide-search').addClass('show-search').removeClass('visibility-collapse');
+	    c.getContainer().find('#searchbox-icon').addClass('hidden');
+      $scope.focusOnSearchBar();
+    };
+
+    $scope.onSearchBoxBlur = function(event) {
+     	$scope.hideSearchBarMobile();
+    };
+
+    $scope.getUrlParameters = function(parameter, decode, staticURL) {
+      var url = staticURL ? staticURL : $location.url();
+      var currLocation = (url.length) ? url : window.location.search;
+      if (!currLocation || !currLocation.split("?") || currLocation.split("?").length &lt; 2)
+        return '';
+      var paramArr = currLocation.split("?")[1].split("&amp;");
+      var numOfParams = paramArr.length;
+      for (var i = 0; i &lt; numOfParams; i++) {
+        param = paramArr[i].split("=");
+        if (param[0] === parameter)
+          return (decode) ? decodeURIComponent(param[1]) : param[1];
+      }
+      return '';
+    };
+
+    $scope.$on("$sp.service_catalog.cart.count", function($evt, count) {
+        $scope.cartItemCount = count;
+    });
+
+    $scope.$on("$locationChangeSuccess", function(event, data) {
+      $scope.newPageId = $scope.getUrlParameters("id", true, data);
+        if (c.data.isMobile) {
+            if ($('div#popup_todos_mobile').is(":visible"))
+                $('li &gt; a#todos_popup').click();
+            else if ($('div#popup_cases_mobile').is(":visible"))
+                $('li &gt; a#cases_popup').click();
+        } else {
+            $('li.open &gt; a#cases_popup').click();
+            $('li.open &gt; a#todos_popup').click();
+        }
+
+      // hide modal-div on location change
+      if($scope.isMobileViewOnDesktopExpanded){
+        $scope.isMobileViewOnDesktopExpanded = false;
+        $scope.expanded = false;
+        $scope.showMobileMegaMenu = false;
+        $rootScope.$emit(c.SHOW_MOBILE_MEGA_MENU, false);
+      }
+    });
+
+    $scope.openLogin = function() {
+        $scope.modalInstance = $uibModal.open({
+            templateUrl: 'spPolarisModalLogin',
+            scope: $scope
+        });
+
+        var pageRoot = angular.element('.sp-page-root');
+        $scope.modalInstance.rendered.then(function() {
+            var $uibModalStack = $injector.get('$uibModalStack');
+            var modalObj = $uibModalStack.getTop();
+            var modal = modalObj.value.modalDomEl;
+
+            modal.attr('aria-label', modal.find('.panel-title').html());
+            modal.attr('aria-modal', 'true');
+            pageRoot.attr('aria-hidden', 'true');
+        });
+
+        $scope.modalInstance.closed.then(function() {
+            pageRoot.attr('aria-hidden', 'false');
+        });
+    };
+
+    $rootScope.$on("update.searchpage", function(e, searchPage) {
+        $scope.searchPage = searchPage;
+    });
+
+    $rootScope.$on('sp.avatar_changed', function() {
+        $scope.userID = '';
+        $timeout(function() {
+            $scope.userID = $scope.user.sys_id;
+        });
+    });
+
+    $rootScope.$on(c.SHOW_MOBILE_MENU_ON_DESKTOP, function(event, showMobileMenuOnDesktop) {
+        if (!showMobileMenuOnDesktop &amp;&amp; $scope.showMobileMenuOnDesktop) {
+            $scope.isMobileViewOnDesktopExpanded = false;
+        }
+        $scope.showMobileMenuOnDesktop = showMobileMenuOnDesktop;
+    });
+
+    $rootScope.$on(c.SHOW_MOBILE_MEGA_MENU, function(event, showMobileMegaMenu) {
+        $scope.showMobileMegaMenu = showMobileMegaMenu;
+    });
+
+    $scope.toggleMobileMenuVisibility = function(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        $scope.isMobileViewOnDesktopExpanded = !$scope.isMobileViewOnDesktopExpanded;
+        $scope.expanded = false;
+        $scope.showMobileMegaMenu = false;
+        $rootScope.$emit(c.SHOW_MOBILE_MEGA_MENU, false);
+    };
+
+    $rootScope.$on(c.TOGGLE_MOBILE_MENU_VISIBILITY, function() {
+        $scope.toggleMobileMenuVisibility();
+    });
+
+    $scope.isHomepage = function() {
+        if (!$scope.page.id)
+            return true;
+
+        if ($scope.page.id == $scope.portal.homepage_dv)
+            return true;
+
+        return false;
+    };
+
+}]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;$sp-space--xxs: 2px !default;
+$sp-space--xs: 4px !default;
+$sp-space--sm: 8px !default;
+$sp-space--md: 12px !default;
+$sp-space--lg: 16px !default;
+$sp-space--xl: 24px !default;
+$sp-space--3xl: 40px !default;
+$background-primary : $body-bg !default;
+$font-size-md: 16px !default;
+$font-size-large: 20px !default;
+$font-size-xl: 24px !default;
+$brand-primary-darker: darken($brand-primary,16) !default;
+
+#searchBox .btn{
+  padding : 0px $sp-space--lg;
+}
+
+.dropdown-menu.empty-dropdown.ng-scope,.dropdown-menu.cart-dropdown.custom-drop-down,.dropdown-menu.wishlist-menu.custom-drop-down {
+  background-color: transparent !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+.navbar-inverse {
+  margin-bottom: 0px;
+  border-radius: 0px; 
+  background-color: $navbar-inverse-bg;
+  .navbar-header {
+    &amp;amp;.nav-container {
+      width: 100%;
+
+      .sub-navbar-overflow-entry-button {
+        position: relative;
+        float: right;
+        margin: $sp-space--md $sp-space--lg $sp-space--md 0;
+        padding: $sp-space--sm $sp-space--sm;
+        background-color: transparent;
+        background-image: none;
+        border: .1rem solid transparent;
+        border-radius: $border-radius-base;
+        border-color: rgba(255, 255, 255, .25);
+
+       .label {
+         float: right;
+         margin-right: -$sp-space--xs;
+         margin-top: -$sp-space--sm;
+         padding: $sp-space--xxs $sp-space--xs;
+       }
+
+       .label-as-badge {
+          font-size: $font-size-xs;
+          position: relative;
+          top: -$sp-space--xxs;
+          left: $sp-space--xxs;
+          padding: $sp-space--xxs $sp-space--xs;
+          margin-left: 0;
+          background-color: $btn-danger-bg;
+          color: $background-primary;
+        }
+
+        .icon-bar {
+          display: block;
+          width: 2.2rem;
+          height: .2rem;
+          border-radius: $border-radius-small;
+          background-color: $background-primary;
+        }
+        .icon-bar + .icon-bar {
+          margin-top: $sp-space--xs;
+        }
+      }
+    }
+
+    .mobile-view-on-desktop {
+    	position: absolute;
+      z-index: 999;
+      /* 60px is height of the header strip */
+      top: 60px;
+      right: 0;
+      min-height: 500px;
+      max-width: 400px;
+      background-color: $navbar-inverse-bg;
+      box-shadow: 5px 5px 5px $navbar-inverse-link-color;
+      color: $navbar-inverse-link-color;
+
+      .mobile-view-navbar {
+         list-style: none;
+         padding: 0 $sp-space--sm;
+         margin: 0;
+         display: flex;
+         flex-direction: column;
+         border-top: 1px solid darken($navbar-inverse-link-color, 45%);
+
+         .main-header-items {
+           list-style: none;
+           padding: $sp-space--md 0 0 $sp-space--lg;
+           margin: 0;
+           display: flex;
+           flex-direction: column;
+
+           &amp;amp; &amp;gt; li {
+             &amp;amp;:not(:last-child) {
+               padding-top: $sp-space--lg;
+             }
+             // Cart, tours, and Wishlist (Mobile View)
+             .nav.navbar-nav {
+               display: flex;
+               flex-direction: column;
+
+               li {
+                 padding-top: $sp-space--lg;
+               }
+             }
+           }
+         }
+
+         .mobile-mega-menu-entry {
+           margin: 0 -$sp-space--sm;
+           padding: $sp-space--xl $sp-space--lg;
+           background-color: $sp-navbar-divider-color;
+           
+           .dropdown-menu {
+           	background-color: transparent;
+           }
+         }
+         .separator {
+           margin: 20px -$sp-space--sm;
+           border-top: 1px solid darken($navbar-inverse-link-color, 30%);
+         }
+
+         li &amp;gt; a {
+           color: $navbar-inverse-link-color;
+           padding: 0;
+
+           &amp;amp;:hover, &amp;amp;:focus {
+             color: $navbar-inverse-link-hover-color !important;
+             background-color: transparent;
+           }
+           &amp;amp;:focus {
+             box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+             padding: $sp-space--xs;
+             border: 0.5px solid $navbar-inverse-link-color;
+             border-radius: $border-radius-base;
+           }
+         }
+        .header-menu-item &amp;gt; a{
+        	padding: $sp-space--md $sp-space--sm;
+        }
+       }
+
+      .impersonate-and-logout {
+          div &amp;gt; ul &amp;gt; li:first-child {
+            height: 0;
+
+            ul.dropdown-menu {
+              width: 400px;
+              display: block;
+              z-index: inherit;
+              background-color: $navbar-inverse-bg;
+              box-shadow: none;
+              border-radius: 0;
+              padding-left: $sp-space--xxs;
+              padding-bottom: $sp-space--lg;
+
+              li &amp;gt; a {
+                line-height: 2;
+
+                &amp;amp;:hover, &amp;amp;:focus {
+                  color: $navbar-inverse-link-hover-color !important;
+                  background-color: transparent;
+                }
+                &amp;amp;:focus {
+                  box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+                  padding: $sp-space--xs;
+                  margin-left: $sp-space--lg;
+                  border: 0.5px solid $navbar-inverse-link-color;
+                  border-radius: $border-radius-base;
+                  width: fit-content;
+                }
+              }
+              li:first-child {
+                display: none;
+              }
+           }
+         }
+       }
+     }
+
+    .navbar-brand {
+      margin: 0;
+      height: 60px;
+      padding: $sp-logo-margin-y 0px $sp-space--sm $sp-space--lg;
+      img, span {
+        margin: 0;
+        display: block;
+        max-height: $sp-logo-max-height;
+        max-width: $sp-logo-max-width;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+	padding-right: $sp-space--sm;
+      }
+    }
+
+    .navbar-right .dropdown-menu &amp;gt; li &amp;gt; a {
+      &amp;amp;:hover, &amp;amp;:focus {
+        background-color: darken($navbar-inverse-bg, 8%);
+      }
+
+      &amp;amp;:focus {
+        border: 0.5px solid $navbar-inverse-link-color;
+        border-radius: $border-radius-base;
+        box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+      }
+    }
+  }
+  .dropdown-menu &amp;gt; li &amp;gt; a {
+    color: $navbar-inverse-link-color;
+  }
+  .dropdown-toggle:focus {
+  	outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+  .sub-navbar {
+    background-color: $sp-navbar-divider-color;
+    border: none;
+    width: 100%;
+   
+    #cart-dropdown, #wishlist-menu {
+      display: none;
+      ~ * {
+        display: none !important;
+      }
+    }
+    .navbar-nav &amp;gt; li &amp;gt; a[href="?id=sc_cart"], .navbar-nav &amp;gt; li &amp;gt; a[href="?id=sc_wishlist"] {
+      display: none !important;
+    }
+    .gtd-dropdown-container {
+      display: none;
+    }
+    .open &amp;gt; a, .open &amp;gt; a:focus {
+      background-color: darken($sp-navbar-divider-color, 8%);
+    }
+    #cart-dropdown {
+      display: none;
+      :after {
+        content: "\f0d7";
+        vertical-align: baseline;
+        width: auto;
+        height: auto;
+        border: none;
+        margin-left: sp-space--xs !important;
+        display: inline-block;
+        font: normal normal normal $font-size-small/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+   
+    .dropdown-menu {
+      background-color: $sp-navbar-divider-color;
+      &amp;gt; li &amp;gt; a:hover, &amp;gt; li &amp;gt; a:focus {
+        background-color: darken($sp-navbar-divider-color, 8%);
+	box-shadow:unset;
+      }
+    }
+  }
+  .dropdown-menu {
+    background-color: rgba($navbar-inverse-bg, 0.97);
+    border: none;
+    &amp;amp;.case-menu {
+      right: 0;
+      left: auto;
+      padding: 0;
+      width: 450px;
+      background: $background-primary;
+      overflow-y: hidden;
+    }
+  }
+  &amp;gt; .open &amp;gt; a:hover, &amp;gt; .open &amp;gt; a:focus  {
+    background-color: darken($navbar-invese-bg, 8%);
+  }
+  .fa-caret-down {
+    vertical-align: middle;
+    margin-top: $sp-space--xxs;
+  }
+  .caret:before {
+    content: "\f0d7";
+  }
+  .caret {
+    vertical-align: baseline;
+    width: auto;
+    height: auto;
+    border: none;
+    margin-left: $sp-space--xs !important;
+    display: inline-block;
+    font: normal normal normal $font-size-small/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .label-as-badge {
+    font-size: $font-size-xs;
+    position: relative;
+    top: -$sp-space--sm;
+    left: -$sp-space--xxs;
+    padding: -$sp-space--xxs $sp-space--xs;
+    margin-left: 0;
+    background-color: $btn-danger-bg;
+    color: $background-primary;
+  }
+  .navbar {
+    transition: 250ms opacity ease-in-out; 
+    -webkit-transition: 250ms opacity ease-in-out; 
+    border: 0;
+  }
+  .navbar-fade {
+    opacity: 0.4;
+  }
+  .navbar-collapse {
+    padding-right: 0px;
+  }
+  .case-menu {
+    div#widget-tabs-2 {
+      border: none;
+      &amp;gt; .panel-heading {
+        border: none;
+        border-bottom: 1px solid $border-tertiary;
+      }
+    }
+  }
+
+  ul.nav.navbar-nav {
+    // Hiding the loading indicator from Header Menu base system widget
+    div.header-loader {
+       display: none;
+    }
+    li.sp-loading-indicator {
+       padding-top: $sp-space--xl;
+       margin-top: $sp-space--xxs;
+    }
+  }
+  
+  #more-items-dropdown {
+    overflow: visible;
+  }
+
+  .cart-dropdown, .wishlist-menu, .gtd-dropdown-container .empty-dropdown {
+    width: 350px;
+    padding: 0;
+    z-index: 1000;
+    border-top-left-radius: $border-radius-base !important;
+    border-top-right-radius: $border-radius-base !important;
+
+    ul {
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    .subtotal {
+      display: block;
+    }
+
+    .item-image {
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      max-width:100%;
+      height:auto;
+    }
+    label, p {
+      padding: 0;
+      margin: 0;
+    }
+    .media {
+      padding: 0;
+      margin: 0;
+    }
+    .media-left &amp;gt; a {
+      display: block;
+      width: 48px;
+      max-width: 48px;
+    }
+    .media-body {
+      label {
+        font-weight: bold;
+      }
+    }
+    li.media {
+      border-top: 1px solid #cccccc;
+      padding: 1rem;
+    }
+    .panel {
+      margin: 0;
+    }
+    .panel .panel-body {
+      padding: 0;
+    }
+    .btn-clear {
+      color: #333;
+      background-color: $background-primary;
+    }
+    p.quantity-price {
+      padding-top: $sp-space--xs;
+      span {
+        color: $text-muted;
+        padding-right: $sp-space--xs;
+      }
+    }
+    .align-right {
+      text-align: right;
+    }
+  }
+
+  .item-added-tooltip, wishlist-item-added-tooltip {
+    width: 184px;
+    font-size: $font-size-small;
+  }
+
+  .gtd-dropdown-container {
+    .empty-tour-content {
+      text-align: center;
+      margin: $sp-space--3xl $sp-space--lg;
+    }
+    .dropdown-menu li {
+      a {
+        cursor: pointer;
+      }
+      min-width: 20em;
+    }
+    .label-as-badge {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      padding: 0px;
+      padding-top: $sp-space--xxs;
+    }
+    .badge-container {
+      display: inline-block;
+      width: 12px;
+    }
+  }
+
+}
+@media screen and (min-width: 768px) {
+  .navbar-inverse {
+    .navbar-right &amp;gt; .navbar-nav &amp;gt; div {
+      float: left;
+    }
+    .navbar-right {
+      margin-right: $sp-space--sm;
+      &amp;gt; ul {
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+
+        -moz-box-orient: horizontal;
+        box-orient: horizontal; 
+        -webkit-box-orient: horizontal;
+      }
+      .navbar-nav &amp;gt; li &amp;gt; a {
+        padding-right: $sp-space--md;
+        padding-left: $sp-space--md;
+      }
+      .header-menu-item &amp;gt; a{
+        	padding: $sp-space--sm;
+        }
+    }
+    .navbar-avatar {
+      margin-top: -$sp-space--xs;
+    }
+    a#todos_popup {
+      padding-left:0px;
+    }
+    .navbar-nav .open .dropdown-menu &amp;gt; li &amp;gt; a {
+      padding: 10px 20px;
+    }
+    .navbar-header {
+      position:relative;
+      .dropdown-toggle {
+        height: 60px;
+      }
+      .navbar-nav  &amp;gt; li  &amp;gt; a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        max-height:50px;
+        padding-right: $sp-space--md;
+        padding-left: $sp-space--md;
+      }
+    }
+    .temp-mobile {
+      display: inline-block;
+    }
+    .sub-navbar {
+      display: flex;
+      padding-left: 0;
+    }
+
+    .sub-navbar--mobile-view {
+      max-height: 0px;
+      /* Using !important here as we are overriding bootstrap style */
+      overflow-y: hidden !important;
+    }
+    .navbar-nav  &amp;gt; li  &amp;gt; a {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+  }
+}
+
+// Search bar styles in the header (Should always be in the center)
+.header-search {
+   @media screen and (min-width: 768px) {
+      position: absolute;
+      left: 37%;
+      margin: $sp-space--md 0;
+      width: 20%;
+   }
+
+   @media (min-width : 320px) and (max-width : 767px) {
+      margin-top: 0 !important;
+      padding-bottom: 10px;
+      float: right;
+      width: 100%;
+   }
+
+   @media (min-width : 768px) and (max-width: 867px) {
+      left: 23% !important;
+   }
+
+   @media (min-width : 868px) and (max-width: 1024px) {
+      left: 27% !important;
+   }
+
+   @media (min-width : 1025px) and (max-width: 1200px) {
+      left: 30% !important;
+   }
+
+   @media (min-width : 1201px) and (max-width: 1400px) {
+      left: 33% !important;
+   }
+}
+
+@media (min-width : 320px) and (max-width : 767px) {
+  .navbar-inverse {
+    .dropdown-menu.case-menu {
+      width: 100%;
+    }
+    .navbar-toggle {
+      border-color: rgba(255, 255, 255, .25);
+    }
+    .navbar-toggle:focus {
+      -webkit-box-shadow: 0rem 0rem 0.5rem #1f8476 
+    }
+    .navbar-nav {
+      display: block;
+      margin: 0;
+
+      .open .dropdown-menu &amp;gt; li &amp;gt; a {
+        padding: 5px 30px;
+      }
+    }
+    .sub-navbar {
+      padding: 0px 0px;
+    }
+    .upper-collapse {
+      width: 100%;
+      padding-bottom: 0px;
+    }
+    .navbar-collapse {
+      padding-top: 0px;
+      padding-left: 0px;
+      overflow: hidden;
+      ul {
+        margin: 0;
+      }
+    }
+    .navbar-header.nav-container {
+      .sub-navbar-overflow-entry-button {
+        float: none;
+        position: absolute;
+        right: 0;
+      }
+      .mobile-view-on-desktop {
+        min-width: 100%;
+        // max-width: 100%; is needed for 400% zoom-level in WCAG resolution
+        max-width: 100%;
+        top: 60px;
+        box-shadow: none;
+
+        .impersonate-and-logout {
+           div &amp;gt; ul &amp;gt; li:first-child {
+             height: auto;
+           }
+         }
+      }
+      .mobile-view-on-desktop.search-visible {
+         top: 53px;
+      }
+
+      &amp;gt; ul {
+        display: inline-block;
+        padding: 10px 10px 0 0;
+        float: right;
+        margin: 0;
+      }
+      &amp;gt; li {
+        display: inline-block; 
+      }
+    }
+    .height-adjust {
+      padding: $sp-space--sm 0px;
+      margin-bottom: $sp-space--md;
+    }
+    .popup-edit {
+      background: $background-primary;
+      position: fixed;
+      top:0; 
+      height:100%;
+      margin-top: 0;
+      max-height:100%;
+      width:100%
+    }
+    .navbar-collapse-label {
+      float: right;
+      margin-right: -5px;
+      margin-top: -7px;
+    }
+    button &amp;gt; span.label {
+      padding: .2em .5em .2em;
+    }
+  }
+  .nav &amp;gt; li &amp;gt; a {
+  	padding-left: 0px;
+  }
+}
+.navbar-right{
+  .nav{
+    .dropdown{
+      .tooltip{
+        .tooltip-inner{
+        	word-wrap:unset;
+        }
+      }
+    }
+  }
+}
+
+/* Header search */
+input[name="q"]::placeholder {
+  font-size: $font-size-md !important;
+}
+
+input[name="q"],.search-combobox--header .input-container__input{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desktop-headersearch-wrapper {
+  display:flex;
+  justify-content: end;
+  padding: $sp-space--md 0px $sp-space--md $sp-space--md;
+
+  .desktop-headersearch-icon {
+    padding: $sp-space--sm $sp-space--sm $sp-space--sm $sp-space--sm;
+    color: $navbar-inverse-link-color;
+    float: right;
+    &amp;amp;:hover {
+      color: $navbar-inverse-link-hover-color;
+    } 
+    &amp;amp;:focus {
+      box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+      border: 0.5px solid $navbar-inverse-link-color;
+      border-radius: $border-radius-base;
+    }
+  }
+  .hide-search {
+    width: 80px;
+    transition: width 0.5s ease-in-out;
+  }
+  .visibility-collapse {
+    visibility: collapse;
+  }
+  .show-search {
+    width: 400px !important;
+    transition: width 0.5s ease-in-out;
+    visibility: visible;
+  }
+}
+.mobile-header-search-icon-wrapper {
+  float: none;
+  position: absolute;
+  right: 60px;
+  padding: $sp-space--md;
+
+  .mobile-header-search-icon{
+    color: $navbar-inverse-link-color;
+    padding: $sp-space--xs;
+    padding-right: $sp-space--xs ;
+    &amp;amp;:hover {
+      color: $navbar-inverse-link-hover-color;
+    }
+  }
+}
+.mobile-header-search {
+  display: flex;
+  height: 6rem;
+  padding: $sp-space--md $sp-space--lg 0px $sp-space--lg;
+
+  .mobile-header-search-back {
+    font-size: $font-size-large;
+    padding: $sp-space--xs;
+    margin: 0px $sp-space--md $sp-space--lg 0px;
+    align-self: center;
+    .fa {
+    	color: $navbar-inverse-link-color;
+       	&amp;amp;:hover {
+      		color: $navbar-inverse-link-hover-color;
+    	}
+    }
+  }
+  .full-width {
+    width: 100%;
+    padding-top: $sp-space--lg;
+  }
+}
+
+/* Mobile menu modal */
+#mobile-menu-items-modal{
+  color: $navbar-inverse-link-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 25;
+  overflow: auto;
+  background-color: $brand-primary-darker;
+  
+  a {
+  	color: $navbar-inverse-link-color;
+  }
+  li {
+    padding-left: $sp-space--md;
+    .fa {
+    	font-size: $font-size-xl;
+      margin-right: $sp-space--md;
+    }
+  }
+  li &amp;gt; a:focus {
+    box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+    padding: $sp-space--xs;
+    border: 0.5px solid $navbar-inverse-link-color;
+    border-radius: $border-radius-base;
+  }
+  .dropdown-menu {
+    background-color: transparent;
+  }
+  .mobile-menu-modal-list {
+    list-style-type: none;
+    padding: $sp-space--sm;
+  }
+  .user-profile-mobile {
+    font-size: $font-size-large;
+    font-weight: 600;
+  }
+  .line-separator-categories {
+    margin-top: 0px;
+    margin-bottom: $sp-space--lg;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
+  .tree-mobile {
+    display: flex;
+    margin: 0 $sp-space--lg $sp-space--lg $sp-space--lg;
+  }
+  .result-heading-mobile {
+    display: flex;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: $font-size-md;
+    line-height: 23px;
+    gap: $sp-space--md;
+    padding: $sp-space--md $sp-space--lg;
+  }
+  .close-modal-button {
+    display: flex;
+    justify-content: right;
+    margin-right: $sp-space--lg;
+    margin-top: $sp-space--lg;
+    
+    path {
+    	fill: $navbar-inverse-link-color;
+    }
+  }
+  .mobile-list-item {
+    margin: $sp-space--xs 0px;
+    padding: $sp-space--md;
+  }
+  .avatar-container .avatar.soloAvatar .sub-avatar {
+    font-size: $font-size-large;
+  }
+  .user-profile-menu-item {
+    font-size: $font-size-large;
+    padding: $sp-space--md;
+    margin: $sp-space--xs 0px;
+  }
+  .mobile-menu-icon {
+    font-size: $font-size-xl;
+    vertical-align: sub;
+  }
+  .guest-avatar {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    border-color: $border;
+    background-color: $background-tertiary;
+  }
+  .guest-avatar-icon {
+    color: $brand-primary;
+    font-size: $font-size-xl;
+    vertical-align: -webkit-baseline-middle;
+    margin: 0px !important;
+  }
+  .show-more-item{
+  	margin-bottom: $sp-space--lg;
+	}
+  hr {
+  	border-color: $brand-primary;
+  }
+  .navbar-avatar {
+    margin-right: $sp-space--md !important;
+  }
+}
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;portal-polaris-header&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function pspHeaderLink(scope, element, attrs, controller) {
+
+	var KEY = {
+		ENTER: 13,
+		SPACE: 32
+	};
+    $(element).on('click', 'a.navbar-brand', function(e) {
+        scope.expanded = false;
+    });
+    $(element).on('click.nav', '.navbar-collapse.in', function(e) {
+        var target = $(e.target);
+        if (target.is('a') &amp;&amp; !target.hasClass("dropdown-toggle") &amp;&amp; target.siblings('.dropdown-menu').length == 0) {
+            // collapse mobile nav if clicked an anchor that isn't a dropdown toggle
+            scope.expanded = false;
+            return;
+        }
+
+        // if neither target nor parent is an anchor or the parent anchor is a dropdown-toggle, do nothing
+        if (!target.parent().is('a') || target.parent().hasClass("dropdown-toggle") || target.parent().siblings('.dropdown-menu').length &gt; 0)
+            return;
+
+        // collapse mobile nav if target is part of a submenu
+        if (target.parents("ul.dropdown-menu").length &gt; 0) {
+            scope.expanded = false;
+            return;
+        }
+
+        // collapse mobile nav is target is part of the dropdown
+        if (target.parents("div.navbar-collapse").length &gt; 0)
+            scope.expanded = false;
+    });
+    $(element).on('keydown', '.dropdown-menu &gt; .header-menu-item', function(e) {
+        var target = e.target;
+        if (target.localName === 'a') {
+            if (e.keyCode === 37 || e.keyCode === 39) {
+                e.preventDefault();
+                $(target).parents('li').removeClass('open');
+                $(target).parents('li').find('a').focus();
+            } else if (e.keyCode === 9) {
+                $(target).parents('li').removeClass('open');
+            }
+        }
+    });
+
+    $('body').click(function(event) {
+        if ($(event.target).text() !== controller.toursTranslation &amp;&amp; !$(event.target).is("[aria-expanded]") &amp;&amp; scope.isMobileViewOnDesktopExpanded &amp;&amp; !(document.getElementsByClassName("mobile-menu-modal-list")[0].contains(event.target)))
+            scope.toggleMobileMenuVisibility();
+    });
+
+    // Closing mobile navigation menu after hitting Tab key on Logout option to focus on next DOM element on the page.
+    $(document).on('keydown', 'ul &gt; li.logout &gt; a[href*="logout"]', function(keyDownEvent) {
+        var TAB_KEY_VALUE = 'Tab';
+
+        if (keyDownEvent.key === TAB_KEY_VALUE &amp;&amp; scope.mobileDevice) {
+            scope.$applyAsync(function() {
+                scope.toggleMobileMenuVisibility();
+            });
+        }
+    });
+    $(document).on('keydown', 'ul &gt; li.login', function(keyDownEvent) {
+        var TAB_KEY_VALUE = 'Tab';
+
+        if (keyDownEvent.key === TAB_KEY_VALUE &amp;&amp; scope.mobileDevice) {
+            scope.$applyAsync(function() {
+                scope.toggleMobileMenuVisibility();
+            });
+        }
+    });
+    // Helper function to handle the arrow key navigation in the header
+    function handleKeyPressEvents(e) {
+        var target = e.target;
+        var querySelector;
+        if ($(this).hasClass('main-header-item'))
+            querySelector = 'li.main-header-item';
+        else if ($(this).hasClass('gt-menu-item'))
+            querySelector = 'li.gt-menu-item';
+
+        if (target.localName === 'a') {
+            var currentMenuItem = $(target).parents('li');
+            var parentUL = currentMenuItem.parents('ul');
+            var allMenuItems = parentUL.children(querySelector);
+            var firstMenuItem = allMenuItems.first();
+            var lastMenuItem = allMenuItems.last();
+            var menuItemToFocus;
+
+            // Only Side arrow keys should work for gt-menu-item and only vertical arrow keys should work for main-header-item
+            if (querySelector === 'li.gt-menu-item' &amp;&amp; !(e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 9))
+                return;
+            else if (querySelector === 'li.main-header-item' &amp;&amp; !(e.keyCode === 38 || e.keyCode === 40))
+                return;
+
+            if (querySelector === 'li.gt-menu-item') {
+                if (e.keyCode === 9) {
+                    $(target).parents('li').removeClass('open');
+                    return;
+                } else {
+                    e.preventDefault();
+                    currentMenuItem.removeClass('open');
+                }
+            } else
+                e.preventDefault();
+
+            if (e.keyCode === 37 || e.keyCode === 38) {
+                var previousMenuItem = currentMenuItem.prevAll(querySelector);
+                currentMenuItem.prevAll(querySelector).first();
+                //enable circular navigation
+                menuItemToFocus = previousMenuItem.length ? previousMenuItem : lastMenuItem;
+                menuItemToFocus.find('a').focus();
+            } else if (e.keyCode === 39 || e.keyCode === 40) {
+                var nextMenuItem = currentMenuItem.nextAll(querySelector).first();
+                //enable circular navigation
+                menuItemToFocus = nextMenuItem.length ? nextMenuItem : firstMenuItem;
+                menuItemToFocus.find('a').focus();
+            }
+        }
+    }
+
+    // Handler to focus the first element of More Items dropdown on pressing Space/Enter/Down Arrow key.
+    $(element).on('keydown', '#more-items-button', function(e) {
+        if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 40) {
+            e.preventDefault();
+            var target = e.target;
+            var moreItemsDropdown = '#more-items-dropdown';
+            $(target).click();
+            $(moreItemsDropdown).find('li.header-menu-item a:first').focus();
+        }
+    });
+
+    // Capturing the arrow key navigation in mega menu for both desktop and mobile view  
+    $(element).on('keydown', '.gt-menu-item, .main-header-item', handleKeyPressEvents);
+
+    var rateLimitedCallback = debounce(function() {
+        scope.$apply(function() {
+            // update current scope based on the new innerWidth and let angular update the view.
+            scope.mobileDevice = controller.data.isMobile || (window.innerWidth &lt;= controller.MOBILE_DEVICE_SCREEN_WIDTH);
+        });
+    }, 250);
+
+    $(window).resize(rateLimitedCallback);
+
+    // This helper returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate &amp;&amp; !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+}]]&gt;&lt;/link&gt;&lt;name&gt;Portal Polaris Header&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    data.isMobile = gs.isMobile();
+    data.instanceId = $sp.getDisplayValue("sys_id");
+
+    data.login_page = $sp.getValue('login_page');
+
+    data.langSelector = GlidePluginManager.isActive('com.glide.i18n') ? $sp.getWidget('sp-lang-selector') : "";
+    
+	data.showSubHeader = true;
+  var portalRecord = $sp.getPortalRecord();
+  var urlSuffix=portalRecord.getValue("url_suffix");
+	// Load the Secondary Menu Widget
+
+    var qsConfig = $sp.getValue("quick_start_config");
+    var qsConfigJson = qsConfig ? JSON.parse(qsConfig)[0] : {};
+    if(qsConfigJson.headerSearch &amp;&amp; qsConfigJson.headerSearch.display_search === true){
+      data.excludeSeachForPages = [];
+      if (qsConfigJson.headerSearch.exclude_search_for_pages)
+            data.excludeSeachForPages = qsConfigJson.headerSearch.exclude_search_for_pages.split(",");
+      data.aisEnabled = $sp.isAISearchEnabled();
+      if (data.aisEnabled) {
+          var typeAheadOptions = {
+              search_application: portalRecord.getValue('search_application'),
+              disable_all_suggestions: false
+          };
+          if (qsConfigJson.headerSearch.search_placeholder_text)
+              typeAheadOptions.placeholder = gs.getMessage(qsConfigJson.headerSearch.search_placeholder_text);
+      }
+      else {
+          var typeAheadOptions = {
+              size: 'md',
+              color: 'default'
+          };
+          if (qsConfigJson.headerSearch.search_placeholder_text)
+              typeAheadOptions.title = gs.getMessage(qsConfigJson.headerSearch.search_placeholder_text);
+      }
+      data.typeAheadSearch = $sp.getWidget('typeahead-search', typeAheadOptions);
+	  }
+	  if(qsConfigJson.widget){
+		data.embeddedWidget = $sp.getWidget(qsConfigJson.widget.widget_id, qsConfigJson.widget.instance_options || {});
+	  }
+	  data.showTypeAheadSearch = (data.typeAheadSearch &amp;&amp; data.typeAheadSearch.sys_id ? true : false) &amp;&amp; qsConfigJson.headerSearch &amp;&amp; qsConfigJson.headerSearch.display_search === true;
+	
+
+    var showSubHeaderString = qsConfigJson.showSubHeader;
+    if (!gs.nil(showSubHeaderString))
+        switch (showSubHeaderString.toUpperCase()) {
+            case "ON_LOG_IN":
+                data.showSubHeader = gs.isLoggedIn();
+                break;
+            case "NEVER":
+                data.showSubHeader = false;
+                break;
+            case "ALWAYS":
+            default:
+                data.showSubHeader = true;
+                break;
+        }
+
+    //Initialize menu objects
+    data.sub = {};
+    data.top = {};
+
+    var menu = $sp.getValue("sp_rectangle_menu");
+
+    if (!gs.nil(menu)) {
+
+        data.sub.menu = $sp.getWidgetFromInstance(menu);
+
+        //Copy sub menu to top menu, we want cart up top and menu items in the sub nav
+        data.top.menu = JSON.parse(JSON.stringify(data.sub.menu));
+
+        //Fetching My Items menu item sys_id
+        var configOptions = JSON.parse((data.top.menu &amp;&amp; data.top.menu.options &amp;&amp; data.top.menu.options.widget_parameters) || '{}');
+        data.moreItemsSysId = (configOptions.enable_more_items &amp;&amp; configOptions.enable_more_items.sysId) || '';
+
+        var subMenu = data.sub.menu;
+        var moreItems;
+        if (subMenu &amp;&amp; subMenu.data) {
+            subMenu.data.replace = true;
+            // Hide login if menu already has link to login
+            data.hasLogin = false;
+            var subMenuDataItems = (subMenu.data.menu &amp;&amp; subMenu.data.menu.items) || [];
+            for (var i in subMenuDataItems) {
+
+                var item = subMenuDataItems[i];
+                if (item.sys_id === data.moreItemsSysId)
+                    moreItems = item;
+                if (item.type === 'page' &amp;&amp; item.sp_page === data.login_page)
+                    data.hasLogin = true;
+            }
+        }
+
+        if (moreItems &amp;&amp; moreItems.items)
+            data.moreItems = moreItems.items;
+        if (moreItems &amp;&amp; data.moreItems &amp;&amp; moreItems.label) {
+            // Removing items with no label
+            data.moreItems = data.moreItems.filter(function(moreItem) {
+                return moreItem.label;
+            });
+
+            // Truncating label of items exceeding 60 character limit
+            data.moreItems.forEach(function(moreItem) {
+                moreItem.shortLabel = (moreItem.label.length &gt; 60) ? (moreItem.label.substring(0, 60) + '...') : moreItem.label;
+            });
+        }
+    
+    data.showMoreItems = (moreItems &amp;&amp; moreItems.label &amp;&amp; data.moreItems &amp;&amp; configOptions.enable_more_items) ? (data.moreItems.length &gt; 0 &amp;&amp; configOptions.enable_more_items.value) : false;
+    if (data.showMoreItems)
+        data.moreItemsTitle = data.moreItems.length === 1 ? data.moreItems[0].shortLabel : moreItems.label;
+		
+		
+	//Clean up items that don't belong
+    subMenu.data.cartWidget = {};
+    subMenu.options.enable_cart = false;
+    subMenu.options.enable_wishlist = false;
+    subMenu.data.showTours = false;
+    subMenu.data.menuType = 'SUB';
+
+    // Make this true to show Tours menu in main header
+    data.top.menu.data.showTours = true;
+    data.top.menu.data.hasLogin = data.hasLogin;
+    data.top.menu.data.menuType = 'TOP';
+
+    if(data.top.menu.sys_id === '756957db43f5ed1011a4ebdffab8f243'){
+			if (data.top.menu &amp;&amp; data.top.menu.data &amp;&amp; data.top.menu.data.menu &amp;&amp; data.top.menu.data.menu.items){
+				data.sub.menu.data.menu.items = data.sub.menu.data.menu.items.filter(function(item) {
+						return item.type != 'scripted';
+				});
+				data.top.menu.data.menu.items = data.top.menu.data.menu.items.filter(function(item) {
+						return item.type == 'scripted';
+				});
+			}
+		}	
+		else {
+			 if (data.top.menu &amp;&amp; data.top.menu.data &amp;&amp; data.top.menu.data.menu &amp;&amp; data.top.menu.data.menu.items)
+        data.top.menu.data.menu.items = [];
+		}
+	}
+    // Analytics
+    data.analyticsSupportEnabled = new GlidePluginManager().isActive('com.sn_content_analytics') &amp;&amp; new GlidePluginManager().isActive('com.sn_content_delivery') &amp;&amp; !sn_cd.cd_ContentDelivery.isContentPreview($sp);
+    data.supportProfilePortal = new sn_sppolaris_theme.UserProfileUtil().getProfileURL(urlSuffix);
+    data.loginWidget = $sp.getWidgetFromInstance('login-modal');
+	data.initialPageId = $sp.getParameter('id');
+	if (!data.initialPageId)
+		data.initialPageId = '';
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_header_footer&lt;/sys_class_name&gt;&lt;sys_created_by&gt;maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-10-22 17:18:47&lt;/sys_created_on&gt;&lt;sys_id&gt;3552f974845a1110f87767389929c604&lt;/sys_id&gt;&lt;sys_mod_count&gt;22&lt;/sys_mod_count&gt;&lt;sys_name&gt;Portal Polaris Header&lt;/sys_name&gt;&lt;sys_package display_value="Portal Next Experience Theme" source="sn_sppolaris_theme"&gt;e9276da055525110f87724327a36ce96&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Portal Next Experience Theme"&gt;e9276da055525110f87724327a36ce96&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_header_footer_3552f974845a1110f87767389929c604&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-05 10:16:00&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;!-- Nav bar menu items starts--&gt;
+&lt;nav class="navbar-inverse instance-{{c.data.instanceId}}" aria-label="Primary" role="navigation"&gt;
+  &lt;!-- Piece above searchbar --&gt;
+  &lt;div class="clearfix"&gt;
+    &lt;div class="navbar-header nav-container"&gt;
+    &lt;!-- Header search widget for Mobile View --&gt;
+      &lt;div ng-if="data.showTypeAheadSearch &amp;&amp; (showMobileMenuOnDesktop || mobileDevice)"&gt;
+        &lt;div class="mobile-header-search" ng-show="showSearchbarOnMobile"&gt;
+          &lt;div class="mobile-header-search-back"  ng-click="hideSearchBar1()"&gt;
+            &lt;i class="fa fa-arrow-left"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div id="searchBox" class="full-width" &gt;
+            &lt;sp-widget widget="data.typeAheadSearch"&gt;&lt;/sp-widget&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- Logo --&gt;
+      &lt;a class="navbar-brand" ng-if="!portal.logo &amp;&amp; !showSearchbarOnMobile" href="?id={{::portal.homepage_dv}}" aria-label="{{::portal.title}}"&gt;&lt;span&gt;{{::portal.title}}&lt;/span&gt;&lt;/a&gt;
+	    &lt;a class="navbar-brand navbar-brand-logo"
+           ng-if="portal.logo &amp;&amp; !showSearchbarOnMobile"
+           href="?id={{::portal.homepage_dv}}"
+           aria-label="{{::portal.title}}${ - Home Page}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           data-title="{{::portal.title}}${ - Home}"&gt;
+        &lt;img ng-src="{{::portal.logo}}" alt="{{::portal.title}}${ - Home Page}"/&gt;
+      &lt;/a&gt;
+
+      &lt;!-- Mobile Navigation View --&gt;
+      &lt;div ng-if="(showMobileMenuOnDesktop || mobileDevice) &amp;&amp; !showSearchbarOnMobile"&gt;
+        &lt;!-- Header search icon for Mobile View --&gt;
+        &lt;div class="gt-menu-item" ng-if="data.showTypeAheadSearch"&gt;
+          &lt;div ng-show="!data.excludeSeachForPages.includes(newPageId)" class="mobile-header-search-icon-wrapper"&gt;
+            &lt;div ng-if="!showSearchbarOnMobile" class="mobile-header-search-icon" tabindex="0" ng-click="showSearchBarMobile($event)" &gt;
+              &lt;i class="fa fa-search searchprimary"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- Toggle Button (Hamburger Menu for Mobile View) --&gt;
+        &lt;button type="button" 
+                class="sub-navbar-overflow-entry-button"
+                aria-label="${Show menu primary navigation}" 
+                data-toggle="tooltip"
+                data-placement="auto bottom" 
+                data-original-title="${Show Menu}"
+                ng-click="toggleMobileMenuVisibility($event)"&gt;
+          &lt;div ng-if="!isMobileViewOnDesktopExpanded"&gt;
+             &lt;span class="label label-as-badge label-primary"&gt;{{data.todoCount + data.requestCount + cartItemCount}}&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/button&gt;
+
+        &lt;!-- Mobile menu items dialog modal--&gt;
+      	&lt;div ng-show="isMobileViewOnDesktopExpanded" id = "mobile-menu-items-modal" ng-include="'polaris-menuitems-mobileview'"&gt;&lt;/div&gt;
+      
+      &lt;/div&gt;
+
+      &lt;!-- Header Navbar --&gt;
+      &lt;div ng-if="!(showMobileMenuOnDesktop || mobileDevice)" class="navbar-right"&gt;
+        &lt;div class="height-adjust"&gt;
+          &lt;ul class="nav navbar-nav"&gt;
+            &lt;li class="hidden-xs sp-loading-indicator la-sm" ng-class="{'invisible': !loadingIndicator}" &gt;
+               &lt;div&gt;&lt;/div&gt;
+               &lt;div&gt;&lt;/div&gt;
+               &lt;div&gt;&lt;/div&gt;
+            &lt;/li&gt;
+            
+            &lt;!-- Header search widget for desktop view --&gt;
+            &lt;li class="gt-menu-item" ng-if="data.showTypeAheadSearch" &gt;
+              &lt;div ng-show="!data.excludeSeachForPages.includes(newPageId)" class="desktop-headersearch-wrapper"&gt;
+                &lt;div id="searchBox" class="hide-search visibility-collapse desktop-headersearch"&gt;
+                  &lt;sp-widget widget="data.typeAheadSearch"&gt;&lt;/sp-widget&gt;
+                &lt;/div&gt;
+                &lt;div aria-expanded="false" class="desktop-headersearch-icon" id="searchbox-icon" ng-click="showAndExpandSearch()" tabindex = "0" aria-label="${Show search box}"&gt;
+                  &lt;i class="fa fa-search searchprimary"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+            
+            
+            &lt;li class="gt-menu-item" aria-label="Custom Widget"&gt;
+               &lt;sp-widget widget="::data.embeddedWidget"&gt;&lt;/sp-widget&gt;
+            &lt;/li&gt;
+            &lt;li class="gt-menu-item" id="more-items" role="presentation" ng-if="data.showMoreItems" &gt;
+              &lt;a ng-if="(data.moreItems.length === 1) &amp;&amp; (data.moreItems[0].label !== data.moreItems[0].shortLabel)"
+                 href="{{data.moreItems[0].href}}"
+                 data-toggle="tooltip"
+                 data-placement="bottom"
+                 data-original-title="${{{data.moreItems[0].label}}}"
+                 aria-label="${{{data.moreItems[0].label}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;/a&gt;
+              &lt;a ng-if="(data.moreItems.length === 1) &amp;&amp; (data.moreItems[0].label === data.moreItems[0].shortLabel)"
+                 href="{{data.moreItems[0].href}}"
+                 aria-label="${{{data.moreItems[0].label}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;/a&gt;
+              &lt;a href
+                 ng-if="data.moreItems.length &gt; 1"
+                 id="more-items-button"
+                 data-toggle="dropdown"
+                 data-target="more-items-dropdown"
+                 data-placement="bottom"
+                 aria-label="${{{data.moreItemsTitle}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                &lt;i class="fa collapse-margin m-l-xs fa-caret-down"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+              &lt;ul id="more-items-dropdown" ng-if="data.moreItems.length &gt; 1" class="dropdown-menu"
+                   aria-label="${{{data.moreItemsTitle}}}"&gt;
+                &lt;li role="presentation"
+                    ng-repeat="item in data.moreItems"
+                    class="ng-scope dropdown-menu-line header-menu-item"&gt;
+                  &lt;a ng-if="item.label !== item.shortLabel"
+                     href="{{item.href}}"
+                     data-toggle="tooltip"
+                     data-placement="bottom"
+                     data-original-title="${ {{item.label}} }"
+                     aria-label="{{item.label}}"
+                    &gt;
+                    &lt;span ng-bind-html="'${' + item.shortLabel + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                  &lt;/a&gt;
+                  &lt;a ng-if="item.label === item.shortLabel"
+                     href="{{item.href}}"
+                     aria-label="{{item.label}}"
+                     &gt;
+                    &lt;span ng-bind-html="'${' + item.shortLabel + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                  &lt;/a&gt;
+                &lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            
+            &lt;!-- Cart, tours, and Wishlist --&gt;
+              &lt;li class="gt-menu-item" &gt;
+                &lt;sp-widget widget="data.top.menu" id="menu_item"&gt;&lt;/sp-widget&gt;
+              &lt;/li&gt;  
+              &lt;li class="gt-menu-item" aria-label="Language Selector"&gt;
+                &lt;sp-widget widget="::data.langSelector"&gt;&lt;/sp-widget&gt;
+              &lt;/li&gt;
+            
+            &lt;li&gt;
+              &lt;div sp-navbar-toggle="" class="navbar-right" id="sp-nav-bar" &gt;
+                &lt;ul ng-if="::(!user.logged_in &amp;&amp; page.id != portal.login_page_dv &amp;&amp; !data.hasLogin)" class="nav navbar-nav"&gt;
+                  &lt;li class="login"&gt;&lt;a href ng-click="openLogin()"&gt;${Login}&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul ng-if="::user.logged_in" class="nav navbar-nav"&gt;
+                  &lt;!-- chat, avatar, and logout --&gt;
+                  &lt;li class="dropdown hidden-xs"&gt;
+                    &lt;a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-label="{{c.userLabel}}"&gt;
+                      &lt;span class="navbar-avatar"&gt;&lt;sn-avatar class="avatar-small-medium" primary="avatarProfile" /&gt;&lt;/span&gt;
+                      &lt;span class="visible-lg-inline"&gt;{{::user.name}}&lt;/span&gt;
+                    &lt;/a&gt;
+                    &lt;ul class="dropdown-menu"&gt;
+                      &lt;li&gt;&lt;a ng-href="?id={{::data.supportProfilePortal}}"&gt;${Profile}&lt;/a&gt;&lt;/li&gt;
+                      &lt;li class="logout"&gt;&lt;a href="{{::portal.logoutUrl}}"&gt;${Logout}&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                  &lt;li class="visible-xs-block"&gt;&lt;a ng-href="?id={{::data.supportProfilePortal}}"&gt;&lt;span class="navbar-avatar"&gt;&lt;sn-avatar class="avatar-small-medium" primary="avatarProfile" /&gt;&lt;/span&gt;{{::user.name}}&lt;/a&gt;&lt;/li&gt;
+                  &lt;li class="visible-xs-block logout"&gt;&lt;a href="{{::portal.logoutUrl}}"&gt;${Logout}&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+      
+  &lt;!-- Sub Navbar on Desktop --&gt;
+  &lt;div class="navbar-collapse sub-navbar clearfix collapse collapsed hidden-xs"
+       ng-class="{ 'in': expanded, 'collapsed': !expanded, 'sub-navbar--mobile-view': showMobileMenuOnDesktop }"
+       ng-if="data.showSubHeader"&gt;
+    &lt;div&gt;
+      &lt;sp-widget widget="data.sub.menu"&gt;&lt;/sp-widget&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Analytics --&gt;
+  &lt;div ng-if="data.analyticsSupportEnabled"&gt;
+    &lt;widget id="cda-site-analytics" options="{'enable_logging': false}"&gt;&lt;/widget&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload>
+        <sys_class_name>sp_rel_widget_clone</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 15:12:41</sys_created_on>
+        <sys_id>9dcc1e95976d36d0ec453b90f053afc7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>91cc1e95976d36d0ec453b90f053afb6</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_rel_widget_clone_9dcc1e95976d36d0ec453b90f053afc7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 15:12:41</sys_updated_on>
+    </sp_rel_widget_clone>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_rel_widget_clone_9dcc1e95976d36d0ec453b90f053afc7</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone"><sp_rel_widget_clone action="INSERT_OR_UPDATE"><child display_value="Copy of Portal Polaris Header">91cc1e95976d36d0ec453b90f053afb6</child><cloned>2025-11-30 15:12:41</cloned><last_validated>2025-11-30 15:12:41</last_validated><parent display_value="Portal Polaris Header">3552f974845a1110f87767389929c604</parent><payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;standard&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function pspHeaderController($rootScope, $scope, $window, spUtil, $location, $uibModal, cabrillo, $timeout, i18n, spContextManager,spAriaUtil) {
+    var c = this;
+	var userOptionsMessage=i18n.getMessage('User options: {userName}');
+	c.userLabel = userOptionsMessage.replace('{userName}',$scope.user.name);
+    $scope.avatarProfile = {
+		userID: $scope.user.sys_id,
+		name: $scope.user.name,
+		initials: $window.NOW.user_initials
+	  };
+	  if ($window.NOW.user_avatar) {
+		$scope.avatarProfile.userImage = $window.NOW.user_avatar;
+	  }
+    // Events fired from/to $rootScope for responsive mobile view.
+    c.SHOW_MOBILE_MEGA_MENU = 'showMobileMegaMenu';
+    c.SHOW_MOBILE_MENU_ON_DESKTOP = 'showMobileMenuOnDesktop';
+    c.TOGGLE_MOBILE_MENU_VISIBILITY = 'toggleMobileMenuVisibility';
+
+    $scope.showSearchBar = true;
+    $scope.userID = $scope.user.sys_id;
+    $scope.popupType = c.data.isMobile ? 'collapse' : 'dropdown';
+    $scope.expanded = false;
+    $scope.isMobileViewOnDesktopExpanded = false;
+	var flag = 0;
+    // $scope.loadingIndicator = $rootScope.loadingIndicator;
+
+    /* Below 2 scope variables (showMobileMenuOnDesktop, showMobileMegaMenu) have counterparts in EC Navigation widget also.
+     So whenever we set these variables, make sure to emit an event on rootScope to update them in the former widget as well. */
+
+    // Determines whether to show mobile view on desktop due to oveflow of items in sub navigation bar of header.
+    $scope.showMobileMenuOnDesktop = false;
+    // Used to hide global navigation tools on mobile while showing mega menu topics in right panel.
+    $scope.showMobileMegaMenu = false;
+
+    c.MOBILE_DEVICE_SCREEN_WIDTH = 767;
+    $scope.mobileDevice = c.data.isMobile || ($window.innerWidth &lt;= c.MOBILE_DEVICE_SCREEN_WIDTH);
+
+    if (cabrillo.isNative())
+        $scope.isViewNative = true;
+
+    $scope.isCategorySelectedOnMobileMegaMenu = false;
+    $rootScope.$on('categorySelectedOnMobileMegaMenu', function(event, isCategorySelected) {
+        $scope.isCategorySelectedOnMobileMegaMenu = isCategorySelected;
+    });
+    $scope.newPageId = c.data.initialPageId;
+    $scope.showSearchbarOnMobile = false;
+    
+    c.getContainer = function(){
+		  return $("." + "instance" + "-" + c.data.instanceId);
+	  };
+
+    $scope.showSearchBarMobile = function(event) {
+		if (event.keyCode === 13 || event.keyCode === 32) {
+			event.preventDefault();
+		}
+      $scope.showSearchbarOnMobile = true;
+      $timeout(function() {
+        $scope.focusOnSearchBar();
+      });
+    };
+
+   	$scope.hideSearchBarMobile = function() {
+        $scope.showSearchbarOnMobile = false;
+		$timeout(function(){
+			 $scope.$apply();
+		},10);    
+    };
+
+
+    document.addEventListener('focus', (event) =&gt; {
+	var  currentlyFocusedElement = event.target;
+	if(flag ==1)
+	{
+		if(currentlyFocusedElement.name!= 'search' &amp;&amp;  currentlyFocusedElement!=c.getContainer().find('input[name="q"]')[0] &amp;&amp; currentlyFocusedElement!=c.getContainer().find('sn-search-combobox')[0]){
+			var typeaheadSearchDiv = c.getContainer().find('#searchBox');
+			typeaheadSearchDiv.removeClass("show-search").addClass('hide-search');
+			$timeout(function() {
+				// visibility should be hidden after the collapsing animation, hence the timeout
+				typeaheadSearchDiv.addClass('visibility-collapse');
+				c.getContainer().find('#searchbox-icon').removeClass('hidden');
+			}, 500);
+			if($scope.mobileDevice)
+				$scope.hideSearchBarMobile();
+			flag =0;
+		}
+	}
+    }, true);
+
+    $scope.focusOnSearchBar = function() {
+		flag=1;
+      // focus on the search widget input box, and add a blur event
+      if (c.data.aisEnabled) {
+        var searchBox = c.getContainer().find('sn-search-combobox')[0];
+		if ($scope.mobileDevice)
+        searchBox.addEventListener('blur', $scope.onSearchBoxBlur);
+        $timeout(function() {
+          searchBox.shadowRoot.childNodes[0].shadowRoot.childNodes[0].querySelector('input').focus();
+        }, 500);
+      } else {
+        var searchBox = c.getContainer().find('input[name="q"]')[0];
+		searchBox.addEventListener('keydown',(event)=&gt;$scope.onSearchBoxTab(event));
+        searchBox.focus();
+      }
+    };
+	
+		$scope.onSearchBoxTab = function(event){
+			$timeout(function() {
+				if(event.keyCode==9){
+            var searchIcon =  c.getContainer().find('#searchbox-icon');
+						searchIcon.focus();
+				}        
+        }, 525);
+		
+		};
+
+    $scope.showAndExpandSearch = function(event) {
+      // show typeahead search widget and hide search icon on Desktop view
+			spAriaUtil.sendLiveMessage(i18n.getMessage("button expanded"));
+      c.getContainer().find('#searchBox').removeClass('hide-search').addClass('show-search').removeClass('visibility-collapse');
+	    c.getContainer().find('#searchbox-icon').addClass('hidden');
+      $scope.focusOnSearchBar();
+    };
+
+    $scope.onSearchBoxBlur = function(event) {
+     	$scope.hideSearchBarMobile();
+    };
+
+    $scope.getUrlParameters = function(parameter, decode, staticURL) {
+      var url = staticURL ? staticURL : $location.url();
+      var currLocation = (url.length) ? url : window.location.search;
+      if (!currLocation || !currLocation.split("?") || currLocation.split("?").length &lt; 2)
+        return '';
+      var paramArr = currLocation.split("?")[1].split("&amp;");
+      var numOfParams = paramArr.length;
+      for (var i = 0; i &lt; numOfParams; i++) {
+        param = paramArr[i].split("=");
+        if (param[0] === parameter)
+          return (decode) ? decodeURIComponent(param[1]) : param[1];
+      }
+      return '';
+    };
+
+    $scope.$on("$sp.service_catalog.cart.count", function($evt, count) {
+        $scope.cartItemCount = count;
+    });
+
+    $scope.$on("$locationChangeSuccess", function(event, data) {
+      $scope.newPageId = $scope.getUrlParameters("id", true, data);
+        if (c.data.isMobile) {
+            if ($('div#popup_todos_mobile').is(":visible"))
+                $('li &gt; a#todos_popup').click();
+            else if ($('div#popup_cases_mobile').is(":visible"))
+                $('li &gt; a#cases_popup').click();
+        } else {
+            $('li.open &gt; a#cases_popup').click();
+            $('li.open &gt; a#todos_popup').click();
+        }
+
+      // hide modal-div on location change
+      if($scope.isMobileViewOnDesktopExpanded){
+        $scope.isMobileViewOnDesktopExpanded = false;
+        $scope.expanded = false;
+        $scope.showMobileMegaMenu = false;
+        $rootScope.$emit(c.SHOW_MOBILE_MEGA_MENU, false);
+      }
+    });
+
+    $scope.openLogin = function() {
+        $scope.modalInstance = $uibModal.open({
+            templateUrl: 'spPolarisModalLogin',
+            scope: $scope
+        });
+
+        var pageRoot = angular.element('.sp-page-root');
+        $scope.modalInstance.rendered.then(function() {
+            var $uibModalStack = $injector.get('$uibModalStack');
+            var modalObj = $uibModalStack.getTop();
+            var modal = modalObj.value.modalDomEl;
+
+            modal.attr('aria-label', modal.find('.panel-title').html());
+            modal.attr('aria-modal', 'true');
+            pageRoot.attr('aria-hidden', 'true');
+        });
+
+        $scope.modalInstance.closed.then(function() {
+            pageRoot.attr('aria-hidden', 'false');
+        });
+    };
+
+    $rootScope.$on("update.searchpage", function(e, searchPage) {
+        $scope.searchPage = searchPage;
+    });
+
+    $rootScope.$on('sp.avatar_changed', function() {
+        $scope.userID = '';
+        $timeout(function() {
+            $scope.userID = $scope.user.sys_id;
+        });
+    });
+
+    $rootScope.$on(c.SHOW_MOBILE_MENU_ON_DESKTOP, function(event, showMobileMenuOnDesktop) {
+        if (!showMobileMenuOnDesktop &amp;&amp; $scope.showMobileMenuOnDesktop) {
+            $scope.isMobileViewOnDesktopExpanded = false;
+        }
+        $scope.showMobileMenuOnDesktop = showMobileMenuOnDesktop;
+    });
+
+    $rootScope.$on(c.SHOW_MOBILE_MEGA_MENU, function(event, showMobileMegaMenu) {
+        $scope.showMobileMegaMenu = showMobileMegaMenu;
+    });
+
+    $scope.toggleMobileMenuVisibility = function(event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        $scope.isMobileViewOnDesktopExpanded = !$scope.isMobileViewOnDesktopExpanded;
+        $scope.expanded = false;
+        $scope.showMobileMegaMenu = false;
+        $rootScope.$emit(c.SHOW_MOBILE_MEGA_MENU, false);
+    };
+
+    $rootScope.$on(c.TOGGLE_MOBILE_MENU_VISIBILITY, function() {
+        $scope.toggleMobileMenuVisibility();
+    });
+
+    $scope.isHomepage = function() {
+        if (!$scope.page.id)
+            return true;
+
+        if ($scope.page.id == $scope.portal.homepage_dv)
+            return true;
+
+        return false;
+    };
+
+}]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;$sp-space--xxs: 2px !default;
+$sp-space--xs: 4px !default;
+$sp-space--sm: 8px !default;
+$sp-space--md: 12px !default;
+$sp-space--lg: 16px !default;
+$sp-space--xl: 24px !default;
+$sp-space--3xl: 40px !default;
+$background-primary : $body-bg !default;
+$font-size-md: 16px !default;
+$font-size-large: 20px !default;
+$font-size-xl: 24px !default;
+$brand-primary-darker: darken($brand-primary,16) !default;
+
+#searchBox .btn{
+  padding : 0px $sp-space--lg;
+}
+
+.dropdown-menu.empty-dropdown.ng-scope,.dropdown-menu.cart-dropdown.custom-drop-down,.dropdown-menu.wishlist-menu.custom-drop-down {
+  background-color: transparent !important;
+  padding-bottom: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+
+.navbar-inverse {
+  margin-bottom: 0px;
+  border-radius: 0px; 
+  background-color: $navbar-inverse-bg;
+  .navbar-header {
+    &amp;amp;.nav-container {
+      width: 100%;
+
+      .sub-navbar-overflow-entry-button {
+        position: relative;
+        float: right;
+        margin: $sp-space--md $sp-space--lg $sp-space--md 0;
+        padding: $sp-space--sm $sp-space--sm;
+        background-color: transparent;
+        background-image: none;
+        border: .1rem solid transparent;
+        border-radius: $border-radius-base;
+        border-color: rgba(255, 255, 255, .25);
+
+       .label {
+         float: right;
+         margin-right: -$sp-space--xs;
+         margin-top: -$sp-space--sm;
+         padding: $sp-space--xxs $sp-space--xs;
+       }
+
+       .label-as-badge {
+          font-size: $font-size-xs;
+          position: relative;
+          top: -$sp-space--xxs;
+          left: $sp-space--xxs;
+          padding: $sp-space--xxs $sp-space--xs;
+          margin-left: 0;
+          background-color: $btn-danger-bg;
+          color: $background-primary;
+        }
+
+        .icon-bar {
+          display: block;
+          width: 2.2rem;
+          height: .2rem;
+          border-radius: $border-radius-small;
+          background-color: $background-primary;
+        }
+        .icon-bar + .icon-bar {
+          margin-top: $sp-space--xs;
+        }
+      }
+    }
+
+    .mobile-view-on-desktop {
+    	position: absolute;
+      z-index: 999;
+      /* 60px is height of the header strip */
+      top: 60px;
+      right: 0;
+      min-height: 500px;
+      max-width: 400px;
+      background-color: $navbar-inverse-bg;
+      box-shadow: 5px 5px 5px $navbar-inverse-link-color;
+      color: $navbar-inverse-link-color;
+
+      .mobile-view-navbar {
+         list-style: none;
+         padding: 0 $sp-space--sm;
+         margin: 0;
+         display: flex;
+         flex-direction: column;
+         border-top: 1px solid darken($navbar-inverse-link-color, 45%);
+
+         .main-header-items {
+           list-style: none;
+           padding: $sp-space--md 0 0 $sp-space--lg;
+           margin: 0;
+           display: flex;
+           flex-direction: column;
+
+           &amp;amp; &amp;gt; li {
+             &amp;amp;:not(:last-child) {
+               padding-top: $sp-space--lg;
+             }
+             // Cart, tours, and Wishlist (Mobile View)
+             .nav.navbar-nav {
+               display: flex;
+               flex-direction: column;
+
+               li {
+                 padding-top: $sp-space--lg;
+               }
+             }
+           }
+         }
+
+         .mobile-mega-menu-entry {
+           margin: 0 -$sp-space--sm;
+           padding: $sp-space--xl $sp-space--lg;
+           background-color: $sp-navbar-divider-color;
+           
+           .dropdown-menu {
+           	background-color: transparent;
+           }
+         }
+         .separator {
+           margin: 20px -$sp-space--sm;
+           border-top: 1px solid darken($navbar-inverse-link-color, 30%);
+         }
+
+         li &amp;gt; a {
+           color: $navbar-inverse-link-color;
+           padding: 0;
+
+           &amp;amp;:hover, &amp;amp;:focus {
+             color: $navbar-inverse-link-hover-color !important;
+             background-color: transparent;
+           }
+           &amp;amp;:focus {
+             box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+             padding: $sp-space--xs;
+             border: 0.5px solid $navbar-inverse-link-color;
+             border-radius: $border-radius-base;
+           }
+         }
+        .header-menu-item &amp;gt; a{
+        	padding: $sp-space--md $sp-space--sm;
+        }
+       }
+
+      .impersonate-and-logout {
+          div &amp;gt; ul &amp;gt; li:first-child {
+            height: 0;
+
+            ul.dropdown-menu {
+              width: 400px;
+              display: block;
+              z-index: inherit;
+              background-color: $navbar-inverse-bg;
+              box-shadow: none;
+              border-radius: 0;
+              padding-left: $sp-space--xxs;
+              padding-bottom: $sp-space--lg;
+
+              li &amp;gt; a {
+                line-height: 2;
+
+                &amp;amp;:hover, &amp;amp;:focus {
+                  color: $navbar-inverse-link-hover-color !important;
+                  background-color: transparent;
+                }
+                &amp;amp;:focus {
+                  box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+                  padding: $sp-space--xs;
+                  margin-left: $sp-space--lg;
+                  border: 0.5px solid $navbar-inverse-link-color;
+                  border-radius: $border-radius-base;
+                  width: fit-content;
+                }
+              }
+              li:first-child {
+                display: none;
+              }
+           }
+         }
+       }
+     }
+
+    .navbar-brand {
+      margin: 0;
+      height: 60px;
+      padding: $sp-logo-margin-y 0px $sp-space--sm $sp-space--lg;
+      img, span {
+        margin: 0;
+        display: block;
+        max-height: $sp-logo-max-height;
+        max-width: $sp-logo-max-width;
+        position: relative;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+	padding-right: $sp-space--sm;
+      }
+    }
+
+    .navbar-right .dropdown-menu &amp;gt; li &amp;gt; a {
+      &amp;amp;:hover, &amp;amp;:focus {
+        background-color: darken($navbar-inverse-bg, 8%);
+      }
+
+      &amp;amp;:focus {
+        border: 0.5px solid $navbar-inverse-link-color;
+        border-radius: $border-radius-base;
+        box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+      }
+    }
+  }
+  .dropdown-menu &amp;gt; li &amp;gt; a {
+    color: $navbar-inverse-link-color;
+  }
+  .dropdown-toggle:focus {
+  	outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+  .sub-navbar {
+    background-color: $sp-navbar-divider-color;
+    border: none;
+    width: 100%;
+   
+    #cart-dropdown, #wishlist-menu {
+      display: none;
+      ~ * {
+        display: none !important;
+      }
+    }
+    .navbar-nav &amp;gt; li &amp;gt; a[href="?id=sc_cart"], .navbar-nav &amp;gt; li &amp;gt; a[href="?id=sc_wishlist"] {
+      display: none !important;
+    }
+    .gtd-dropdown-container {
+      display: none;
+    }
+    .open &amp;gt; a, .open &amp;gt; a:focus {
+      background-color: darken($sp-navbar-divider-color, 8%);
+    }
+    #cart-dropdown {
+      display: none;
+      :after {
+        content: "\f0d7";
+        vertical-align: baseline;
+        width: auto;
+        height: auto;
+        border: none;
+        margin-left: sp-space--xs !important;
+        display: inline-block;
+        font: normal normal normal $font-size-small/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    }
+   
+    .dropdown-menu {
+      background-color: $sp-navbar-divider-color;
+      &amp;gt; li &amp;gt; a:hover, &amp;gt; li &amp;gt; a:focus {
+        background-color: darken($sp-navbar-divider-color, 8%);
+	box-shadow:unset;
+      }
+    }
+  }
+  .dropdown-menu {
+    background-color: rgba($navbar-inverse-bg, 0.97);
+    border: none;
+    &amp;amp;.case-menu {
+      right: 0;
+      left: auto;
+      padding: 0;
+      width: 450px;
+      background: $background-primary;
+      overflow-y: hidden;
+    }
+  }
+  &amp;gt; .open &amp;gt; a:hover, &amp;gt; .open &amp;gt; a:focus  {
+    background-color: darken($navbar-invese-bg, 8%);
+  }
+  .fa-caret-down {
+    vertical-align: middle;
+    margin-top: $sp-space--xxs;
+  }
+  .caret:before {
+    content: "\f0d7";
+  }
+  .caret {
+    vertical-align: baseline;
+    width: auto;
+    height: auto;
+    border: none;
+    margin-left: $sp-space--xs !important;
+    display: inline-block;
+    font: normal normal normal $font-size-small/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  .label-as-badge {
+    font-size: $font-size-xs;
+    position: relative;
+    top: -$sp-space--sm;
+    left: -$sp-space--xxs;
+    padding: -$sp-space--xxs $sp-space--xs;
+    margin-left: 0;
+    background-color: $btn-danger-bg;
+    color: $background-primary;
+  }
+  .navbar {
+    transition: 250ms opacity ease-in-out; 
+    -webkit-transition: 250ms opacity ease-in-out; 
+    border: 0;
+  }
+  .navbar-fade {
+    opacity: 0.4;
+  }
+  .navbar-collapse {
+    padding-right: 0px;
+  }
+  .case-menu {
+    div#widget-tabs-2 {
+      border: none;
+      &amp;gt; .panel-heading {
+        border: none;
+        border-bottom: 1px solid $border-tertiary;
+      }
+    }
+  }
+
+  ul.nav.navbar-nav {
+    // Hiding the loading indicator from Header Menu base system widget
+    div.header-loader {
+       display: none;
+    }
+    li.sp-loading-indicator {
+       padding-top: $sp-space--xl;
+       margin-top: $sp-space--xxs;
+    }
+  }
+  
+  #more-items-dropdown {
+    overflow: visible;
+  }
+
+  .cart-dropdown, .wishlist-menu, .gtd-dropdown-container .empty-dropdown {
+    width: 350px;
+    padding: 0;
+    z-index: 1000;
+    border-top-left-radius: $border-radius-base !important;
+    border-top-right-radius: $border-radius-base !important;
+
+    ul {
+      max-height: 300px;
+      overflow: auto;
+    }
+
+    .subtotal {
+      display: block;
+    }
+
+    .item-image {
+      padding: 0;
+      margin: 0;
+      text-align: center;
+      max-width:100%;
+      height:auto;
+    }
+    label, p {
+      padding: 0;
+      margin: 0;
+    }
+    .media {
+      padding: 0;
+      margin: 0;
+    }
+    .media-left &amp;gt; a {
+      display: block;
+      width: 48px;
+      max-width: 48px;
+    }
+    .media-body {
+      label {
+        font-weight: bold;
+      }
+    }
+    li.media {
+      border-top: 1px solid #cccccc;
+      padding: 1rem;
+    }
+    .panel {
+      margin: 0;
+    }
+    .panel .panel-body {
+      padding: 0;
+    }
+    .btn-clear {
+      color: #333;
+      background-color: $background-primary;
+    }
+    p.quantity-price {
+      padding-top: $sp-space--xs;
+      span {
+        color: $text-muted;
+        padding-right: $sp-space--xs;
+      }
+    }
+    .align-right {
+      text-align: right;
+    }
+  }
+
+  .item-added-tooltip, wishlist-item-added-tooltip {
+    width: 184px;
+    font-size: $font-size-small;
+  }
+
+  .gtd-dropdown-container {
+    .empty-tour-content {
+      text-align: center;
+      margin: $sp-space--3xl $sp-space--lg;
+    }
+    .dropdown-menu li {
+      a {
+        cursor: pointer;
+      }
+      min-width: 20em;
+    }
+    .label-as-badge {
+      width: 12px;
+      height: 12px;
+      display: inline-block;
+      padding: 0px;
+      padding-top: $sp-space--xxs;
+    }
+    .badge-container {
+      display: inline-block;
+      width: 12px;
+    }
+  }
+
+}
+@media screen and (min-width: 768px) {
+  .navbar-inverse {
+    .navbar-right &amp;gt; .navbar-nav &amp;gt; div {
+      float: left;
+    }
+    .navbar-right {
+      margin-right: $sp-space--sm;
+      &amp;gt; ul {
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+
+        -moz-box-orient: horizontal;
+        box-orient: horizontal; 
+        -webkit-box-orient: horizontal;
+      }
+      .navbar-nav &amp;gt; li &amp;gt; a {
+        padding-right: $sp-space--md;
+        padding-left: $sp-space--md;
+      }
+      .header-menu-item &amp;gt; a{
+        	padding: $sp-space--sm;
+        }
+    }
+    .navbar-avatar {
+      margin-top: -$sp-space--xs;
+    }
+    a#todos_popup {
+      padding-left:0px;
+    }
+    .navbar-nav .open .dropdown-menu &amp;gt; li &amp;gt; a {
+      padding: 10px 20px;
+    }
+    .navbar-header {
+      position:relative;
+      .dropdown-toggle {
+        height: 60px;
+      }
+      .navbar-nav  &amp;gt; li  &amp;gt; a {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        max-height:50px;
+        padding-right: $sp-space--md;
+        padding-left: $sp-space--md;
+      }
+    }
+    .temp-mobile {
+      display: inline-block;
+    }
+    .sub-navbar {
+      display: flex;
+      padding-left: 0;
+    }
+
+    .sub-navbar--mobile-view {
+      max-height: 0px;
+      /* Using !important here as we are overriding bootstrap style */
+      overflow-y: hidden !important;
+    }
+    .navbar-nav  &amp;gt; li  &amp;gt; a {
+		padding-top: 20px;
+		padding-bottom: 20px;
+	}
+  }
+}
+
+// Search bar styles in the header (Should always be in the center)
+.header-search {
+   @media screen and (min-width: 768px) {
+      position: absolute;
+      left: 37%;
+      margin: $sp-space--md 0;
+      width: 20%;
+   }
+
+   @media (min-width : 320px) and (max-width : 767px) {
+      margin-top: 0 !important;
+      padding-bottom: 10px;
+      float: right;
+      width: 100%;
+   }
+
+   @media (min-width : 768px) and (max-width: 867px) {
+      left: 23% !important;
+   }
+
+   @media (min-width : 868px) and (max-width: 1024px) {
+      left: 27% !important;
+   }
+
+   @media (min-width : 1025px) and (max-width: 1200px) {
+      left: 30% !important;
+   }
+
+   @media (min-width : 1201px) and (max-width: 1400px) {
+      left: 33% !important;
+   }
+}
+
+@media (min-width : 320px) and (max-width : 767px) {
+  .navbar-inverse {
+    .dropdown-menu.case-menu {
+      width: 100%;
+    }
+    .navbar-toggle {
+      border-color: rgba(255, 255, 255, .25);
+    }
+    .navbar-toggle:focus {
+      -webkit-box-shadow: 0rem 0rem 0.5rem #1f8476 
+    }
+    .navbar-nav {
+      display: block;
+      margin: 0;
+
+      .open .dropdown-menu &amp;gt; li &amp;gt; a {
+        padding: 5px 30px;
+      }
+    }
+    .sub-navbar {
+      padding: 0px 0px;
+    }
+    .upper-collapse {
+      width: 100%;
+      padding-bottom: 0px;
+    }
+    .navbar-collapse {
+      padding-top: 0px;
+      padding-left: 0px;
+      overflow: hidden;
+      ul {
+        margin: 0;
+      }
+    }
+    .navbar-header.nav-container {
+      .sub-navbar-overflow-entry-button {
+        float: none;
+        position: absolute;
+        right: 0;
+      }
+      .mobile-view-on-desktop {
+        min-width: 100%;
+        // max-width: 100%; is needed for 400% zoom-level in WCAG resolution
+        max-width: 100%;
+        top: 60px;
+        box-shadow: none;
+
+        .impersonate-and-logout {
+           div &amp;gt; ul &amp;gt; li:first-child {
+             height: auto;
+           }
+         }
+      }
+      .mobile-view-on-desktop.search-visible {
+         top: 53px;
+      }
+
+      &amp;gt; ul {
+        display: inline-block;
+        padding: 10px 10px 0 0;
+        float: right;
+        margin: 0;
+      }
+      &amp;gt; li {
+        display: inline-block; 
+      }
+    }
+    .height-adjust {
+      padding: $sp-space--sm 0px;
+      margin-bottom: $sp-space--md;
+    }
+    .popup-edit {
+      background: $background-primary;
+      position: fixed;
+      top:0; 
+      height:100%;
+      margin-top: 0;
+      max-height:100%;
+      width:100%
+    }
+    .navbar-collapse-label {
+      float: right;
+      margin-right: -5px;
+      margin-top: -7px;
+    }
+    button &amp;gt; span.label {
+      padding: .2em .5em .2em;
+    }
+  }
+  .nav &amp;gt; li &amp;gt; a {
+  	padding-left: 0px;
+  }
+}
+.navbar-right{
+  .nav{
+    .dropdown{
+      .tooltip{
+        .tooltip-inner{
+        	word-wrap:unset;
+        }
+      }
+    }
+  }
+}
+
+/* Header search */
+input[name="q"]::placeholder {
+  font-size: $font-size-md !important;
+}
+
+input[name="q"],.search-combobox--header .input-container__input{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.desktop-headersearch-wrapper {
+  display:flex;
+  justify-content: end;
+  padding: $sp-space--md 0px $sp-space--md $sp-space--md;
+
+  .desktop-headersearch-icon {
+    padding: $sp-space--sm $sp-space--sm $sp-space--sm $sp-space--sm;
+    color: $navbar-inverse-link-color;
+    float: right;
+    &amp;amp;:hover {
+      color: $navbar-inverse-link-hover-color;
+    } 
+    &amp;amp;:focus {
+      box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+      border: 0.5px solid $navbar-inverse-link-color;
+      border-radius: $border-radius-base;
+    }
+  }
+  .hide-search {
+    width: 80px;
+    transition: width 0.5s ease-in-out;
+  }
+  .visibility-collapse {
+    visibility: collapse;
+  }
+  .show-search {
+    width: 400px !important;
+    transition: width 0.5s ease-in-out;
+    visibility: visible;
+  }
+}
+.mobile-header-search-icon-wrapper {
+  float: none;
+  position: absolute;
+  right: 60px;
+  padding: $sp-space--md;
+
+  .mobile-header-search-icon{
+    color: $navbar-inverse-link-color;
+    padding: $sp-space--xs;
+    padding-right: $sp-space--xs ;
+    &amp;amp;:hover {
+      color: $navbar-inverse-link-hover-color;
+    }
+  }
+}
+.mobile-header-search {
+  display: flex;
+  height: 6rem;
+  padding: $sp-space--md $sp-space--lg 0px $sp-space--lg;
+
+  .mobile-header-search-back {
+    font-size: $font-size-large;
+    padding: $sp-space--xs;
+    margin: 0px $sp-space--md $sp-space--lg 0px;
+    align-self: center;
+    .fa {
+    	color: $navbar-inverse-link-color;
+       	&amp;amp;:hover {
+      		color: $navbar-inverse-link-hover-color;
+    	}
+    }
+  }
+  .full-width {
+    width: 100%;
+    padding-top: $sp-space--lg;
+  }
+}
+
+/* Mobile menu modal */
+#mobile-menu-items-modal{
+  color: $navbar-inverse-link-color;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 25;
+  overflow: auto;
+  background-color: $brand-primary-darker;
+  
+  a {
+  	color: $navbar-inverse-link-color;
+  }
+  li {
+    padding-left: $sp-space--md;
+    .fa {
+    	font-size: $font-size-xl;
+      margin-right: $sp-space--md;
+    }
+  }
+  li &amp;gt; a:focus {
+    box-shadow: inset 0 0 0 0.1rem $navbar-inverse-link-hover-color;
+    padding: $sp-space--xs;
+    border: 0.5px solid $navbar-inverse-link-color;
+    border-radius: $border-radius-base;
+  }
+  .dropdown-menu {
+    background-color: transparent;
+  }
+  .mobile-menu-modal-list {
+    list-style-type: none;
+    padding: $sp-space--sm;
+  }
+  .user-profile-mobile {
+    font-size: $font-size-large;
+    font-weight: 600;
+  }
+  .line-separator-categories {
+    margin-top: 0px;
+    margin-bottom: $sp-space--lg;
+    width: 100%;
+    text-align: left;
+    margin-left: 0;
+  }
+  .tree-mobile {
+    display: flex;
+    margin: 0 $sp-space--lg $sp-space--lg $sp-space--lg;
+  }
+  .result-heading-mobile {
+    display: flex;
+    align-items: center;
+    font-style: normal;
+    font-weight: 600;
+    font-size: $font-size-md;
+    line-height: 23px;
+    gap: $sp-space--md;
+    padding: $sp-space--md $sp-space--lg;
+  }
+  .close-modal-button {
+    display: flex;
+    justify-content: right;
+    margin-right: $sp-space--lg;
+    margin-top: $sp-space--lg;
+    
+    path {
+    	fill: $navbar-inverse-link-color;
+    }
+  }
+  .mobile-list-item {
+    margin: $sp-space--xs 0px;
+    padding: $sp-space--md;
+  }
+  .avatar-container .avatar.soloAvatar .sub-avatar {
+    font-size: $font-size-large;
+  }
+  .user-profile-menu-item {
+    font-size: $font-size-large;
+    padding: $sp-space--md;
+    margin: $sp-space--xs 0px;
+  }
+  .mobile-menu-icon {
+    font-size: $font-size-xl;
+    vertical-align: sub;
+  }
+  .guest-avatar {
+    height: 42px;
+    width: 42px;
+    border-radius: 50%;
+    text-align: center;
+    display: inline-block;
+    vertical-align: middle;
+    border-color: $border;
+    background-color: $background-tertiary;
+  }
+  .guest-avatar-icon {
+    color: $brand-primary;
+    font-size: $font-size-xl;
+    vertical-align: -webkit-baseline-middle;
+    margin: 0px !important;
+  }
+  .show-more-item{
+  	margin-bottom: $sp-space--lg;
+	}
+  hr {
+  	border-color: $brand-primary;
+  }
+  .navbar-avatar {
+    margin-right: $sp-space--md !important;
+  }
+}
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list/&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id&gt;portal-polaris-header&lt;/id&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function pspHeaderLink(scope, element, attrs, controller) {
+
+	var KEY = {
+		ENTER: 13,
+		SPACE: 32
+	};
+    $(element).on('click', 'a.navbar-brand', function(e) {
+        scope.expanded = false;
+    });
+    $(element).on('click.nav', '.navbar-collapse.in', function(e) {
+        var target = $(e.target);
+        if (target.is('a') &amp;&amp; !target.hasClass("dropdown-toggle") &amp;&amp; target.siblings('.dropdown-menu').length == 0) {
+            // collapse mobile nav if clicked an anchor that isn't a dropdown toggle
+            scope.expanded = false;
+            return;
+        }
+
+        // if neither target nor parent is an anchor or the parent anchor is a dropdown-toggle, do nothing
+        if (!target.parent().is('a') || target.parent().hasClass("dropdown-toggle") || target.parent().siblings('.dropdown-menu').length &gt; 0)
+            return;
+
+        // collapse mobile nav if target is part of a submenu
+        if (target.parents("ul.dropdown-menu").length &gt; 0) {
+            scope.expanded = false;
+            return;
+        }
+
+        // collapse mobile nav is target is part of the dropdown
+        if (target.parents("div.navbar-collapse").length &gt; 0)
+            scope.expanded = false;
+    });
+    $(element).on('keydown', '.dropdown-menu &gt; .header-menu-item', function(e) {
+        var target = e.target;
+        if (target.localName === 'a') {
+            if (e.keyCode === 37 || e.keyCode === 39) {
+                e.preventDefault();
+                $(target).parents('li').removeClass('open');
+                $(target).parents('li').find('a').focus();
+            } else if (e.keyCode === 9) {
+                $(target).parents('li').removeClass('open');
+            }
+        }
+    });
+
+    $('body').click(function(event) {
+        if ($(event.target).text() !== controller.toursTranslation &amp;&amp; !$(event.target).is("[aria-expanded]") &amp;&amp; scope.isMobileViewOnDesktopExpanded &amp;&amp; !(document.getElementsByClassName("mobile-menu-modal-list")[0].contains(event.target)))
+            scope.toggleMobileMenuVisibility();
+    });
+
+    // Closing mobile navigation menu after hitting Tab key on Logout option to focus on next DOM element on the page.
+    $(document).on('keydown', 'ul &gt; li.logout &gt; a[href*="logout"]', function(keyDownEvent) {
+        var TAB_KEY_VALUE = 'Tab';
+
+        if (keyDownEvent.key === TAB_KEY_VALUE &amp;&amp; scope.mobileDevice) {
+            scope.$applyAsync(function() {
+                scope.toggleMobileMenuVisibility();
+            });
+        }
+    });
+    $(document).on('keydown', 'ul &gt; li.login', function(keyDownEvent) {
+        var TAB_KEY_VALUE = 'Tab';
+
+        if (keyDownEvent.key === TAB_KEY_VALUE &amp;&amp; scope.mobileDevice) {
+            scope.$applyAsync(function() {
+                scope.toggleMobileMenuVisibility();
+            });
+        }
+    });
+    // Helper function to handle the arrow key navigation in the header
+    function handleKeyPressEvents(e) {
+        var target = e.target;
+        var querySelector;
+        if ($(this).hasClass('main-header-item'))
+            querySelector = 'li.main-header-item';
+        else if ($(this).hasClass('gt-menu-item'))
+            querySelector = 'li.gt-menu-item';
+
+        if (target.localName === 'a') {
+            var currentMenuItem = $(target).parents('li');
+            var parentUL = currentMenuItem.parents('ul');
+            var allMenuItems = parentUL.children(querySelector);
+            var firstMenuItem = allMenuItems.first();
+            var lastMenuItem = allMenuItems.last();
+            var menuItemToFocus;
+
+            // Only Side arrow keys should work for gt-menu-item and only vertical arrow keys should work for main-header-item
+            if (querySelector === 'li.gt-menu-item' &amp;&amp; !(e.keyCode === 37 || e.keyCode === 39 || e.keyCode === 9))
+                return;
+            else if (querySelector === 'li.main-header-item' &amp;&amp; !(e.keyCode === 38 || e.keyCode === 40))
+                return;
+
+            if (querySelector === 'li.gt-menu-item') {
+                if (e.keyCode === 9) {
+                    $(target).parents('li').removeClass('open');
+                    return;
+                } else {
+                    e.preventDefault();
+                    currentMenuItem.removeClass('open');
+                }
+            } else
+                e.preventDefault();
+
+            if (e.keyCode === 37 || e.keyCode === 38) {
+                var previousMenuItem = currentMenuItem.prevAll(querySelector);
+                currentMenuItem.prevAll(querySelector).first();
+                //enable circular navigation
+                menuItemToFocus = previousMenuItem.length ? previousMenuItem : lastMenuItem;
+                menuItemToFocus.find('a').focus();
+            } else if (e.keyCode === 39 || e.keyCode === 40) {
+                var nextMenuItem = currentMenuItem.nextAll(querySelector).first();
+                //enable circular navigation
+                menuItemToFocus = nextMenuItem.length ? nextMenuItem : firstMenuItem;
+                menuItemToFocus.find('a').focus();
+            }
+        }
+    }
+
+    // Handler to focus the first element of More Items dropdown on pressing Space/Enter/Down Arrow key.
+    $(element).on('keydown', '#more-items-button', function(e) {
+        if (e.keyCode === 32 || e.keyCode === 13 || e.keyCode === 40) {
+            e.preventDefault();
+            var target = e.target;
+            var moreItemsDropdown = '#more-items-dropdown';
+            $(target).click();
+            $(moreItemsDropdown).find('li.header-menu-item a:first').focus();
+        }
+    });
+
+    // Capturing the arrow key navigation in mega menu for both desktop and mobile view  
+    $(element).on('keydown', '.gt-menu-item, .main-header-item', handleKeyPressEvents);
+
+    var rateLimitedCallback = debounce(function() {
+        scope.$apply(function() {
+            // update current scope based on the new innerWidth and let angular update the view.
+            scope.mobileDevice = controller.data.isMobile || (window.innerWidth &lt;= controller.MOBILE_DEVICE_SCREEN_WIDTH);
+        });
+    }, 250);
+
+    $(window).resize(rateLimitedCallback);
+
+    // This helper returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    function debounce(func, wait, immediate) {
+        var timeout;
+        return function() {
+            var context = this,
+                args = arguments;
+            var later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+            var callNow = immediate &amp;&amp; !timeout;
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+            if (callNow) func.apply(context, args);
+        };
+    }
+}]]&gt;&lt;/link&gt;&lt;name&gt;Portal Polaris Header&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+    data.isMobile = gs.isMobile();
+    data.instanceId = $sp.getDisplayValue("sys_id");
+
+    data.login_page = $sp.getValue('login_page');
+
+    data.langSelector = GlidePluginManager.isActive('com.glide.i18n') ? $sp.getWidget('sp-lang-selector') : "";
+    
+	data.showSubHeader = true;
+  var portalRecord = $sp.getPortalRecord();
+  var urlSuffix=portalRecord.getValue("url_suffix");
+	// Load the Secondary Menu Widget
+
+    var qsConfig = $sp.getValue("quick_start_config");
+    var qsConfigJson = qsConfig ? JSON.parse(qsConfig)[0] : {};
+    if(qsConfigJson.headerSearch &amp;&amp; qsConfigJson.headerSearch.display_search === true){
+      data.excludeSeachForPages = [];
+      if (qsConfigJson.headerSearch.exclude_search_for_pages)
+            data.excludeSeachForPages = qsConfigJson.headerSearch.exclude_search_for_pages.split(",");
+      data.aisEnabled = $sp.isAISearchEnabled();
+      if (data.aisEnabled) {
+          var typeAheadOptions = {
+              search_application: portalRecord.getValue('search_application'),
+              disable_all_suggestions: false
+          };
+          if (qsConfigJson.headerSearch.search_placeholder_text)
+              typeAheadOptions.placeholder = gs.getMessage(qsConfigJson.headerSearch.search_placeholder_text);
+      }
+      else {
+          var typeAheadOptions = {
+              size: 'md',
+              color: 'default'
+          };
+          if (qsConfigJson.headerSearch.search_placeholder_text)
+              typeAheadOptions.title = gs.getMessage(qsConfigJson.headerSearch.search_placeholder_text);
+      }
+      data.typeAheadSearch = $sp.getWidget('typeahead-search', typeAheadOptions);
+	  }
+	  if(qsConfigJson.widget){
+		data.embeddedWidget = $sp.getWidget(qsConfigJson.widget.widget_id, qsConfigJson.widget.instance_options || {});
+	  }
+	  data.showTypeAheadSearch = (data.typeAheadSearch &amp;&amp; data.typeAheadSearch.sys_id ? true : false) &amp;&amp; qsConfigJson.headerSearch &amp;&amp; qsConfigJson.headerSearch.display_search === true;
+	
+
+    var showSubHeaderString = qsConfigJson.showSubHeader;
+    if (!gs.nil(showSubHeaderString))
+        switch (showSubHeaderString.toUpperCase()) {
+            case "ON_LOG_IN":
+                data.showSubHeader = gs.isLoggedIn();
+                break;
+            case "NEVER":
+                data.showSubHeader = false;
+                break;
+            case "ALWAYS":
+            default:
+                data.showSubHeader = true;
+                break;
+        }
+
+    //Initialize menu objects
+    data.sub = {};
+    data.top = {};
+
+    var menu = $sp.getValue("sp_rectangle_menu");
+
+    if (!gs.nil(menu)) {
+
+        data.sub.menu = $sp.getWidgetFromInstance(menu);
+
+        //Copy sub menu to top menu, we want cart up top and menu items in the sub nav
+        data.top.menu = JSON.parse(JSON.stringify(data.sub.menu));
+
+        //Fetching My Items menu item sys_id
+        var configOptions = JSON.parse((data.top.menu &amp;&amp; data.top.menu.options &amp;&amp; data.top.menu.options.widget_parameters) || '{}');
+        data.moreItemsSysId = (configOptions.enable_more_items &amp;&amp; configOptions.enable_more_items.sysId) || '';
+
+        var subMenu = data.sub.menu;
+        var moreItems;
+        if (subMenu &amp;&amp; subMenu.data) {
+            subMenu.data.replace = true;
+            // Hide login if menu already has link to login
+            data.hasLogin = false;
+            var subMenuDataItems = (subMenu.data.menu &amp;&amp; subMenu.data.menu.items) || [];
+            for (var i in subMenuDataItems) {
+
+                var item = subMenuDataItems[i];
+                if (item.sys_id === data.moreItemsSysId)
+                    moreItems = item;
+                if (item.type === 'page' &amp;&amp; item.sp_page === data.login_page)
+                    data.hasLogin = true;
+            }
+        }
+
+        if (moreItems &amp;&amp; moreItems.items)
+            data.moreItems = moreItems.items;
+        if (moreItems &amp;&amp; data.moreItems &amp;&amp; moreItems.label) {
+            // Removing items with no label
+            data.moreItems = data.moreItems.filter(function(moreItem) {
+                return moreItem.label;
+            });
+
+            // Truncating label of items exceeding 60 character limit
+            data.moreItems.forEach(function(moreItem) {
+                moreItem.shortLabel = (moreItem.label.length &gt; 60) ? (moreItem.label.substring(0, 60) + '...') : moreItem.label;
+            });
+        }
+    
+    data.showMoreItems = (moreItems &amp;&amp; moreItems.label &amp;&amp; data.moreItems &amp;&amp; configOptions.enable_more_items) ? (data.moreItems.length &gt; 0 &amp;&amp; configOptions.enable_more_items.value) : false;
+    if (data.showMoreItems)
+        data.moreItemsTitle = data.moreItems.length === 1 ? data.moreItems[0].shortLabel : moreItems.label;
+		
+		
+	//Clean up items that don't belong
+    subMenu.data.cartWidget = {};
+    subMenu.options.enable_cart = false;
+    subMenu.options.enable_wishlist = false;
+    subMenu.data.showTours = false;
+    subMenu.data.menuType = 'SUB';
+
+    // Make this true to show Tours menu in main header
+    data.top.menu.data.showTours = true;
+    data.top.menu.data.hasLogin = data.hasLogin;
+    data.top.menu.data.menuType = 'TOP';
+
+    if(data.top.menu.sys_id === '756957db43f5ed1011a4ebdffab8f243'){
+			if (data.top.menu &amp;&amp; data.top.menu.data &amp;&amp; data.top.menu.data.menu &amp;&amp; data.top.menu.data.menu.items){
+				data.sub.menu.data.menu.items = data.sub.menu.data.menu.items.filter(function(item) {
+						return item.type != 'scripted';
+				});
+				data.top.menu.data.menu.items = data.top.menu.data.menu.items.filter(function(item) {
+						return item.type == 'scripted';
+				});
+			}
+		}	
+		else {
+			 if (data.top.menu &amp;&amp; data.top.menu.data &amp;&amp; data.top.menu.data.menu &amp;&amp; data.top.menu.data.menu.items)
+        data.top.menu.data.menu.items = [];
+		}
+	}
+    // Analytics
+    data.analyticsSupportEnabled = new GlidePluginManager().isActive('com.sn_content_analytics') &amp;&amp; new GlidePluginManager().isActive('com.sn_content_delivery') &amp;&amp; !sn_cd.cd_ContentDelivery.isContentPreview($sp);
+    data.supportProfilePortal = new sn_sppolaris_theme.UserProfileUtil().getProfileURL(urlSuffix);
+    data.loginWidget = $sp.getWidgetFromInstance('login-modal');
+	data.initialPageId = $sp.getParameter('id');
+	if (!data.initialPageId)
+		data.initialPageId = '';
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_header_footer&lt;/sys_class_name&gt;&lt;sys_created_by&gt;maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2021-10-22 17:18:47&lt;/sys_created_on&gt;&lt;sys_id&gt;3552f974845a1110f87767389929c604&lt;/sys_id&gt;&lt;sys_mod_count&gt;22&lt;/sys_mod_count&gt;&lt;sys_name&gt;Portal Polaris Header&lt;/sys_name&gt;&lt;sys_package display_value="Portal Next Experience Theme" source="sn_sppolaris_theme"&gt;e9276da055525110f87724327a36ce96&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Portal Next Experience Theme"&gt;e9276da055525110f87724327a36ce96&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_header_footer_3552f974845a1110f87767389929c604&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-05-05 10:16:00&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;!-- Nav bar menu items starts--&gt;
+&lt;nav class="navbar-inverse instance-{{c.data.instanceId}}" aria-label="Primary" role="navigation"&gt;
+  &lt;!-- Piece above searchbar --&gt;
+  &lt;div class="clearfix"&gt;
+    &lt;div class="navbar-header nav-container"&gt;
+    &lt;!-- Header search widget for Mobile View --&gt;
+      &lt;div ng-if="data.showTypeAheadSearch &amp;&amp; (showMobileMenuOnDesktop || mobileDevice)"&gt;
+        &lt;div class="mobile-header-search" ng-show="showSearchbarOnMobile"&gt;
+          &lt;div class="mobile-header-search-back"  ng-click="hideSearchBar1()"&gt;
+            &lt;i class="fa fa-arrow-left"&gt;&lt;/i&gt;
+          &lt;/div&gt;
+          &lt;div id="searchBox" class="full-width" &gt;
+            &lt;sp-widget widget="data.typeAheadSearch"&gt;&lt;/sp-widget&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;!-- Logo --&gt;
+      &lt;a class="navbar-brand" ng-if="!portal.logo &amp;&amp; !showSearchbarOnMobile" href="?id={{::portal.homepage_dv}}" aria-label="{{::portal.title}}"&gt;&lt;span&gt;{{::portal.title}}&lt;/span&gt;&lt;/a&gt;
+	    &lt;a class="navbar-brand navbar-brand-logo"
+           ng-if="portal.logo &amp;&amp; !showSearchbarOnMobile"
+           href="?id={{::portal.homepage_dv}}"
+           aria-label="{{::portal.title}}${ - Home Page}"
+           data-toggle="tooltip"
+           data-placement="bottom"
+           data-title="{{::portal.title}}${ - Home}"&gt;
+        &lt;img ng-src="{{::portal.logo}}" alt="{{::portal.title}}${ - Home Page}"/&gt;
+      &lt;/a&gt;
+
+      &lt;!-- Mobile Navigation View --&gt;
+      &lt;div ng-if="(showMobileMenuOnDesktop || mobileDevice) &amp;&amp; !showSearchbarOnMobile"&gt;
+        &lt;!-- Header search icon for Mobile View --&gt;
+        &lt;div class="gt-menu-item" ng-if="data.showTypeAheadSearch"&gt;
+          &lt;div ng-show="!data.excludeSeachForPages.includes(newPageId)" class="mobile-header-search-icon-wrapper"&gt;
+            &lt;div ng-if="!showSearchbarOnMobile" class="mobile-header-search-icon" tabindex="0" ng-click="showSearchBarMobile($event)" &gt;
+              &lt;i class="fa fa-search searchprimary"&gt;&lt;/i&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;!-- Toggle Button (Hamburger Menu for Mobile View) --&gt;
+        &lt;button type="button" 
+                class="sub-navbar-overflow-entry-button"
+                aria-label="${Show menu primary navigation}" 
+                data-toggle="tooltip"
+                data-placement="auto bottom" 
+                data-original-title="${Show Menu}"
+                ng-click="toggleMobileMenuVisibility($event)"&gt;
+          &lt;div ng-if="!isMobileViewOnDesktopExpanded"&gt;
+             &lt;span class="label label-as-badge label-primary"&gt;{{data.todoCount + data.requestCount + cartItemCount}}&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+             &lt;span class="icon-bar"&gt;&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/button&gt;
+
+        &lt;!-- Mobile menu items dialog modal--&gt;
+      	&lt;div ng-show="isMobileViewOnDesktopExpanded" id = "mobile-menu-items-modal" ng-include="'polaris-menuitems-mobileview'"&gt;&lt;/div&gt;
+      
+      &lt;/div&gt;
+
+      &lt;!-- Header Navbar --&gt;
+      &lt;div ng-if="!(showMobileMenuOnDesktop || mobileDevice)" class="navbar-right"&gt;
+        &lt;div class="height-adjust"&gt;
+          &lt;ul class="nav navbar-nav"&gt;
+            &lt;li class="hidden-xs sp-loading-indicator la-sm" ng-class="{'invisible': !loadingIndicator}" &gt;
+               &lt;div&gt;&lt;/div&gt;
+               &lt;div&gt;&lt;/div&gt;
+               &lt;div&gt;&lt;/div&gt;
+            &lt;/li&gt;
+            
+            &lt;!-- Header search widget for desktop view --&gt;
+            &lt;li class="gt-menu-item" ng-if="data.showTypeAheadSearch" &gt;
+              &lt;div ng-show="!data.excludeSeachForPages.includes(newPageId)" class="desktop-headersearch-wrapper"&gt;
+                &lt;div id="searchBox" class="hide-search visibility-collapse desktop-headersearch"&gt;
+                  &lt;sp-widget widget="data.typeAheadSearch"&gt;&lt;/sp-widget&gt;
+                &lt;/div&gt;
+                &lt;div aria-expanded="false" class="desktop-headersearch-icon" id="searchbox-icon" ng-click="showAndExpandSearch()" tabindex = "0" aria-label="${Show search box}"&gt;
+                  &lt;i class="fa fa-search searchprimary"&gt;&lt;/i&gt;
+                &lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+            
+            
+            &lt;li class="gt-menu-item" aria-label="Custom Widget"&gt;
+               &lt;sp-widget widget="::data.embeddedWidget"&gt;&lt;/sp-widget&gt;
+            &lt;/li&gt;
+            &lt;li class="gt-menu-item" id="more-items" role="presentation" ng-if="data.showMoreItems" &gt;
+              &lt;a ng-if="(data.moreItems.length === 1) &amp;&amp; (data.moreItems[0].label !== data.moreItems[0].shortLabel)"
+                 href="{{data.moreItems[0].href}}"
+                 data-toggle="tooltip"
+                 data-placement="bottom"
+                 data-original-title="${{{data.moreItems[0].label}}}"
+                 aria-label="${{{data.moreItems[0].label}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;/a&gt;
+              &lt;a ng-if="(data.moreItems.length === 1) &amp;&amp; (data.moreItems[0].label === data.moreItems[0].shortLabel)"
+                 href="{{data.moreItems[0].href}}"
+                 aria-label="${{{data.moreItems[0].label}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+              &lt;/a&gt;
+              &lt;a href
+                 ng-if="data.moreItems.length &gt; 1"
+                 id="more-items-button"
+                 data-toggle="dropdown"
+                 data-target="more-items-dropdown"
+                 data-placement="bottom"
+                 aria-label="${{{data.moreItemsTitle}}}"
+                 &gt;
+                &lt;span ng-bind-html="'${' + data.moreItemsTitle + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                &lt;i class="fa collapse-margin m-l-xs fa-caret-down"&gt;&lt;/i&gt;
+              &lt;/a&gt;
+              &lt;ul id="more-items-dropdown" ng-if="data.moreItems.length &gt; 1" class="dropdown-menu"
+                   aria-label="${{{data.moreItemsTitle}}}"&gt;
+                &lt;li role="presentation"
+                    ng-repeat="item in data.moreItems"
+                    class="ng-scope dropdown-menu-line header-menu-item"&gt;
+                  &lt;a ng-if="item.label !== item.shortLabel"
+                     href="{{item.href}}"
+                     data-toggle="tooltip"
+                     data-placement="bottom"
+                     data-original-title="${ {{item.label}} }"
+                     aria-label="{{item.label}}"
+                    &gt;
+                    &lt;span ng-bind-html="'${' + item.shortLabel + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                  &lt;/a&gt;
+                  &lt;a ng-if="item.label === item.shortLabel"
+                     href="{{item.href}}"
+                     aria-label="{{item.label}}"
+                     &gt;
+                    &lt;span ng-bind-html="'${' + item.shortLabel + '}'" aria-hidden="true"&gt;&lt;/span&gt;
+                  &lt;/a&gt;
+                &lt;/li&gt;
+              &lt;/ul&gt;
+            &lt;/li&gt;
+            
+            &lt;!-- Cart, tours, and Wishlist --&gt;
+              &lt;li class="gt-menu-item" &gt;
+                &lt;sp-widget widget="data.top.menu" id="menu_item"&gt;&lt;/sp-widget&gt;
+              &lt;/li&gt;  
+              &lt;li class="gt-menu-item" aria-label="Language Selector"&gt;
+                &lt;sp-widget widget="::data.langSelector"&gt;&lt;/sp-widget&gt;
+              &lt;/li&gt;
+            
+            &lt;li&gt;
+              &lt;div sp-navbar-toggle="" class="navbar-right" id="sp-nav-bar" &gt;
+                &lt;ul ng-if="::(!user.logged_in &amp;&amp; page.id != portal.login_page_dv &amp;&amp; !data.hasLogin)" class="nav navbar-nav"&gt;
+                  &lt;li class="login"&gt;&lt;a href ng-click="openLogin()"&gt;${Login}&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+                &lt;ul ng-if="::user.logged_in" class="nav navbar-nav"&gt;
+                  &lt;!-- chat, avatar, and logout --&gt;
+                  &lt;li class="dropdown hidden-xs"&gt;
+                    &lt;a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" aria-label="{{c.userLabel}}"&gt;
+                      &lt;span class="navbar-avatar"&gt;&lt;sn-avatar class="avatar-small-medium" primary="avatarProfile" /&gt;&lt;/span&gt;
+                      &lt;span class="visible-lg-inline"&gt;{{::user.name}}&lt;/span&gt;
+                    &lt;/a&gt;
+                    &lt;ul class="dropdown-menu"&gt;
+                      &lt;li&gt;&lt;a ng-href="?id={{::data.supportProfilePortal}}"&gt;${Profile}&lt;/a&gt;&lt;/li&gt;
+                      &lt;li class="logout"&gt;&lt;a href="{{::portal.logoutUrl}}"&gt;${Logout}&lt;/a&gt;&lt;/li&gt;
+                    &lt;/ul&gt;
+                  &lt;/li&gt;
+                  &lt;li class="visible-xs-block"&gt;&lt;a ng-href="?id={{::data.supportProfilePortal}}"&gt;&lt;span class="navbar-avatar"&gt;&lt;sn-avatar class="avatar-small-medium" primary="avatarProfile" /&gt;&lt;/span&gt;{{::user.name}}&lt;/a&gt;&lt;/li&gt;
+                  &lt;li class="visible-xs-block logout"&gt;&lt;a href="{{::portal.logoutUrl}}"&gt;${Logout}&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+              &lt;/div&gt;
+            &lt;/li&gt;
+
+          &lt;/ul&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+      
+  &lt;!-- Sub Navbar on Desktop --&gt;
+  &lt;div class="navbar-collapse sub-navbar clearfix collapse collapsed hidden-xs"
+       ng-class="{ 'in': expanded, 'collapsed': !expanded, 'sub-navbar--mobile-view': showMobileMenuOnDesktop }"
+       ng-if="data.showSubHeader"&gt;
+    &lt;div&gt;
+      &lt;sp-widget widget="data.sub.menu"&gt;&lt;/sp-widget&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;!-- Analytics --&gt;
+  &lt;div ng-if="data.analyticsSupportEnabled"&gt;
+    &lt;widget id="cda-site-analytics" options="{'enable_logging': false}"&gt;&lt;/widget&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload><sys_class_name>sp_rel_widget_clone</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-30 15:12:41</sys_created_on><sys_id>9dcc1e95976d36d0ec453b90f053afc7</sys_id><sys_mod_count>0</sys_mod_count><sys_name>91cc1e95976d36d0ec453b90f053afb6</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_rel_widget_clone_9dcc1e95976d36d0ec453b90f053afc7</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-30 15:12:41</sys_updated_on></sp_rel_widget_clone></record_update>]]></payload>
+        <payload_hash>346296704</payload_hash>
+        <record_name>91cc1e95976d36d0ec453b90f053afb6</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 15:12:41</sys_created_on>
+        <sys_id>e5cc1e95976d36d0ec453b90f053afcb</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad552bf010000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 15:12:41</sys_updated_on>
+        <type>Widget Clone</type>
+        <update_guid>a5cc1e95c56d36d0df88ae8cf09ef9ca</update_guid>
+        <update_guid_history>a5cc1e95c56d36d0df88ae8cf09ef9ca:346296704</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">0b8e5e2997edb6d0ec453b90f053afc4</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 09:58:55</sys_created_on>
+        <sys_db_object display_value="" name="sp_rel_widget_clone">sp_rel_widget_clone</sys_db_object>
+        <sys_id>031c5cee621a47bc80720a6fd649f310</sys_id>
+        <sys_metadata>9dcc1e95976d36d0ec453b90f053afc7</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>91cc1e95976d36d0ec453b90f053afb6</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_rel_widget_clone_9dcc1e95976d36d0ec453b90f053afc7</sys_update_name>
+        <sys_update_version display_value="sp_rel_widget_clone_9dcc1e95976d36d0ec453b90f053afc7">e5cc1e95976d36d0ec453b90f053afcb</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 09:58:55</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

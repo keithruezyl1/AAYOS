@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone">
+    <sp_rel_widget_clone action="DELETE">
+        <child display_value="Copy of KB Article Page">f8848e2d97a9b6d0ec453b90f053afbd</child>
+        <cloned>2025-12-01 08:05:10</cloned>
+        <last_validated>2025-12-01 08:05:10</last_validated>
+        <parent display_value="KB Article Page">c6545050ff223100ba13ffffffffffe8</parent>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function ($scope, spUtil, $sce, $rootScope, $timeout, $location, i18n) {
+		
+	$scope.publishedMsg = i18n.getMessage('Published');
+	$scope.$on('$locationChangeSuccess', function(e) {
+		var uriHash = $location.hash();
+		var decodedUriHash = decodeURIComponent(uriHash);
+		if (uriHash !== decodedUriHash)
+			$location.hash(decodedUriHash);
+	});
+	spUtil.setSearchPage('kb');
+	$scope.data.text = $sce.trustAsHtml($scope.data.text);
+	$timeout(function() {
+		$rootScope.$broadcast('sp.update.breadcrumbs', $scope.data.breadcrumbs);
+	});
+}]]&gt;&lt;/client_script&gt;&lt;controller_as/&gt;&lt;css&gt;td {
+	padding: .5em;
+}
+
+.knowledge-wiki-text {
+  dl { 
+    margin-top: .2em; 
+    margin-bottom: .5em; 
+  }
+  
+  dd { 
+    line-height: 1.5em; 
+    margin-left: 2em; 
+    margin-bottom: .1em; 
+  }
+}
+	    
+.kb-star-on {
+  color: $fav-star-color !important;
+  text-shadow: $fav-star-outline;
+}
+
+.kb-star-off {
+  color: $fav-star-color-off !important;
+  text-shadow: $fav-star-outline;
+}
+
+.version-link {
+  padding-bottom: 8px;
+  a {
+    text-decoration: underline;
+  }
+}
+
+.fa-info-circle {
+  color: $link-color;
+  padding-right: 4px;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;color&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link/&gt;&lt;name&gt;KB Article Page&lt;/name&gt;&lt;option_schema&gt;[{"name":"show_star_rating","default_value":"Use system properties","section":"Presentation","label":"Show star rating","type":"choice","choices":[{"label":"Yes","value":"Yes"},{"label":"No","value":"No"},{"label":"Use system properties","value":"Use system properties"}]}]&lt;/option_schema&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+	var t = data;
+	t.isvalid = false;
+	
+	var articleGR = new GlideRecord("kb_knowledge");
+	var id = $sp.getParameter("sys_id") || $sp.getParameter("sys_kb_id") || $sp.getParameter('sysparm_article');
+	articleGR.addQuery("sys_id", id).addOrCondition("number", id);
+	articleGR.query();
+	if (!articleGR.next())
+		return;
+	
+	if (!articleGR.canRead())
+		return;
+	
+	t.isvalid = true;
+	
+  // update sys_view_count on kb_knowledge record
+	var asyncUpdate = gs.getProperty('glide.knowman.async_view_update', 'false');
+	if (!asyncUpdate || asyncUpdate === 'false')
+		articleGR.incrementViewCount();
+	else
+		gs.eventQueue("knowledge.view", articleGR, null, null, "knowledge_view_queue");
+
+	var art = new GlideRecord("kb_use");
+	if (art.isValid()) {
+		art.article = articleGR.getUniqueValue();
+		art.user = gs.getUserID();
+		art.viewed = true;
+		art.insert(); // kb_use records are aggregated to update sys_view_count nightly
+		$sp.logStat('KB Article View', "kb_knowledge", articleGR.getUniqueValue(), articleGR.short_description);
+	}
+
+	t.category = articleGR.getValue('kb_category');
+	t.sys_id = articleGR.getUniqueValue();
+	t.table = articleGR.getRecordClassName();
+	t.showAttachments = false;
+	if (articleGR.display_attachments)
+		t.showAttachments = true;
+	t.categoryDisplay = articleGR.getDisplayValue('kb_category');
+	t.short_description = articleGR.getValue('short_description');
+	t.text = new global.KBViewModel().getArticleContentBySysId(articleGR.getUniqueValue());
+	t.articleType = articleGR.getValue('article_type');
+	
+	// Next line bumps the view count for display, but does not update the kb_knowledge
+	// record. The articleGR.incrementViewCount() line above already did that, but we
+	// don't want to re-fetch the GlideRecord
+	articleGR.sys_view_count = articleGR.sys_view_count + 1;
+	
+	t.sys_view_count = articleGR.getDisplayValue('sys_view_count');
+	t.sys_view_countValue = articleGR.getValue('sys_view_count');
+	t.author = articleGR.getDisplayValue('author');
+	t.publishedUtc = articleGR.getValue('published');
+	t.number = articleGR.getValue('number');
+	if (showStarRating())
+		t.rating = articleGR.getValue('rating');
+	t.direct = false;
+	if (articleGR.direct)
+		t.direct = true;
+  
+	//get KB name of the article
+	data.kbId = [articleGR.getValue('kb_knowledge_base')];
+	data.kbName = articleGR.getDisplayValue('kb_knowledge_base');
+	
+	t.breadcrumbs = [{label: t.short_description, url: '#'}];
+	if (!articleGR.kb_category.nil()) {
+		var rec = articleGR.kb_category.getRefRecord();
+		while (rec.getRecordClassName() == "kb_category") {
+			t.breadcrumbs.unshift({label: rec.getDisplayValue(), url: '?id=kb_category&amp;kb_category=' + rec.getUniqueValue() + '&amp;kb_id='+ data.kbId});
+			rec = rec.parent_id.getRefRecord();
+		}
+	}
+	
+	var kbs = $sp.getKnowledgeBases();
+	var countOfKb= kbs.split(',').length;
+	
+	data.kb_knowledge_page = $sp.getDisplayValue("kb_knowledge_page") || "kb_view";
+	if (countOfKb &gt; 1) {
+		if (GlideStringUtil.notNil(data.kbName))
+			t.breadcrumbs.unshift({label: data.kbName, url: '?id=' + data.kb_knowledge_page + '&amp;kb_id='+ data.kbId});
+		t.breadcrumbs.unshift({label: gs.getMessage("All Knowledge Bases"), url: '?id=' + t.kb_knowledge_page});
+	} else
+		t.breadcrumbs.unshift({label: gs.getMessage("Knowledge Base"), url: '?id=' + t.kb_knowledge_page});
+	
+	if (global.KBVersioning) {
+		var latestAccessibleVersionGR = new global.KBVersioning().getLatestAccessibleVersion(t.number);
+		var newerVersionID = latestAccessibleVersionGR.getUniqueValue();
+		if (newerVersionID != t.sys_id)
+			data.newerVersionID = newerVersionID;
+	}
+})();
+		
+function showStarRating() {
+	if (options.show_star_rating == "Yes")
+		return true;
+
+	if (options.show_star_rating == "No")
+		return false;
+
+	// check gating property for all rating options
+	if (gs.getProperty("glide.knowman.show_rating_options", "true") != "true")
+		return false;
+
+	// does user have the right role?
+	if (!gs.hasRole(gs.getProperty("glide.knowman.show_rating_options.roles")))
+		return false;
+
+	// check specific property for stars
+	if (gs.getProperty("glide.knowman.show_star_rating", "true") != "true")
+		return false;
+
+	// does user have the right role?
+	return gs.hasRole(gs.getProperty("glide.knowman.show_star_rating.roles"));
+}]]&gt;&lt;/script&gt;&lt;servicenow&gt;true&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-02-26 00:05:40&lt;/sys_created_on&gt;&lt;sys_id&gt;c6545050ff223100ba13ffffffffffe8&lt;/sys_id&gt;&lt;sys_mod_count&gt;254&lt;/sys_mod_count&gt;&lt;sys_name&gt;KB Article Page&lt;/sys_name&gt;&lt;sys_package display_value="Service Portal - Knowledge Base (do not activate...see plugin description)" source="com.glide.service-portal.knowledge-base"&gt;7a050b690ca432108bb2ce4d4ed10e14&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_c6545050ff223100ba13ffffffffffe8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-16 00:00:00&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div ng-if="data.isvalid"&gt;
+  
+  &lt;div ng-if="::data.newerVersionID" class="version-link"&gt;
+    &lt;span class="fa fa-info-circle"&gt;&lt;/span&gt;
+    &lt;a href="?id=kb_article&amp;sys_id={{::data.newerVersionID}}"&gt;${An updated version of this article is available.}&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;div class="panel panel-{{options.color}} b"&gt;
+
+    &lt;div class="panel-heading"&gt;
+        &lt;h2 class="panel-title h4" style="overflow:hidden"&gt;
+            &lt;span class="pull-left"&gt;{{::data.short_description}}&lt;/span&gt;
+            &lt;span class="pull-right"&gt;{{::data.number}}&lt;/span&gt;
+        &lt;/h2&gt;
+    &lt;/div&gt;
+
+    &lt;div class="panel-body m-b-lg wrapper-lg"&gt;
+
+      &lt;div class="row m-b-lg b-b"&gt;
+          &lt;span class="author pad-right" ng-if="data.author"&gt;
+            &lt;glyph sn-char="user" class="pad-right"&gt;&lt;/glyph&gt;
+            ${Authored by {{::data.author}}}
+          &lt;/span&gt;
+          &lt;span ng-if="data.sys_view_countValue == 1" class="views pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="eye-open" class="pad-right"&gt;&lt;/glyph&gt;
+            ${{{::data.sys_view_count}} View}
+          &lt;/span&gt;
+          &lt;span ng-if="data.sys_view_countValue &gt; 1" class="views pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="eye-open" class="pad-right"&gt;&lt;/glyph&gt;
+            ${{{::data.sys_view_count}} Views}
+          &lt;/span&gt;
+          &lt;span class="published pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="calendar" class="pad-right"&gt;&lt;/glyph&gt;
+            &lt;sn-day-ago date="data.publishedUtc" label="publishedMsg"&gt;&lt;/sn-day-ago&gt;
+          &lt;/span&gt;
+          &lt;span ng-if="data.rating &gt; 0 &amp;&amp; !data.direct" title="{{::data.rating}} rating"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt;
+            &lt;span class="sr-only"&gt;Article rating - {{::data.rating}}&lt;/span&gt;
+            &lt;uib-rating sp-rating ng-model="::data.rating" max="5" readonly="true" aria-hidden="true" state-on="'fa fa-star kb-star-on'" state-off="'fa fa-star kb-star-off'"&gt;&lt;/uib-rating&gt;
+          &lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div ng-if="!data.direct" class="kb_article" ng-class="{'knowledge-wiki-text' : data.articleType == 'wiki'}" ng-bind-html="::data.text" style="overflow-x:auto;"&gt;&lt;/div&gt;
+
+      &lt;h4 ng-if="data.direct"&gt;
+        ${View or download the attachments below}
+      &lt;/h4&gt;
+      &lt;div ng-if="::data.showAttachments || data.direct" class="b-t m-t"&gt;
+        &lt;sp-attachment-manager table="::data.table" sys-id="::data.sys_id" omit-edit="true"&gt;&lt;/sp-attachment-manager&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div ng-if="!data.isvalid"&gt;
+  ${Article not found}
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload>
+        <sys_class_name>sp_rel_widget_clone</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:05:10</sys_created_on>
+        <sys_id>b084426d97a9b6d0ec453b90f053afb3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>f8848e2d97a9b6d0ec453b90f053afbd</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_rel_widget_clone_b084426d97a9b6d0ec453b90f053afb3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:05:10</sys_updated_on>
+    </sp_rel_widget_clone>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_rel_widget_clone_b084426d97a9b6d0ec453b90f053afb3</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_rel_widget_clone"><sp_rel_widget_clone action="INSERT_OR_UPDATE"><child display_value="Copy of KB Article Page">f8848e2d97a9b6d0ec453b90f053afbd</child><cloned>2025-12-01 08:05:10</cloned><last_validated>2025-12-01 08:05:10</last_validated><parent display_value="KB Article Page">c6545050ff223100ba13ffffffffffe8</parent><payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;sp_widget&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[function ($scope, spUtil, $sce, $rootScope, $timeout, $location, i18n) {
+		
+	$scope.publishedMsg = i18n.getMessage('Published');
+	$scope.$on('$locationChangeSuccess', function(e) {
+		var uriHash = $location.hash();
+		var decodedUriHash = decodeURIComponent(uriHash);
+		if (uriHash !== decodedUriHash)
+			$location.hash(decodedUriHash);
+	});
+	spUtil.setSearchPage('kb');
+	$scope.data.text = $sce.trustAsHtml($scope.data.text);
+	$timeout(function() {
+		$rootScope.$broadcast('sp.update.breadcrumbs', $scope.data.breadcrumbs);
+	});
+}]]&gt;&lt;/client_script&gt;&lt;controller_as/&gt;&lt;css&gt;td {
+	padding: .5em;
+}
+
+.knowledge-wiki-text {
+  dl { 
+    margin-top: .2em; 
+    margin-bottom: .5em; 
+  }
+  
+  dd { 
+    line-height: 1.5em; 
+    margin-left: 2em; 
+    margin-bottom: .1em; 
+  }
+}
+	    
+.kb-star-on {
+  color: $fav-star-color !important;
+  text-shadow: $fav-star-outline;
+}
+
+.kb-star-off {
+  color: $fav-star-color-off !important;
+  text-shadow: $fav-star-outline;
+}
+
+.version-link {
+  padding-bottom: 8px;
+  a {
+    text-decoration: underline;
+  }
+}
+
+.fa-info-circle {
+  color: $link-color;
+  padding-right: 4px;
+}&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;color&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link/&gt;&lt;name&gt;KB Article Page&lt;/name&gt;&lt;option_schema&gt;[{"name":"show_star_rating","default_value":"Use system properties","section":"Presentation","label":"Show star rating","type":"choice","choices":[{"label":"Yes","value":"Yes"},{"label":"No","value":"No"},{"label":"Use system properties","value":"Use system properties"}]}]&lt;/option_schema&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function() {
+	var t = data;
+	t.isvalid = false;
+	
+	var articleGR = new GlideRecord("kb_knowledge");
+	var id = $sp.getParameter("sys_id") || $sp.getParameter("sys_kb_id") || $sp.getParameter('sysparm_article');
+	articleGR.addQuery("sys_id", id).addOrCondition("number", id);
+	articleGR.query();
+	if (!articleGR.next())
+		return;
+	
+	if (!articleGR.canRead())
+		return;
+	
+	t.isvalid = true;
+	
+  // update sys_view_count on kb_knowledge record
+	var asyncUpdate = gs.getProperty('glide.knowman.async_view_update', 'false');
+	if (!asyncUpdate || asyncUpdate === 'false')
+		articleGR.incrementViewCount();
+	else
+		gs.eventQueue("knowledge.view", articleGR, null, null, "knowledge_view_queue");
+
+	var art = new GlideRecord("kb_use");
+	if (art.isValid()) {
+		art.article = articleGR.getUniqueValue();
+		art.user = gs.getUserID();
+		art.viewed = true;
+		art.insert(); // kb_use records are aggregated to update sys_view_count nightly
+		$sp.logStat('KB Article View', "kb_knowledge", articleGR.getUniqueValue(), articleGR.short_description);
+	}
+
+	t.category = articleGR.getValue('kb_category');
+	t.sys_id = articleGR.getUniqueValue();
+	t.table = articleGR.getRecordClassName();
+	t.showAttachments = false;
+	if (articleGR.display_attachments)
+		t.showAttachments = true;
+	t.categoryDisplay = articleGR.getDisplayValue('kb_category');
+	t.short_description = articleGR.getValue('short_description');
+	t.text = new global.KBViewModel().getArticleContentBySysId(articleGR.getUniqueValue());
+	t.articleType = articleGR.getValue('article_type');
+	
+	// Next line bumps the view count for display, but does not update the kb_knowledge
+	// record. The articleGR.incrementViewCount() line above already did that, but we
+	// don't want to re-fetch the GlideRecord
+	articleGR.sys_view_count = articleGR.sys_view_count + 1;
+	
+	t.sys_view_count = articleGR.getDisplayValue('sys_view_count');
+	t.sys_view_countValue = articleGR.getValue('sys_view_count');
+	t.author = articleGR.getDisplayValue('author');
+	t.publishedUtc = articleGR.getValue('published');
+	t.number = articleGR.getValue('number');
+	if (showStarRating())
+		t.rating = articleGR.getValue('rating');
+	t.direct = false;
+	if (articleGR.direct)
+		t.direct = true;
+  
+	//get KB name of the article
+	data.kbId = [articleGR.getValue('kb_knowledge_base')];
+	data.kbName = articleGR.getDisplayValue('kb_knowledge_base');
+	
+	t.breadcrumbs = [{label: t.short_description, url: '#'}];
+	if (!articleGR.kb_category.nil()) {
+		var rec = articleGR.kb_category.getRefRecord();
+		while (rec.getRecordClassName() == "kb_category") {
+			t.breadcrumbs.unshift({label: rec.getDisplayValue(), url: '?id=kb_category&amp;kb_category=' + rec.getUniqueValue() + '&amp;kb_id='+ data.kbId});
+			rec = rec.parent_id.getRefRecord();
+		}
+	}
+	
+	var kbs = $sp.getKnowledgeBases();
+	var countOfKb= kbs.split(',').length;
+	
+	data.kb_knowledge_page = $sp.getDisplayValue("kb_knowledge_page") || "kb_view";
+	if (countOfKb &gt; 1) {
+		if (GlideStringUtil.notNil(data.kbName))
+			t.breadcrumbs.unshift({label: data.kbName, url: '?id=' + data.kb_knowledge_page + '&amp;kb_id='+ data.kbId});
+		t.breadcrumbs.unshift({label: gs.getMessage("All Knowledge Bases"), url: '?id=' + t.kb_knowledge_page});
+	} else
+		t.breadcrumbs.unshift({label: gs.getMessage("Knowledge Base"), url: '?id=' + t.kb_knowledge_page});
+	
+	if (global.KBVersioning) {
+		var latestAccessibleVersionGR = new global.KBVersioning().getLatestAccessibleVersion(t.number);
+		var newerVersionID = latestAccessibleVersionGR.getUniqueValue();
+		if (newerVersionID != t.sys_id)
+			data.newerVersionID = newerVersionID;
+	}
+})();
+		
+function showStarRating() {
+	if (options.show_star_rating == "Yes")
+		return true;
+
+	if (options.show_star_rating == "No")
+		return false;
+
+	// check gating property for all rating options
+	if (gs.getProperty("glide.knowman.show_rating_options", "true") != "true")
+		return false;
+
+	// does user have the right role?
+	if (!gs.hasRole(gs.getProperty("glide.knowman.show_rating_options.roles")))
+		return false;
+
+	// check specific property for stars
+	if (gs.getProperty("glide.knowman.show_star_rating", "true") != "true")
+		return false;
+
+	// does user have the right role?
+	return gs.hasRole(gs.getProperty("glide.knowman.show_star_rating.roles"));
+}]]&gt;&lt;/script&gt;&lt;servicenow&gt;true&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-02-26 00:05:40&lt;/sys_created_on&gt;&lt;sys_id&gt;c6545050ff223100ba13ffffffffffe8&lt;/sys_id&gt;&lt;sys_mod_count&gt;254&lt;/sys_mod_count&gt;&lt;sys_name&gt;KB Article Page&lt;/sys_name&gt;&lt;sys_package display_value="Service Portal - Knowledge Base (do not activate...see plugin description)" source="com.glide.service-portal.knowledge-base"&gt;7a050b690ca432108bb2ce4d4ed10e14&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_c6545050ff223100ba13ffffffffffe8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-04-16 00:00:00&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div ng-if="data.isvalid"&gt;
+  
+  &lt;div ng-if="::data.newerVersionID" class="version-link"&gt;
+    &lt;span class="fa fa-info-circle"&gt;&lt;/span&gt;
+    &lt;a href="?id=kb_article&amp;sys_id={{::data.newerVersionID}}"&gt;${An updated version of this article is available.}&lt;/a&gt;
+  &lt;/div&gt;
+
+  &lt;div class="panel panel-{{options.color}} b"&gt;
+
+    &lt;div class="panel-heading"&gt;
+        &lt;h2 class="panel-title h4" style="overflow:hidden"&gt;
+            &lt;span class="pull-left"&gt;{{::data.short_description}}&lt;/span&gt;
+            &lt;span class="pull-right"&gt;{{::data.number}}&lt;/span&gt;
+        &lt;/h2&gt;
+    &lt;/div&gt;
+
+    &lt;div class="panel-body m-b-lg wrapper-lg"&gt;
+
+      &lt;div class="row m-b-lg b-b"&gt;
+          &lt;span class="author pad-right" ng-if="data.author"&gt;
+            &lt;glyph sn-char="user" class="pad-right"&gt;&lt;/glyph&gt;
+            ${Authored by {{::data.author}}}
+          &lt;/span&gt;
+          &lt;span ng-if="data.sys_view_countValue == 1" class="views pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="eye-open" class="pad-right"&gt;&lt;/glyph&gt;
+            ${{{::data.sys_view_count}} View}
+          &lt;/span&gt;
+          &lt;span ng-if="data.sys_view_countValue &gt; 1" class="views pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="eye-open" class="pad-right"&gt;&lt;/glyph&gt;
+            ${{{::data.sys_view_count}} Views}
+          &lt;/span&gt;
+          &lt;span class="published pad-right"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt; &lt;glyph sn-char="calendar" class="pad-right"&gt;&lt;/glyph&gt;
+            &lt;sn-day-ago date="data.publishedUtc" label="publishedMsg"&gt;&lt;/sn-day-ago&gt;
+          &lt;/span&gt;
+          &lt;span ng-if="data.rating &gt; 0 &amp;&amp; !data.direct" title="{{::data.rating}} rating"&gt;
+            &lt;span class="pad-right"&gt;&amp;#8226;&lt;/span&gt;
+            &lt;span class="sr-only"&gt;Article rating - {{::data.rating}}&lt;/span&gt;
+            &lt;uib-rating sp-rating ng-model="::data.rating" max="5" readonly="true" aria-hidden="true" state-on="'fa fa-star kb-star-on'" state-off="'fa fa-star kb-star-off'"&gt;&lt;/uib-rating&gt;
+          &lt;/span&gt;
+      &lt;/div&gt;
+
+      &lt;div ng-if="!data.direct" class="kb_article" ng-class="{'knowledge-wiki-text' : data.articleType == 'wiki'}" ng-bind-html="::data.text" style="overflow-x:auto;"&gt;&lt;/div&gt;
+
+      &lt;h4 ng-if="data.direct"&gt;
+        ${View or download the attachments below}
+      &lt;/h4&gt;
+      &lt;div ng-if="::data.showAttachments || data.direct" class="b-t m-t"&gt;
+        &lt;sp-attachment-manager table="::data.table" sys-id="::data.sys_id" omit-edit="true"&gt;&lt;/sp-attachment-manager&gt;
+      &lt;/div&gt;
+
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div ng-if="!data.isvalid"&gt;
+  ${Article not found}
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;</payload><sys_class_name>sp_rel_widget_clone</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-01 08:05:10</sys_created_on><sys_id>b084426d97a9b6d0ec453b90f053afb3</sys_id><sys_mod_count>0</sys_mod_count><sys_name>f8848e2d97a9b6d0ec453b90f053afbd</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_rel_widget_clone_b084426d97a9b6d0ec453b90f053afb3</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-01 08:05:10</sys_updated_on></sp_rel_widget_clone></record_update>]]></payload>
+        <payload_hash>-1804423455</payload_hash>
+        <record_name>f8848e2d97a9b6d0ec453b90f053afbd</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:05:10</sys_created_on>
+        <sys_id>3084426d97a9b6d0ec453b90f053afb7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8f1b61f0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:05:10</sys_updated_on>
+        <type>Widget Clone</type>
+        <update_guid>fc84426d47a9b6d08edf2e8f429419b5</update_guid>
+        <update_guid_history>fc84426d47a9b6d08edf2e8f429419b5:-1804423455</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="">db8e9e2997edb6d0ec453b90f053af2a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 09:58:56</sys_created_on>
+        <sys_db_object display_value="" name="sp_rel_widget_clone">sp_rel_widget_clone</sys_db_object>
+        <sys_id>4e0fb96de08c4785828d8627519578d1</sys_id>
+        <sys_metadata>b084426d97a9b6d0ec453b90f053afb3</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>f8848e2d97a9b6d0ec453b90f053afbd</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_rel_widget_clone_b084426d97a9b6d0ec453b90f053afb3</sys_update_name>
+        <sys_update_version display_value="sp_rel_widget_clone_b084426d97a9b6d0ec453b90f053afb3">3084426d97a9b6d0ec453b90f053afb7</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 09:58:56</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

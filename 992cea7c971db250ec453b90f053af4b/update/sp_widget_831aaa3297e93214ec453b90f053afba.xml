@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($window, $http) {
+    var c = this;
+
+    c.isSubmitting = false;
+    c.user_name = '';
+    c.user_password = '';
+
+    // LOGIN BUTTON HANDLER
+    c.doLogin = function () {
+        if (!c.user_name || !c.user_password || c.isSubmitting)
+            return;
+
+        c.isSubmitting = true;
+        c.data.error = "";
+
+        // 1) Authenticate using ServiceNow REST endpoint
+        $http.post('/api/sn_sc/v1/serviceportal/login', {
+            username: c.user_name,
+            password: c.user_password
+        }).then(function (res) {
+
+            if (res.data && res.data.status === "success") {
+                // 2) Ask the server which URL to redirect to
+                return c.server.update({ action: 'post_auth' });
+
+            } else {
+                c.isSubmitting = false;
+                c.data.error = "Invalid username or password.";
+                return null;
+            }
+
+        }).then(function (serverResponse) {
+
+            if (!serverResponse)
+                return;
+
+            c.isSubmitting = false;
+
+            var data = serverResponse.data || {};
+            c.data = data;
+
+            if (data.logged_in && data.redirect_url) {
+                // admin / tech: go where the server tells us
+                $window.location.href = data.redirect_url;
+            } else if (!data.logged_in && data.error) {
+                // login failed on the server side
+                c.data.error = data.error;
+            }
+            // If logged_in and no redirect_url:
+            // stay on /aayos_login. Your UI Script will
+            // auto-redirect technicians to /aayos_technician.
+        }).catch(function () {
+            c.isSubmitting = false;
+            c.data.error = "Unexpected error. Try again.";
+        });
+    };
+
+    // AUTO-REDIRECT IF ALREADY LOGGED IN
+    c.$onInit = function () {
+        if (c.data && c.data.redirect_url) {
+            // extra safety: don't redirect back to the same page
+            var currentPath = $window.location.pathname;
+            if (c.data.redirect_url.indexOf(currentPath) !== 0) {
+                $window.location.href = c.data.redirect_url;
+            }
+        }
+    };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-login-container {&#13;
+  display: flex;&#13;
+  justify-content: center;&#13;
+  margin-top: 40px;&#13;
+}&#13;
+&#13;
+.aayos-login-card {&#13;
+  width: 330px;&#13;
+  padding: 20px;&#13;
+  border-radius: 8px;&#13;
+  background: #fff;&#13;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);&#13;
+}&#13;
+&#13;
+.aayos-password-group {&#13;
+  margin-bottom: 12px; /* space before the button */&#13;
+}&#13;
+&#13;
+.aayos-login-error {&#13;
+  color: #d9534f;&#13;
+  margin-bottom: 10px;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>aayos_role_login</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAYOS Role Login</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+    data.error = data.error || "";
+    data.logged_in = gs.getUserID() ? true : false;
+    data.redirect_url = "";
+
+    function getTargetUrl() {
+        var u = gs.getUser();
+        if (!u)
+            return "";
+
+        if (u.hasRole('x_1868112_aayos.admin'))
+            return '/aayos_admin?id=aayos_admin_home';
+
+        if (u.hasRole('x_1868112_aayos.technician'))
+            return '/aayos_technician?id=aayos_technician_home';
+
+        // IMPORTANT: no redirect for other roles
+        return "";
+    }
+
+    // Initial widget load
+    if (!input) {
+        if (data.logged_in) {
+            var target = getTargetUrl();
+            if (target)
+                data.redirect_url = target;
+        }
+        return;
+    }
+
+    // After REST login
+    if (input.action === 'post_auth') {
+        data.logged_in = gs.getUserID() ? true : false;
+
+        if (data.logged_in) {
+            var t = getTargetUrl();
+            if (t)
+                data.redirect_url = t;
+        } else {
+            data.error = "Login session not established.";
+        }
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 08:06:10</sys_created_on>
+        <sys_id>831aaa3297e93214ec453b90f053afba</sys_id>
+        <sys_mod_count>28</sys_mod_count>
+        <sys_name>AAYOS Role Login</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_831aaa3297e93214ec453b90f053afba</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 12:08:07</sys_updated_on>
+        <template><![CDATA[<div class="aayos-login-container">
+  <div class="aayos-login-card">
+    <p class="aayos-login-helper">
+      Login as admin or technician to get started
+    </p>
+
+    <!-- Error -->
+    <p class="aayos-login-error" ng-if="c.data.error">
+      {{ c.data.error }}
+    </p>
+
+    <form class="aayos-login-form" novalidate>
+      <div class="form-group">
+        <label for="aayos_user_name">Username</label>
+        <input id="aayos_user_name"
+               type="text"
+               class="form-control"
+               ng-model="c.user_name"
+               required>
+      </div>
+
+      <div class="form-group aayos-password-group">
+        <label for="aayos_user_password">Password</label>
+        <input id="aayos_user_password"
+               type="password"
+               class="form-control"
+               ng-model="c.user_password"
+               required>
+      </div>
+
+      <button type="button"
+              class="btn btn-primary btn-block aayos-login-button"
+              ng-click="c.doLogin()"
+              ng-disabled="c.isSubmitting">
+        <span ng-if="!c.isSubmitting">Login</span>
+        <span ng-if="c.isSubmitting">Logging in...</span>
+      </button>
+    </form>
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

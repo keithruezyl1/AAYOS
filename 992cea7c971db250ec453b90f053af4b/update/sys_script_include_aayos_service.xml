@@ -2,11 +2,13 @@
     <sys_script_include action="INSERT_OR_UPDATE">
         <access>public</access>
         <active>true</active>
-        <api_name>AAYOSService</api_name>
+        <api_name/>
         <caller_access/>
         <client_callable>true</client_callable>
         <description>Client-callable service for AAYOS UI pages. Provides methods to fetch vehicles, tickets, technicians, and counts.</description>
-        <display_name>AAYOS Service</display_name>
+        <mobile_callable>false</mobile_callable>
+        <name/>
+        <sandbox_callable>true</sandbox_callable>
         <script><![CDATA[var AAYOSService = Class.create();
 AAYOSService.prototype = Object.extendsObject(AbstractAjaxProcessor, {
     
@@ -233,4 +235,3 @@ AAYOSService.prototype = Object.extendsObject(AbstractAjaxProcessor, {
         <sys_updated_on>2025-11-16 18:00:00</sys_updated_on>
     </sys_script_include>
 </record_update>
-

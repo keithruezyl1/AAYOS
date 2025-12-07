@@ -14,15 +14,15 @@
             <choice>
                 <element inactive_on_update="false" label="In Progress" sequence="1" value="in_progress"/>
                 <element inactive_on_update="false" label="New" sequence="0" value="new"/>
-                <element inactive_on_update="false" label="Cancelled" sequence="5" value="cancelled"/>
-                <element inactive_on_update="false" label="Resolved" sequence="3" value="resolved"/>
-                <element inactive_on_update="false" label="Closed" sequence="4" value="closed"/>
+                <element inactive_on_update="false" label="Cancelled" sequence="4" value="cancelled"/>
+                <element inactive_on_update="false" label="Closed" sequence="3" value="closed"/>
                 <element inactive_on_update="false" label="On Hold" sequence="2" value="on_hold"/>
             </choice>
         </element>
         <element label="Technician Response Due" mandatory="true" max_length="255" name="technician_response_due" type="glide_date_time"/>
         <element label="Actual Service Date" max_length="255" name="actual_service_date" type="glide_date"/>
         <element label="Service Window Start" max_length="255" name="service_window_start" type="glide_date_time"/>
+        <element label="Customer Notified" max_length="40" name="customer_notified" type="boolean"/>
         <element label="Service Window End" max_length="255" name="service_window_end" type="glide_date_time"/>
         <element choice="3" default="low" label="Urgency" mandatory="true" max_length="40" name="urgency" type="choice">
             <choice>
@@ -40,6 +40,13 @@
             </choice>
         </element>
         <element label="Closed Date" max_length="255" name="closed_date" type="glide_date_time"/>
+        <element choice="3" default="pending" label="Technician Response" max_length="40" name="technician_response" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Pending" sequence="0" value="pending"/>
+                <element inactive_on_update="false" label="Declined" sequence="2" value="declined"/>
+                <element inactive_on_update="false" label="Accepted" sequence="1" value="accepted"/>
+            </choice>
+        </element>
         <element label="Vehicle" mandatory="true" max_length="32" name="vehicle" reference="x_1868112_aayos_vehicle" type="reference"/>
         <element choice="3" default="predicted_maintenance" label="Ticket Type" mandatory="true" max_length="40" name="ticket_type" type="choice">
             <choice>
@@ -48,6 +55,7 @@
                 <element inactive_on_update="false" label="Technician Flagged" sequence="2" value="technician_flagged"/>
             </choice>
         </element>
+        <element label="Customer" max_length="32" name="customer" reference="x_1868112_aayos_customer" type="reference"/>
         <element label="Customer Decision Date" max_length="255" name="customer_decision_date" type="glide_date_time"/>
         <element choice="3" label="Customer Decision" mandatory="true" max_length="40" name="customer_decision" type="choice">
             <choice>
@@ -56,7 +64,7 @@
                 <element inactive_on_update="false" label="Accepted" sequence="1" value="accepted"/>
             </choice>
         </element>
-        <element label="Prediction" mandatory="true" max_length="32" name="prediction" reference="x_1868112_aayos_prediction" type="reference"/>
+        <element label="Prediction" max_length="32" name="prediction" reference="x_1868112_aayos_prediction" type="reference"/>
         <element label="Resolution Summary" max_length="2048" name="resolution_summary" type="string"/>
         <element choice="3" default="ai" label="Source" mandatory="true" max_length="40" name="source" type="choice">
             <choice>
@@ -66,14 +74,17 @@
             </choice>
         </element>
         <element label="Target Service Date" max_length="255" name="target_service_date" type="glide_date"/>
-        <element label="Reassignment Count" mandatory="true" max_length="255" name="reassignment_count" type="integer"/>
+        <element label="Reassignment Count" max_length="255" name="reassignment_count" type="integer"/>
         <index name="index">
             <element name="assigned_technician"/>
         </index>
         <index name="index2">
-            <element name="prediction"/>
+            <element name="customer"/>
         </index>
         <index name="index3">
+            <element name="prediction"/>
+        </index>
+        <index name="index4">
             <element name="vehicle"/>
         </index>
     </element>

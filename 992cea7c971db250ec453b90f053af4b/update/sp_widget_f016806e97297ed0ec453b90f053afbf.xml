@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function($scope) {
+    var c = this;
+
+    c.editMode = false;
+
+    // Local form copy of technician data
+    c.form = angular.copy(c.data.tech || {});
+
+    // Enter edit mode
+    c.enableEdit = function() {
+        c.form = angular.copy(c.data.tech || {});
+        c.editMode = true;
+    };
+
+    // Cancel edit
+    c.cancelEdit = function() {
+        c.editMode = false;
+        c.form = angular.copy(c.data.tech || {});
+    };
+
+    // Save profile (technician-table fields only)
+    c.saveProfile = function() {
+
+        if (!c.data.tech || !c.data.tech.sys_id)
+            return;
+
+        c.saving = true;
+
+        c.server.update({
+            action: "save_profile",
+            tech: {
+                sys_id: c.data.tech.sys_id,
+                phone: c.form.phone,
+                primary_skill_category: c.form.primary_skill_category,
+                max_concurrent_tickets: c.form.max_concurrent_tickets
+            }
+        }).then(function(response) {
+
+            if (response && response.data && response.data.saved) {
+                // Replace technician data with updated form values
+                c.data.tech.phone = c.form.phone;
+                c.data.tech.primary_skill_category = c.form.primary_skill_category;
+                c.data.tech.max_concurrent_tickets = c.form.max_concurrent_tickets;
+                c.editMode = false;
+            }
+
+        }).finally(function() {
+            c.saving = false;
+        });
+    };
+
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>widget for aayos technician profile</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>aayos_technician_profile</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAYOS Technician Profile</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+
+    data.user = {};
+    data.tech = {};
+    data.saved = false;
+
+    var userId = gs.getUserID();
+
+    // ----------------------------------------------------
+    // 1) HANDLE SAVE REQUEST (FROM WIDGET)
+    // ----------------------------------------------------
+    if (input && input.action === "save_profile" && input.tech && input.tech.sys_id) {
+
+        var upd = new GlideRecord("x_1868112_aayos_technician");
+        if (upd.get(input.tech.sys_id)) {
+
+            // Only update editable technician fields
+            upd.setValue("phone", input.tech.phone || "");
+            upd.setValue("primary_skill_category", input.tech.primary_skill_category || "");
+
+            if (gs.nil(input.tech.max_concurrent_tickets)) {
+                upd.setValue("max_concurrent_tickets", "");
+            } else {
+                upd.setValue("max_concurrent_tickets", input.tech.max_concurrent_tickets);
+            }
+
+            upd.update();
+            data.saved = true;
+        }
+    }
+
+    // ----------------------------------------------------
+    // 2) LOAD SYS_USER (ACCOUNT INFO)
+    // ----------------------------------------------------
+    var userGR = new GlideRecord("sys_user");
+    if (userGR.get(userId)) {
+        data.user = {
+            sys_id: userId,
+            name: userGR.getDisplayValue("name"),
+            email: userGR.getDisplayValue("email"),
+            username: userGR.getValue("user_name")
+        };
+    }
+
+    // ----------------------------------------------------
+    // 3) LOAD AAYOS TECHNICIAN RECORD FOR THIS USER
+    // ----------------------------------------------------
+    var techGR = new GlideRecord("x_1868112_aayos_technician");
+    techGR.addQuery("user", userId);
+    techGR.query();
+
+    if (techGR.next()) {
+        data.tech = {
+            sys_id: String(techGR.getUniqueValue()),
+
+            // identity / summary
+            technician_id: String(techGR.getValue("number") || ""),
+            name: String(techGR.getValue("name") || ""),
+            email: String(techGR.getValue("email") || ""),
+
+            // editable fields
+            phone: String(techGR.getValue("phone") || ""),
+            primary_skill_category: String(techGR.getValue("primary_skill_category") || ""),
+            max_concurrent_tickets: String(techGR.getValue("max_concurrent_tickets") || ""),
+
+            // read-only status info
+            current_open_tickets: String(techGR.getValue("current_open_tickets") || ""),
+            status: String(techGR.getDisplayValue("status") || "")
+        };
+    }
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-04 01:27:46</sys_created_on>
+        <sys_id>f016806e97297ed0ec453b90f053afbf</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>AAYOS Technician Profile</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_f016806e97297ed0ec453b90f053afbf</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-04 01:38:39</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default aayos-profile">
+  <div class="panel-heading">
+    <h2 class="h3 m-t-none m-b-xs">My Profile</h2>
+    <p class="text-muted m-b-none">
+      View your account information and manage your technician details.
+    </p>
+  </div>
+
+  <div class="panel-body">
+
+    <!-- ============================
+         SECTION 1: ACCOUNT (sys_user)
+    ============================= -->
+    <h4>Account Information</h4>
+
+    <table class="table table-condensed">
+      <tr>
+        <th style="width: 200px;">Name</th>
+        <td>{{c.data.user.name || '(unknown)'}}</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>{{c.data.user.email || '(none)'}}</td>
+      </tr>
+      <tr>
+        <th>Username</th>
+        <td>{{c.data.user.username || '(none)'}}</td>
+      </tr>
+    </table>
+
+    <hr>
+
+    <!-- ============================
+         SECTION 2: TECHNICIAN RECORD
+    ============================= -->
+    <h4>Technician Details</h4>
+
+    <!-- No technician record case -->
+    <div ng-if="!c.data.tech.sys_id" class="text-warning">
+      No AAYOS Technician record is linked to this account.
+    </div>
+
+    <!-- VIEW MODE -->
+    <div ng-if="c.data.tech.sys_id && !c.editMode">
+
+      <table class="table table-condensed">
+        <tr>
+          <th style="width: 200px;">Technician ID</th>
+          <td>{{c.data.tech.technician_id || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Name</th>
+          <td>{{c.data.tech.name || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Email</th>
+          <td>{{c.data.tech.email || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Primary skill category</th>
+          <td>{{c.data.tech.primary_skill_category || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Contact number</th>
+          <td>{{c.data.tech.phone || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Max concurrent tickets</th>
+          <td>{{c.data.tech.max_concurrent_tickets || '(none)'}}</td>
+        </tr>
+        <tr>
+          <th>Current open tickets</th>
+          <td>{{c.data.tech.current_open_tickets || '0'}}</td>
+        </tr>
+        <tr>
+          <th>Status</th>
+          <td>{{c.data.tech.status || '(none)'}}</td>
+        </tr>
+      </table>
+
+      <button class="btn btn-primary"
+              ng-click="c.enableEdit()"
+              ng-disabled="!c.data.tech.sys_id">
+        Edit Technician Details
+      </button>
+    </div>
+
+    <!-- EDIT MODE -->
+    <div ng-if="c.data.tech.sys_id && c.editMode">
+
+      <div class="form-group">
+        <label>Primary skill category</label>
+        <input type="text"
+               class="form-control"
+               ng-model="c.form.primary_skill_category">
+      </div>
+
+      <div class="form-group">
+        <label>Contact number</label>
+        <input type="text"
+               class="form-control"
+               ng-model="c.form.phone">
+      </div>
+
+      <div class="form-group">
+        <label>Max concurrent tickets</label>
+        <input type="number"
+               class="form-control"
+               ng-model="c.form.max_concurrent_tickets">
+      </div>
+
+      <button class="btn btn-success m-r-sm"
+              ng-click="c.saveProfile()"
+              ng-disabled="c.saving">
+        Save
+      </button>
+      <button class="btn btn-default"
+              ng-click="c.cancelEdit()"
+              ng-disabled="c.saving">
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

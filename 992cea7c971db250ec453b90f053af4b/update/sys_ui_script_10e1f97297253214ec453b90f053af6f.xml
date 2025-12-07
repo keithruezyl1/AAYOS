@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_script">
+    <sys_ui_script action="INSERT_OR_UPDATE">
+        <active>false</active>
+        <description>redirects AAYOS Technicians to /aayos_technician</description>
+        <global>false</global>
+        <ignore_in_now_experience>false</ignore_in_now_experience>
+        <name>x_1868112_aayos.technician_redirect</name>
+        <script><![CDATA[// AAYOS Role Redirect UI Script
+var x_1868112_aayos_role_redirect = (function () {
+    'use strict';
+
+    function run() {
+        // Only in browser / Service Portal context with NOW.user available
+        if (typeof window === 'undefined' || !window.NOW || !NOW.user || !NOW.user.roles)
+            return;
+
+        var url = window.location.href || '';
+
+        // Avoid redirect loops – already on a role home page
+        if (url.indexOf('/aayos_admin') !== -1 ||
+            url.indexOf('/aayos_technician') !== -1)
+            return;
+
+        var roles = String(NOW.user.roles).split(',');
+
+        var isAdmin = roles.indexOf('x_1868112_aayos.admin') !== -1;
+        var isTech  = roles.indexOf('x_1868112_aayos_technician') !== -1;
+
+        // No relevant role → do nothing, user stays on the default landing page
+        if (!isAdmin && !isTech)
+            return;
+
+        // Redirect based on role
+        if (isAdmin) {
+            window.location.href = '/aayos_admin?id=aayos_admin_home';
+        } else if (isTech) {
+            window.location.href = '/aayos_technician?id=aayos_technician_home';
+        }
+    }
+
+    // Run immediately on load
+    run();
+
+    return {
+        run: run
+    };
+})();
+]]></script>
+        <script_name>technician_redirect</script_name>
+        <sys_class_name>sys_ui_script</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 04:00:16</sys_created_on>
+        <sys_id>10e1f97297253214ec453b90f053af6f</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>x_1868112_aayos.technician_redirect</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ui_script_10e1f97297253214ec453b90f053af6f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 12:37:42</sys_updated_on>
+        <ui_type>10</ui_type>
+        <use_scoped_format>false</use_scoped_format>
+    </sys_ui_script>
+</record_update>

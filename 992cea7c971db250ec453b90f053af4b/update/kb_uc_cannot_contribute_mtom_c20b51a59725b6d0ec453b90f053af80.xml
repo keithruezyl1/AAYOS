@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="kb_uc_cannot_contribute_mtom">
+    <kb_uc_cannot_contribute_mtom action="INSERT_OR_UPDATE">
+        <kb_knowledge_base display_value="AAYOS Admin Knowledge">2a9ad1659725b6d0ec453b90f053af0a</kb_knowledge_base>
+        <sys_class_name>kb_uc_cannot_contribute_mtom</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:03:56</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>c20b51a59725b6d0ec453b90f053af80</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Admin Knowledge.Guest User</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>kb_uc_cannot_contribute_mtom_c20b51a59725b6d0ec453b90f053af80</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:03:56</sys_updated_on>
+        <user_criteria display_value="Guest User">76f09af6cb1200108ad442fcf7076dbf</user_criteria>
+    </kb_uc_cannot_contribute_mtom>
+</record_update>

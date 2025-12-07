@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>title</field_list>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Copy of KB Search</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[data.typeahead = $sp.getWidgetFromInstance('typeahead_search_header');]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:39:25</sys_created_on>
+        <sys_id>3923a9e59765b6d0ec453b90f053af3f</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of KB Search</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_3923a9e59765b6d0ec453b90f053af3f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:39:25</sys_updated_on>
+        <template><![CDATA[<div id="homepage-search" class="wrapper">
+  <div>
+    <sp-widget widget="data.typeahead"></sp-widget>
+  </div>
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_widget_3923a9e59765b6d0ec453b90f053af3f</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;title&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;Copy of KB Search&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[data.typeahead = $sp.getWidgetFromInstance('typeahead_search_header');]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-01 05:39:25&lt;/sys_created_on&gt;&lt;sys_id&gt;3923a9e59765b6d0ec453b90f053af3f&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Copy of KB Search&lt;/sys_name&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_3923a9e59765b6d0ec453b90f053af3f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-01 05:39:25&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div id="homepage-search" class="wrapper"&gt;
+  &lt;div&gt;
+    &lt;sp-widget widget="data.typeahead"&gt;&lt;/sp-widget&gt;
+  &lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-716104580</payload_hash>
+        <record_name>Copy of KB Search</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:39:25</sys_created_on>
+        <sys_id>75232de59765b6d0ec453b90f053afa5</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad86c45610000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:39:25</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>7d23a9e56e65b6d0df386fc57ae34142</update_guid>
+        <update_guid_history>7d23a9e56e65b6d0df386fc57ae34142:-716104580</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of KB Search">7db3b16997e5b6d0ec453b90f053af3b</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:51:47</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>8c247fad1ab94d20898a7bfd2b269959</sys_id>
+        <sys_metadata>3923a9e59765b6d0ec453b90f053af3f</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of KB Search</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_widget_3923a9e59765b6d0ec453b90f053af3f</sys_update_name>
+        <sys_update_version display_value="sp_widget_3923a9e59765b6d0ec453b90f053af3f">75232de59765b6d0ec453b90f053afa5</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 06:51:47</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

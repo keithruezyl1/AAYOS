@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1868112_aayos.TicketLifecycleService</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>TicketLifecycleService</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var TicketLifecycleService = Class.create();
+TicketLifecycleService.prototype = {
+
+    initialize: function () {},
+
+    /* -----------------------------
+     * Start Work
+     * ----------------------------- */
+    startWork: function (ticketSysId, techSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        if (techSysId)
+            t.setValue('assigned_technician', techSysId);
+
+        t.setValue('status', 'in_progress');
+        t.setValue('actual_service_date', new GlideDateTime());
+        t.update();   // technician open-count BRs will fire
+    },
+
+    /* -----------------------------
+     * Complete Ticket
+     * ----------------------------- */
+    complete: function (ticketSysId, summary) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        t.setValue('status', 'closed');
+        t.setValue('closed_date', new GlideDateTime());
+        if (summary)
+            t.setValue('resolution_summary', summary);
+
+        t.update();   // technician open-count BRs will fire
+        this._updateTechnicianOpenTickets(String(t.getValue('assigned_technician') || ''));
+    },
+
+    /* -----------------------------
+     * Reassign Technician
+     * (respect max_concurrent_tickets + round-robin)
+     * ----------------------------- */
+    reassign: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        var oldTech = String(t.getValue('assigned_technician') || '');
+        var newTech = this._selectTechnicianWithAvailableCapacity();
+        if (!newTech)
+            return;
+
+        t.setValue('assigned_technician', newTech);
+
+        // push response-due out another 6 hours
+        var due = new GlideDateTime();
+        due.addSeconds(6 * 60 * 60);
+        t.setValue('technician_response_due', due);
+
+        t.setValue('reassignment_count',
+            (parseInt(t.getValue('reassignment_count'), 10) || 0) + 1);
+
+        t.update();
+
+        this._updateTechnicianOpenTickets(oldTech);
+        this._updateTechnicianOpenTickets(newTech);
+    },
+
+    /* -----------------------------
+     * Customer Declined (explicit close)
+     * ----------------------------- */
+    closeAsDeclined: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        t.setValue('status', 'cancelled');     // requirement: move to cancelled
+        t.setValue('customer_decision', 'declined');
+        t.setValue('customer_decision_date', new GlideDateTime());
+        t.setValue('closed_date', new GlideDateTime());
+        t.update();
+
+        this._updateTechnicianOpenTickets(String(t.getValue('assigned_technician') || ''));
+    },
+
+    /* -----------------------------
+     * Ticket Expired (no customer response)
+     * ----------------------------- */
+    closeAsExpired: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        t.setValue('status', 'closed');
+        t.setValue('customer_decision', 'expired');
+        t.setValue('customer_decision_date', new GlideDateTime());
+        t.setValue('closed_date', new GlideDateTime());
+        t.update();
+
+        this._updateTechnicianOpenTickets(String(t.getValue('assigned_technician') || ''));
+    },
+
+    /* -----------------------------
+     * Handle Technician Timeout (6 hours)
+     * ----------------------------- */
+    handleTechnicianTimeout: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        var dueStr = t.getValue('technician_response_due');
+        if (!dueStr)
+            return;
+
+        var now = new GlideDateTime();
+        var due = new GlideDateTime(dueStr);
+
+        // if now is after due, reassign
+        if (now.getNumericValue() > due.getNumericValue()) {
+            this.reassign(ticketSysId);
+            gs.info('TicketLifecycleService: Ticket ' + ticketSysId +
+                    ' reassigned after technician timeout.');
+        }
+    },
+
+    /* -----------------------------
+     * Handle Ticket Deletion
+     * ----------------------------- */
+    handleTicketDeletion: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        var techId = String(t.getValue('assigned_technician') || '');
+        t.deleteRecord();
+
+        this._updateTechnicianOpenTickets(techId);  // BRs also handle this, but this keeps counts in sync even if BRs change
+        gs.info('TicketLifecycleService: Ticket ' + ticketSysId +
+                ' deleted and technician open-ticket count updated.');
+    },
+
+    /* -----------------------------
+     * Called by BR when customer_decision changes to Declined
+     * ----------------------------- */
+    handleDeclinedTicket: function (ticketSysId) {
+        var t = new GlideRecord('x_1868112_aayos_ticket');
+        if (!t.get(ticketSysId))
+            return;
+
+        if (String(t.getValue('customer_decision')) !== 'declined')
+            return;
+
+        this.closeAsDeclined(ticketSysId);
+        gs.info('TicketLifecycleService: Ticket ' + ticketSysId +
+                ' marked cancelled due to customer decline.');
+    },
+
+    /* -----------------------------
+     * Helper – Round-robin technician selection
+     * honoring max_concurrent_tickets & current_open_tickets
+     * ----------------------------- */
+    _selectTechnicianWithAvailableCapacity: function () {
+        var lastTech = gs.getProperty('x_1868112.aayos.last_tech', '');
+        var techGR = new GlideRecord('x_1868112_aayos_technician');
+        techGR.addQuery('status', 'active');
+        techGR.orderBy('sys_id');
+        techGR.query();
+
+        var chosen = '';
+        var firstEligible = '';
+        var passedLast = !lastTech;
+
+        while (techGR.next()) {
+            var techId = techGR.getUniqueValue();
+
+            // Parse capacity fields
+            var maxConc = parseInt(techGR.getValue('max_concurrent_tickets'), 10);
+            if (isNaN(maxConc) || maxConc <= 0) {
+                maxConc = 999999; // treat 0/blank as "no limit"
+            }
+
+            var openCount = parseInt(techGR.getValue('current_open_tickets'), 10);
+            if (isNaN(openCount)) {
+                openCount = 0;
+            }
+
+            var hasCapacity = openCount < maxConc;
+            if (!hasCapacity)
+                continue;
+
+            if (!firstEligible) {
+                firstEligible = techId;
+            }
+
+            if (!passedLast) {
+                if (techId === lastTech) {
+                    passedLast = true;
+                }
+                continue;
+            }
+
+            chosen = techId;
+            break;
+        }
+
+        // Wrap-around if nothing after lastTech
+        if (!chosen && firstEligible) {
+            chosen = firstEligible;
+        }
+
+        if (chosen) {
+            gs.setProperty('x_1868112.aayos.last_tech', chosen);
+        }
+
+        return chosen;
+    },
+
+    /* -----------------------------
+     * Helper – Recalculate technician.current_open_tickets
+     * using the same "open" states as your BRs
+     * ----------------------------- */
+    _updateTechnicianOpenTickets: function (techSysId) {
+        if (!techSysId)
+            return;
+
+        var OPEN_STATES = ['new', 'in_progress', 'on_hold'];
+
+        var ga = new GlideAggregate('x_1868112_aayos_ticket');
+        ga.addAggregate('COUNT');
+        ga.addQuery('assigned_technician', techSysId);
+        ga.addQuery('status', 'IN', OPEN_STATES.join(','));
+        ga.query();
+
+        var count = 0;
+        if (ga.next()) {
+            var raw = ga.getAggregate('COUNT');
+            count = parseInt(raw, 10);
+            if (isNaN(count))
+                count = 0;
+        }
+
+        var techGr = new GlideRecord('x_1868112_aayos_technician');
+        if (techGr.get(techSysId)) {
+            techGr.setValue('current_open_tickets', count);
+            techGr.update();
+        }
+    },
+
+    /* -----------------------------
+     * Optional – link prediction to ticket
+     * (kept for completeness; not called directly here)
+     * ----------------------------- */
+    _linkPredictionToTicket: function (predSysId, ticketSysId) {
+        if (!predSysId || !ticketSysId)
+            return;
+
+        var predGR = new GlideRecord('x_1868112_aayos_prediction');
+        if (predGR.get(predSysId) && predGR.isValidField('linked_ticket')) {
+            predGR.setValue('linked_ticket', ticketSysId);
+            predGR.update();
+        }
+    },
+
+    type: 'TicketLifecycleService'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 13:06:39</sys_created_on>
+        <sys_id>8449436d9725f6d0ec453b90f053af71</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>TicketLifecycleService</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_script_include_8449436d9725f6d0ec453b90f053af71</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-07 11:42:55</sys_updated_on>
+    </sys_script_include>
+</record_update>

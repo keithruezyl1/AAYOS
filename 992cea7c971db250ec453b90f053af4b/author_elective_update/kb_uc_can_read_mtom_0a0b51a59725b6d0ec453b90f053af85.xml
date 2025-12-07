@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="kb_uc_can_read_mtom">
+    <kb_uc_can_read_mtom action="DELETE">
+        <kb_knowledge_base display_value="AAYOS Admin Knowledge">2a9ad1659725b6d0ec453b90f053af0a</kb_knowledge_base>
+        <sys_class_name>kb_uc_can_read_mtom</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:03:56</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>0a0b51a59725b6d0ec453b90f053af85</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Admin Knowledge.Any User</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>kb_uc_can_read_mtom_0a0b51a59725b6d0ec453b90f053af85</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:03:56</sys_updated_on>
+        <user_criteria display_value="Any User">fb1166d64fff0200086eeed18110c7ab</user_criteria>
+    </kb_uc_can_read_mtom>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>kb_uc_can_read_mtom_0a0b51a59725b6d0ec453b90f053af85</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="kb_uc_can_read_mtom"><kb_uc_can_read_mtom action="INSERT_OR_UPDATE"><kb_knowledge_base display_value="AAYOS Admin Knowledge">2a9ad1659725b6d0ec453b90f053af0a</kb_knowledge_base><sys_class_name>kb_uc_can_read_mtom</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-01 05:03:56</sys_created_on><sys_domain>global</sys_domain><sys_domain_path>/</sys_domain_path><sys_id>0a0b51a59725b6d0ec453b90f053af85</sys_id><sys_mod_count>0</sys_mod_count><sys_name>AAYOS Admin Knowledge.Any User</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>kb_uc_can_read_mtom_0a0b51a59725b6d0ec453b90f053af85</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-01 05:03:56</sys_updated_on><user_criteria display_value="Any User">fb1166d64fff0200086eeed18110c7ab</user_criteria></kb_uc_can_read_mtom></record_update>]]></payload>
+        <payload_hash>-1061860813</payload_hash>
+        <record_name>AAYOS Admin Knowledge.Any User</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:03:56</sys_created_on>
+        <sys_id>060b51a59725b6d0ec453b90f053af8a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad84bca100000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:03:56</sys_updated_on>
+        <type>Who Can Read Knowledge Base</type>
+        <update_guid>c20b51a5f025b6d0a1fd182b68a6a089</update_guid>
+        <update_guid_history>c20b51a5f025b6d0a1fd182b68a6a089:-1061860813</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="AAYOS Admin Knowledge.Any User">9bc0ae6d97edb6d0ec453b90f053af8e</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 10:08:45</sys_created_on>
+        <sys_db_object display_value="" name="kb_uc_can_read_mtom">kb_uc_can_read_mtom</sys_db_object>
+        <sys_id>98c8c27617b5421ca0417c2d8f2dd7e4</sys_id>
+        <sys_metadata>0a0b51a59725b6d0ec453b90f053af85</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>AAYOS Admin Knowledge.Any User</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>kb_uc_can_read_mtom_0a0b51a59725b6d0ec453b90f053af85</sys_update_name>
+        <sys_update_version display_value="kb_uc_can_read_mtom_0a0b51a59725b6d0ec453b90f053af85">060b51a59725b6d0ec453b90f053af8a</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 10:08:45</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

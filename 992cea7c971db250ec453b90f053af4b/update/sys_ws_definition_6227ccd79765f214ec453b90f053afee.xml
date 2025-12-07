@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_definition">
+    <sys_ws_definition action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <base_uri>/api/x_1868112_aayos/openai_vehicle_prediction</base_uri>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_version>No active default version</default_version>
+        <doc_link/>
+        <enforce_acl>6b180c5b9765f214ec453b90f053af64,84f4cc2f97a97210ec453b90f053af03</enforce_acl>
+        <is_versioned>false</is_versioned>
+        <name>OpenAI Vehicle Prediction</name>
+        <namespace>x_1868112_aayos</namespace>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <service_id>openai_vehicle_prediction</service_id>
+        <short_description/>
+        <sys_class_name>sys_ws_definition</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-06 09:39:01</sys_created_on>
+        <sys_id>6227ccd79765f214ec453b90f053afee</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>OpenAI Vehicle Prediction</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ws_definition_6227ccd79765f214ec453b90f053afee</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-07 03:56:15</sys_updated_on>
+    </sys_ws_definition>
+</record_update>

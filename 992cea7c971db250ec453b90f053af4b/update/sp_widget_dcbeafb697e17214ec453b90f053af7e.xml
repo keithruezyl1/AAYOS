@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller = function ($scope, spUtil) {
+  var c = this;
+
+  c.customer = {};
+  c.vehicle = {};
+  c.selected = null;
+  c.searchText = '';
+
+  // main step + vehicle wizard sub-step
+  c.step = 'choose_customer_type';
+  c.vehicleStep = 'identity';
+  c.vehicleEntrySource = null; // "new" | "existing"
+
+  /* ---------- STEP 1: choose customer type ---------- */
+
+  c.chooseNewCustomer = function () {
+    c.step = 'add_new_customer';
+  };
+
+  c.chooseExistingCustomer = function () {
+    c.step = 'choose_existing_customer';
+  };
+
+  /* ---------- STEP 2A: new customer ---------- */
+
+  c.submitNewCustomer = function () {
+    c.server.update({
+      action:  'create_customer',
+      name:    c.customer.name,
+      email:   c.customer.email,
+      phone:   c.customer.phone,
+      address1: c.customer.address1,
+      address2: c.customer.address2,
+      city:    c.customer.city,
+      state:   c.customer.state,
+      postal:  c.customer.postal,
+      country: c.customer.country
+    }).then(function (response) {
+      c.data = response.data;
+
+      // we came into the vehicle wizard from the New Customer flow
+      c.vehicleEntrySource = 'new';
+      c.step = 'vehicle_form';
+      c.vehicleStep = 'identity';
+
+      // toast at top-right
+      spUtil.addInfoMessage('Customer registered successfully.');
+    });
+  };
+
+  /* ---------- STEP 2B: existing customer ---------- */
+
+  c.selectExistingCustomer = function (sys_id) {
+    c.selected = sys_id;
+  };
+
+  c.confirmExisting = function () {
+    if (!c.selected)
+      return;
+
+    c.server.update({
+      action: 'select_existing_customer',
+      customer_sys_id: c.selected
+    }).then(function (response) {
+      c.data = response.data;
+
+      // we came into the vehicle wizard from the Existing Customer flow
+      c.vehicleEntrySource = 'existing';
+      c.step = 'vehicle_form';
+      c.vehicleStep = 'identity';
+    });
+  };
+
+  /* ---------- Vehicle wizard navigation (steps 1–5) ---------- */
+
+  c.nextVehicleStep = function () {
+    if (c.vehicleStep === 'identity') {
+      c.vehicleStep = 'usage';
+    } else if (c.vehicleStep === 'usage') {
+      c.vehicleStep = 'mileage';
+    } else if (c.vehicleStep === 'mileage') {
+      c.vehicleStep = 'maintenance';
+    } else if (c.vehicleStep === 'maintenance') {
+      c.vehicleStep = 'risk';
+    }
+  };
+
+  c.prevVehicleStep = function () {
+    if (c.vehicleStep === 'usage') {
+      c.vehicleStep = 'identity';
+    } else if (c.vehicleStep === 'mileage') {
+      c.vehicleStep = 'usage';
+    } else if (c.vehicleStep === 'maintenance') {
+      c.vehicleStep = 'mileage';
+    } else if (c.vehicleStep === 'risk') {
+      c.vehicleStep = 'maintenance';
+    }
+  };
+
+  // top “← Back” link: leave the wizard and go back to the right customer page
+  c.goVehicleRootBack = function () {
+    c.vehicleStep = 'identity';
+
+    if (c.vehicleEntrySource === 'existing') {
+      c.step = 'choose_existing_customer';
+    } else {
+      // default back to the very first page
+      c.step = 'choose_customer_type';
+    }
+  };
+
+  /* ---------- Submit vehicle ---------- */
+
+  c.submitVehicle = function () {
+    var customerSysId = c.data.created_customer_sys_id || c.data.selected_customer;
+
+    c.server.update({
+      action: 'create_vehicle',
+      customer_sys_id: customerSysId,
+
+      make:                      c.vehicle.make,
+      model:                     c.vehicle.model,
+      model_year:                c.vehicle.model_year,
+      vin:                       c.vehicle.vin,
+      plate:                     c.vehicle.plate,
+      fuel_type:                 c.vehicle.fuel_type,
+      load_type:                 c.vehicle.load_type,
+      current_mileage:           c.vehicle.current_mileage,
+      estimated_monthly_mileage: c.vehicle.estimated_monthly_mileage,
+      usage_type:                c.vehicle.usage_type,
+      transmission:              c.vehicle.transmission,
+      has_tcu:                   c.vehicle.has_tcu,
+      driving_condition_profile: c.vehicle.driving_condition_profile,
+      vehicle_status:            c.vehicle.vehicle_status,
+      last_service_date:         c.vehicle.last_service_date,
+      last_service_odometer:     c.vehicle.last_service_odometer,
+      last_oil_change_date:      c.vehicle.last_oil_change_date,
+      last_oil_change_odometer:  c.vehicle.last_oil_change_odometer,
+      last_brake_service_date:   c.vehicle.last_brake_service_date,
+      last_tire_service_date:    c.vehicle.last_tire_service_date,
+      last_tire_service_odometer:c.vehicle.last_tire_service_odometer,
+      last_battery_service_date: c.vehicle.last_battery_service_date,
+      last_battery_service_odometer: c.vehicle.last_battery_service_odometer,
+      last_risk_level:           c.vehicle.last_risk_level,
+      last_prediction_run:       c.vehicle.last_prediction_run
+    }).then(function (response) {
+      c.data = response.data;
+      c.step = 'vehicle_success';
+    });
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>/*********************************************&#13;
+ * AAYOS Add Vehicle – Layout + Typography&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle {&#13;
+  max-width: 900px;&#13;
+  margin: 0 auto;&#13;
+  padding: 24px 0 40px;&#13;
+  font-family: "Segoe UI", Roboto, sans-serif;&#13;
+}&#13;
+&#13;
+/* Card container */&#13;
+.aayos-add-vehicle .aayos-card {&#13;
+  background: #ffffff;&#13;
+  border-radius: 10px;&#13;
+  padding: 26px 30px;&#13;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.12);&#13;
+  border: 1px solid #ececec;&#13;
+  margin-bottom: 28px;&#13;
+}&#13;
+&#13;
+/* Titles */&#13;
+.aayos-add-vehicle .aayos-title {&#13;
+  margin-top: 0;&#13;
+  margin-bottom: 16px;&#13;
+  font-size: 26px;&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-section-title {&#13;
+  margin-top: 26px;&#13;
+  margin-bottom: 12px;&#13;
+  font-size: 17px;&#13;
+  font-weight: 600;&#13;
+  border-bottom: 1px solid #dcdcdc;&#13;
+  padding-bottom: 5px;&#13;
+}&#13;
+&#13;
+/* Form spacing */&#13;
+.aayos-add-vehicle .aayos-form .form-group {&#13;
+  margin-bottom: 14px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-form label {&#13;
+  font-weight: 600;&#13;
+  margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .text-muted {&#13;
+  color: #666 !important;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .mt-20 { margin-top: 20px; }&#13;
+.aayos-add-vehicle .mt-30 { margin-top: 30px; }&#13;
+.aayos-add-vehicle .mb-20 { margin-bottom: 20px; }&#13;
+&#13;
+/* Checkbox alignment */&#13;
+.aayos-add-vehicle .aayos-checkbox-label {&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+  gap: 6px;&#13;
+  font-weight: 500;&#13;
+}&#13;
+&#13;
+/* Table */&#13;
+.aayos-add-vehicle .aayos-table-wrapper {&#13;
+  margin-top: 10px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .table-hover tbody tr:hover {&#13;
+  background-color: #f8f8f8;&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Button layout helpers&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .aayos-button-row {&#13;
+  display: flex;&#13;
+  gap: 12px;&#13;
+  flex-wrap: wrap;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-back-next-row {&#13;
+  display: flex;&#13;
+  justify-content: space-between;&#13;
+  gap: 12px;&#13;
+  margin-top: 24px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-next-row {&#13;
+  display: flex;&#13;
+  justify-content: flex-end;&#13;
+  margin-top: 24px;&#13;
+}&#13;
+&#13;
+/* “← Back” text at top of vehicle wizard (outside card) */&#13;
+.aayos-add-vehicle .aayos-step-back {&#13;
+  font-size: 13px;&#13;
+  color: #555;&#13;
+  margin-bottom: 8px;&#13;
+  cursor: pointer;&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+  gap: 4px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-step-back:hover {&#13;
+  color: #00c978;&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Primary action buttons – black → green&#13;
+ * (New Customer, Register Customer, Choose Customer,&#13;
+ *  Register Vehicle, and all Next buttons)&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .aayos-action {&#13;
+  background-color: #000000 !important;   /* black by default */&#13;
+  color: #ffffff !important;              /* white text */&#13;
+  border: none !important;&#13;
+  padding: 8px 18px !important;&#13;
+  font-weight: 600;&#13;
+  border-radius: 6px;&#13;
+  transition: background-color 0.25s ease, transform 0.15s ease;&#13;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-action:hover {&#13;
+  background-color: #00e68a !important;   /* light green */&#13;
+  color: #ffffff !important;&#13;
+  transform: translateY(-1px);&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-action:active {&#13;
+  background-color: #00c978 !important;   /* slightly darker green */&#13;
+  color: #ffffff !important;&#13;
+  transform: scale(0.97);&#13;
+}&#13;
+&#13;
+/* Disabled state */&#13;
+.aayos-add-vehicle .aayos-action[disabled] {&#13;
+  opacity: 0.55;&#13;
+  cursor: not-allowed;&#13;
+  box-shadow: none;&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Outline black buttons – vehicle sequence Back&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .btn-outline-black {&#13;
+  background-color: #ffffff;&#13;
+  color: #000000;&#13;
+  border: 1px solid #000000;&#13;
+  padding: 7px 16px;&#13;
+  font-weight: 600;&#13;
+  border-radius: 6px;&#13;
+  transition: all 0.25s ease;&#13;
+  box-shadow: none;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .btn-outline-black:hover {&#13;
+  color: #00c978;&#13;
+  border-color: #00c978;&#13;
+  background-color: #f9fffc;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .btn-outline-black:active {&#13;
+  color: #00c978;&#13;
+  border-color: #00c978;&#13;
+  background-color: #e6fff4;&#13;
+  transform: scale(0.97);&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Link-style Back buttons (outside wizard)&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .btn-link {&#13;
+  background: none !important;&#13;
+  color: #666 !important;&#13;
+  padding-left: 0 !important;&#13;
+  box-shadow: none !important;&#13;
+  border-radius: 0 !important;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .btn-link:hover {&#13;
+  color: #00e68a !important;&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Success card&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .aayos-success {&#13;
+  border-left: 5px solid #00e68a;&#13;
+}&#13;
+&#13;
+/*********************************************&#13;
+ * Vehicle wizard step indicator&#13;
+ *********************************************/&#13;
+.aayos-add-vehicle .aayos-vehicle-steps {&#13;
+  list-style: none;&#13;
+  padding: 0;&#13;
+  margin: 0 0 18px;&#13;
+  display: flex;&#13;
+  flex-wrap: wrap;&#13;
+  gap: 8px;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-vehicle-steps li {&#13;
+  padding: 6px 10px;&#13;
+  border-radius: 999px;&#13;
+  font-size: 12px;&#13;
+  background: #f3f3f3;&#13;
+  color: #555;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-vehicle-steps li.active {&#13;
+  background: #000;&#13;
+  color: #fff;&#13;
+}&#13;
+&#13;
+.aayos-add-vehicle .aayos-vehicle-steps li.done {&#13;
+  background: #00e68a;&#13;
+  color: #fff;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>add vehicle widget</description>
+        <docs/>
+        <field_list/>
+        <has_preview>false</has_preview>
+        <id>aayos_add_vehicle</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>AAYOS Add Vehicle</name>
+        <option_schema/>
+        <public>false</public>
+        <roles>x_1868112_aayos.aayos_admin,x_1868112_aayos.admin</roles>
+        <script><![CDATA[(function () {
+    data.error = '';
+
+    // --- RBAC ---
+    if (!gs.hasRole('aayos_admin')) {
+        data.error = 'not_authorized';
+        return;
+    }
+
+    // --- Initialize state to return ---
+    data.customers = [];
+    data.created_customer_sys_id = '';
+    data.selected_customer = '';
+    data.created_vehicle_sys_id = '';
+
+    // --- Always load customers (for Existing Customer step) ---
+    var custGr = new GlideRecord('x_1868112_aayos_customer');
+    custGr.orderBy('name');
+    custGr.query();
+    while (custGr.next()) {
+        data.customers.push({
+            sys_id: custGr.getUniqueValue(),
+            name: custGr.getValue('name'),
+            email: custGr.getValue('email'),
+            phone: custGr.getValue('phone'),
+            city: custGr.getValue('city'),
+            state: custGr.getValue('state_province')
+        });
+    }
+
+    // If there is no input, just return the customer list
+    if (typeof input === 'undefined' || !input)
+        return;
+
+    // --- Actions from client ---
+
+    // 1) Create new customer
+    if (input.action == 'create_customer') {
+        var newCust = new GlideRecord('x_1868112_aayos_customer');
+        newCust.initialize();
+        newCust.name           = input.name || '';
+        newCust.email          = input.email || '';
+        newCust.phone          = input.phone || '';
+        newCust.address_line_1 = input.address1 || '';
+        newCust.address_line_2 = input.address2 || '';
+        newCust.city           = input.city || '';
+        newCust.state_province = input.state || '';
+        newCust.postal_code    = input.postal || '';
+        newCust.country        = input.country || '';
+        newCust.insert();
+
+        data.created_customer_sys_id = newCust.getUniqueValue();
+    }
+
+    // 2) Existing customer chosen
+    if (input.action == 'select_existing_customer') {
+        data.selected_customer = input.customer_sys_id;
+    }
+
+    // 3) Create vehicle
+    if (input.action == 'create_vehicle') {
+        var customerSysId = input.customer_sys_id || '';
+
+        var veh = new GlideRecord('x_1868112_aayos_vehicle');
+        veh.initialize();
+
+        // --- Identity / core ---
+        veh.customer                  = customerSysId;
+        veh.plate                     = input.plate || '';
+        veh.vin                       = input.vin || '';
+        veh.make                      = input.make || '';
+        veh.model                     = input.model || '';
+        veh.model_year                = input.model_year || '';
+
+        // --- Usage Profile ---
+        veh.fuel_type                 = input.fuel_type || '';
+        veh.transmission              = input.transmission || '';
+        veh.usage_type                = input.usage_type || '';
+        veh.load_type                 = input.load_type || '';
+        veh.driving_condition_profile = input.driving_condition_profile || '';
+        veh.has_tcu                   = input.has_tcu === true;
+
+        // --- Mileage ---
+        veh.current_mileage           = input.current_mileage || 0;
+        veh.estimated_monthly_mileage = input.estimated_monthly_mileage || 0;
+
+        // --- Maintenance Baseline ---
+        veh.last_service_date             = input.last_service_date || '';
+        veh.last_service_odometer         = input.last_service_odometer || 0;
+        veh.last_oil_change_date          = input.last_oil_change_date || '';
+        veh.last_oil_change_odometer      = input.last_oil_change_odometer || 0;
+        veh.last_brake_service_date       = input.last_brake_service_date || '';
+        veh.last_tire_service_date        = input.last_tire_service_date || '';
+        veh.last_tire_service_odometer    = input.last_tire_service_odometer || 0;
+        veh.last_battery_service_date     = input.last_battery_service_date || '';
+        veh.last_battery_service_odometer = input.last_battery_service_odometer || 0;
+
+        // --- Risk & Prediction ---
+        veh.vehicle_status            = input.vehicle_status || '';
+        veh.last_risk_level           = input.last_risk_level || '';
+        veh.last_prediction_run       = input.last_prediction_run || '';
+
+        veh.insert();
+        data.created_vehicle_sys_id = veh.getUniqueValue();
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 13:10:10</sys_created_on>
+        <sys_id>dcbeafb697e17214ec453b90f053af7e</sys_id>
+        <sys_mod_count>17</sys_mod_count>
+        <sys_name>AAYOS Add Vehicle</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_dcbeafb697e17214ec453b90f053af7e</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-06 04:12:18</sys_updated_on>
+        <template><![CDATA[<div class="aayos-add-vehicle">
+  <!-- Not authorized -->
+  <div ng-if="c.data.error == 'not_authorized'" class="alert alert-danger mt-20">
+    You are not authorized to access the AAYOS Add Vehicle page.
+  </div>
+
+  <!-- Main content -->
+  <div ng-if="c.data.error != 'not_authorized'">
+
+    <!-- STEP 1: Choose new vs existing customer -->
+    <div ng-if="c.step == 'choose_customer_type'" class="aayos-card">
+      <h2 class="aayos-title">Add Vehicle</h2>
+      <p class="text-muted mb-20">
+        Choose how you want to associate a customer with this vehicle.
+      </p>
+
+      <div class="aayos-button-row">
+        <!-- New Customer – black -> green -->
+        <button class="btn aayos-action" ng-click="c.chooseNewCustomer()">
+          New Customer
+        </button>
+        <!-- Existing Customer – default styling -->
+        <button class="btn btn-default" ng-click="c.chooseExistingCustomer()">
+          Existing Customer
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 2A: New customer form -->
+    <div ng-if="c.step == 'add_new_customer'" class="aayos-card">
+      <h3 class="aayos-title">Register New Customer</h3>
+      <form class="form aayos-form">
+        <div class="form-group">
+          <label>Name</label>
+          <input class="form-control" ng-model="c.customer.name" required>
+        </div>
+
+        <div class="form-group">
+          <label>Email</label>
+          <input class="form-control" ng-model="c.customer.email">
+        </div>
+
+        <div class="form-group">
+          <label>Phone</label>
+          <input class="form-control" ng-model="c.customer.phone">
+        </div>
+
+        <div class="form-group">
+          <label>Address Line 1</label>
+          <input class="form-control" ng-model="c.customer.address1">
+        </div>
+
+        <div class="form-group">
+          <label>Address Line 2</label>
+          <input class="form-control" ng-model="c.customer.address2">
+        </div>
+
+        <div class="form-group">
+          <label>City</label>
+          <input class="form-control" ng-model="c.customer.city">
+        </div>
+
+        <div class="form-group">
+          <label>State / Province</label>
+          <input class="form-control" ng-model="c.customer.state">
+        </div>
+
+        <div class="form-group">
+          <label>Postal Code</label>
+          <input class="form-control" ng-model="c.customer.postal">
+        </div>
+
+        <div class="form-group">
+          <label>Country</label>
+          <input class="form-control" ng-model="c.customer.country">
+        </div>
+
+        <div class="aayos-button-row mt-20">
+          <!-- Register Customer – black -> green -->
+          <button type="button" class="btn aayos-action" ng-click="c.submitNewCustomer()">
+            Register Customer
+          </button>
+          <button type="button" class="btn btn-link" ng-click="c.step='choose_customer_type'">
+            Back
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- STEP 2B: Existing customer selection -->
+    <div ng-if="c.step == 'choose_existing_customer'" class="aayos-card">
+      <h3 class="aayos-title">Select Existing Customer</h3>
+
+      <div class="form-group aayos-search-group">
+        <label>Search Customers</label>
+        <input type="text"
+               class="form-control"
+               placeholder="Search by name, email, or city"
+               ng-model="c.searchText">
+      </div>
+
+      <div class="table-responsive aayos-table-wrapper">
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th class="text-center" style="width: 70px;">Select</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>City</th>
+              <th>State / Province</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="cust in c.data.customers | filter:c.searchText">
+              <td class="text-center">
+                <input type="radio"
+                       name="custsel"
+                       ng-checked="c.selected == cust.sys_id"
+                       ng-click="c.selectExistingCustomer(cust.sys_id)">
+              </td>
+              <td>{{ cust.name }}</td>
+              <td>{{ cust.email }}</td>
+              <td>{{ cust.phone }}</td>
+              <td>{{ cust.city }}</td>
+              <td>{{ cust.state }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="aayos-button-row mt-20">
+        <!-- Choose Customer – black -> green -->
+        <button type="button"
+                class="btn aayos-action"
+                ng-click="c.confirmExisting()"
+                ng-disabled="!c.selected">
+          Choose Customer
+        </button>
+        <button type="button"
+                class="btn btn-link"
+                ng-click="c.step='choose_customer_type'">
+          Back
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: Custom Vehicle Registration Form (multi-step) -->
+    <div ng-if="c.step == 'vehicle_form'">
+
+      <!-- Top-level back: leave vehicle wizard, go back to customer selection/root -->
+      <div class="aayos-step-back" ng-click="c.goVehicleRootBack()">
+        ← Back
+      </div>
+
+      <div class="aayos-card">
+        <h3 class="aayos-title">Register Vehicle</h3>
+
+        <!-- Sub-step indicator -->
+        <ul class="aayos-vehicle-steps">
+          <li ng-class="{'active': c.vehicleStep === 'identity', 'done': c.vehicleStep !== 'identity'}">
+            1. Identity
+          </li>
+          <li ng-class="{'active': c.vehicleStep === 'usage', 'done': c.vehicleStep === 'mileage' || c.vehicleStep === 'maintenance' || c.vehicleStep === 'risk'}">
+            2. Usage Profile
+          </li>
+          <li ng-class="{'active': c.vehicleStep === 'mileage', 'done': c.vehicleStep === 'maintenance' || c.vehicleStep === 'risk'}">
+            3. Mileage
+          </li>
+          <li ng-class="{'active': c.vehicleStep === 'maintenance', 'done': c.vehicleStep === 'risk'}">
+            4. Maintenance Baseline
+          </li>
+          <li ng-class="{'active': c.vehicleStep === 'risk'}">
+            5. Risk &amp; Prediction
+          </li>
+        </ul>
+
+        <form class="form aayos-form">
+
+          <!-- Identity -->
+          <div ng-if="c.vehicleStep === 'identity'">
+            <h4 class="aayos-section-title">Identity</h4>
+
+            <div class="form-group">
+              <label>Plate</label>
+              <input class="form-control" ng-model="c.vehicle.plate">
+            </div>
+
+            <div class="form-group">
+              <label>VIN</label>
+              <input class="form-control" ng-model="c.vehicle.vin">
+            </div>
+
+            <div class="form-group">
+              <label>Make</label>
+              <input class="form-control" ng-model="c.vehicle.make">
+            </div>
+
+            <div class="form-group">
+              <label>Model</label>
+              <input class="form-control" ng-model="c.vehicle.model">
+            </div>
+
+            <div class="form-group">
+              <label>Model Year</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.model_year">
+            </div>
+
+            <!-- Identity: only Next -->
+            <div class="aayos-next-row">
+              <button type="button" class="btn aayos-action" ng-click="c.nextVehicleStep()">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Usage Profile -->
+          <div ng-if="c.vehicleStep === 'usage'">
+            <h4 class="aayos-section-title">Usage Profile</h4>
+
+            <div class="form-group">
+              <label>Fuel Type</label>
+              <input class="form-control" ng-model="c.vehicle.fuel_type">
+            </div>
+
+            <div class="form-group">
+              <label>Transmission</label>
+              <input class="form-control" ng-model="c.vehicle.transmission">
+            </div>
+
+            <div class="form-group">
+              <label>Usage Type</label>
+              <input class="form-control" ng-model="c.vehicle.usage_type">
+            </div>
+
+            <div class="form-group">
+              <label>Load Type</label>
+              <input class="form-control" ng-model="c.vehicle.load_type">
+            </div>
+
+            <div class="form-group">
+              <label>Driving Condition Profile</label>
+              <input class="form-control" ng-model="c.vehicle.driving_condition_profile">
+            </div>
+
+            <div class="form-group">
+              <label class="aayos-checkbox-label">
+                <input type="checkbox" ng-model="c.vehicle.has_tcu">
+                <span>Has TCU</span>
+              </label>
+            </div>
+
+            <div class="aayos-back-next-row">
+              <!-- Outline Back: previous wizard step -->
+              <button type="button" class="btn btn-outline-black" ng-click="c.prevVehicleStep()">
+                Back
+              </button>
+              <button type="button" class="btn aayos-action" ng-click="c.nextVehicleStep()">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Mileage -->
+          <div ng-if="c.vehicleStep === 'mileage'">
+            <h4 class="aayos-section-title">Mileage</h4>
+
+            <div class="form-group">
+              <label>Current Mileage</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.current_mileage">
+            </div>
+
+            <div class="form-group">
+              <label>Estimated Monthly Mileage</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.estimated_monthly_mileage">
+            </div>
+
+            <div class="aayos-back-next-row">
+              <button type="button" class="btn btn-outline-black" ng-click="c.prevVehicleStep()">
+                Back
+              </button>
+              <button type="button" class="btn aayos-action" ng-click="c.nextVehicleStep()">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Maintenance Baseline -->
+          <div ng-if="c.vehicleStep === 'maintenance'">
+            <h4 class="aayos-section-title">Maintenance Baseline</h4>
+
+            <div class="form-group">
+              <label>Last Service Date</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_service_date">
+            </div>
+
+            <div class="form-group">
+              <label>Last Service Odometer</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.last_service_odometer">
+            </div>
+
+            <div class="form-group">
+              <label>Last Oil Change Date</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_oil_change_date">
+            </div>
+
+            <div class="form-group">
+              <label>Last Oil Change Odometer</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.last_oil_change_odometer">
+            </div>
+
+            <div class="form-group">
+              <label>Last Brake Service Date</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_brake_service_date">
+            </div>
+
+            <div class="form-group">
+              <label>Last Tire Service Date</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_tire_service_date">
+            </div>
+
+            <div class="form-group">
+              <label>Last Tire Service Odometer</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.last_tire_service_odometer">
+            </div>
+
+            <div class="form-group">
+              <label>Last Battery Service Date</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_battery_service_date">
+            </div>
+
+            <div class="form-group">
+              <label>Last Battery Service Odometer</label>
+              <input class="form-control" type="number" ng-model="c.vehicle.last_battery_service_odometer">
+            </div>
+
+            <div class="aayos-back-next-row">
+              <button type="button" class="btn btn-outline-black" ng-click="c.prevVehicleStep()">
+                Back
+              </button>
+              <button type="button" class="btn aayos-action" ng-click="c.nextVehicleStep()">
+                Next
+              </button>
+            </div>
+          </div>
+
+          <!-- Risk & Prediction (final) -->
+          <div ng-if="c.vehicleStep === 'risk'">
+            <h4 class="aayos-section-title">Risk &amp; Prediction</h4>
+
+            <div class="form-group">
+              <label>Vehicle Status</label>
+              <input class="form-control" ng-model="c.vehicle.vehicle_status">
+            </div>
+
+            <div class="form-group">
+              <label>Last Risk Level</label>
+              <input class="form-control" ng-model="c.vehicle.last_risk_level">
+            </div>
+
+            <div class="form-group">
+              <label>Last Prediction Run</label>
+              <input class="form-control" type="date" ng-model="c.vehicle.last_prediction_run">
+            </div>
+
+            <div class="aayos-back-next-row">
+              <button type="button" class="btn btn-outline-black" ng-click="c.prevVehicleStep()">
+                Back
+              </button>
+              <!-- Register Vehicle – black -> green -->
+              <button type="button" class="btn aayos-action" ng-click="c.submitVehicle()">
+                Register Vehicle
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- STEP 4: Success -->
+    <div ng-if="c.step == 'vehicle_success'" class="aayos-card aayos-success">
+      <h3 class="aayos-title">Vehicle Registered Successfully</h3>
+      <p class="mb-20">
+        Vehicle Sys ID: <strong>{{ c.data.created_vehicle_sys_id }}</strong>
+      </p>
+
+      <div class="aayos-button-row">
+        <a class="btn btn-primary" href="?id=aayos_vehicles">Go to Vehicles</a>
+        <a class="btn btn-default" href="?id=aayos_add_vehicle">Add Another Vehicle</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

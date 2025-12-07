@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>color</field_list>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Copy of AAYOS KB Categories</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+    // AAYOS Admin Knowledge base sys_id
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.categories = [];
+
+    var t = new GlideRecord('kb_category');
+    // Only categories that belong to AAYOS Admin Knowledge
+    t.addQuery('kb_knowledge_base', kbId);
+    // Optional: only top-level categories
+    t.addQuery('parent_id', '');
+    t.addQuery('active', true);
+    t.orderBy('label');
+    t.query();
+
+    while (t.next()) {
+        var category = {
+            value: t.getUniqueValue(),     // sys_id
+            label: t.getValue('label')     // category name
+        };
+        data.categories.push(category);
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 07:43:33</sys_created_on>
+        <sys_id>c49f79ad9769b6d0ec453b90f053afce</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Categories</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_c49f79ad9769b6d0ec453b90f053afce</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 07:43:33</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-{{options.color}} b">
+  <div class="panel-heading">
+	<h4 class="panel-title">${Categories}</h4>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="a in data.categories | orderBy:'label'" class="m-b">
+      	<a href="?id=aayos_admin_kb&kb_category={{::a.value}}">{{::a.label}}</a>
+    </div>
+  </div>
+</div>]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_widget_c49f79ad9769b6d0ec453b90f053afce</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller=function() {  /* widget controller */  var c = this;};]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css/&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;color&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;Copy of AAYOS KB Categories&lt;/name&gt;&lt;option_schema/&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function () {
+    // AAYOS Admin Knowledge base sys_id
+    var kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    data.categories = [];
+
+    var t = new GlideRecord('kb_category');
+    // Only categories that belong to AAYOS Admin Knowledge
+    t.addQuery('kb_knowledge_base', kbId);
+    // Optional: only top-level categories
+    t.addQuery('parent_id', '');
+    t.addQuery('active', true);
+    t.orderBy('label');
+    t.query();
+
+    while (t.next()) {
+        var category = {
+            value: t.getUniqueValue(),     // sys_id
+            label: t.getValue('label')     // category name
+        };
+        data.categories.push(category);
+    }
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-01 07:43:33&lt;/sys_created_on&gt;&lt;sys_id&gt;c49f79ad9769b6d0ec453b90f053afce&lt;/sys_id&gt;&lt;sys_mod_count&gt;0&lt;/sys_mod_count&gt;&lt;sys_name&gt;Copy of AAYOS KB Categories&lt;/sys_name&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_c49f79ad9769b6d0ec453b90f053afce&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-01 07:43:33&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="panel panel-{{options.color}} b"&gt;
+  &lt;div class="panel-heading"&gt;
+	&lt;h4 class="panel-title"&gt;${Categories}&lt;/h4&gt;
+  &lt;/div&gt;
+  &lt;div class="panel-body"&gt;
+    &lt;div ng-repeat="a in data.categories | orderBy:'label'" class="m-b"&gt;
+      	&lt;a href="?id=aayos_admin_kb&amp;kb_category={{::a.value}}"&gt;{{::a.label}}&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>-285225296</payload_hash>
+        <record_name>Copy of AAYOS KB Categories</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 07:43:33</sys_created_on>
+        <sys_id>c09ff16197a9b6d0ec453b90f053af5c</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8ddea070000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 07:43:33</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>809ff16135a9b6d0acd564979bea595b</update_guid>
+        <update_guid_history>809ff16135a9b6d0acd564979bea595b:-285225296</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of AAYOS KB Categories">cb8e5e2997edb6d0ec453b90f053afd7</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 09:58:55</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>0132ba4de5a94db0bb44baf4ac704910</sys_id>
+        <sys_metadata>c49f79ad9769b6d0ec453b90f053afce</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Categories</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_widget_c49f79ad9769b6d0ec453b90f053afce</sys_update_name>
+        <sys_update_version display_value="sp_widget_c49f79ad9769b6d0ec453b90f053afce">c09ff16197a9b6d0ec453b90f053af5c</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 09:58:55</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

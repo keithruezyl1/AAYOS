@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller = function ($scope) {
+  /* widget controller */
+  var c = this;
+
+  c.query = data.query || '';
+  c.hasSearched = data.hasSearched || false;
+
+  c.doSearch = function () {
+    if (!c.query || c.query.length < 2)
+      return;
+
+    $scope.server.update({ q: c.query }).then(function (response) {
+      // response.data is merged into data automatically,
+      // we just flip this flag for the helper text.
+      c.hasSearched = true;
+    });
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-kb-search {&#13;
+  max-width: 800px;&#13;
+  margin: 0 auto 24px auto;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__form {&#13;
+  display: flex;&#13;
+  gap: 8px;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__input {&#13;
+  flex: 1;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__button {&#13;
+  white-space: nowrap;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__helper,&#13;
+.aayos-kb-search__status {&#13;
+  margin-top: 8px;&#13;
+  font-size: 12px;&#13;
+  color: #666;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__status {&#13;
+  color: #b30000;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__results {&#13;
+  margin-top: 16px;&#13;
+  padding-left: 0;&#13;
+  list-style: none;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result + .aayos-kb-search__result {&#13;
+  margin-top: 8px;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-link {&#13;
+  display: block;&#13;
+  padding: 8px 10px;&#13;
+  border-radius: 4px;&#13;
+  text-decoration: none;&#13;
+  background-color: #f7f7f7;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-link:hover,&#13;
+.aayos-kb-search__result-link:focus {&#13;
+  background-color: #e9f5ff;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-title {&#13;
+  font-size: 14px;&#13;
+  font-weight: 600;&#13;
+  color: #222;&#13;
+}&#13;
+&#13;
+.aayos-kb-search__result-meta {&#13;
+  margin-top: 2px;&#13;
+  font-size: 11px;&#13;
+  color: #777;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>kb search for aayos knowledge base</description>
+        <docs/>
+        <field_list>title</field_list>
+        <has_preview>false</has_preview>
+        <id>aayos_kb_search</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>AAYOS KB Search</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+	if (!gs.hasRole('aayos_admin')) {
+    data.error = "Unauthorized";
+    return;
+	}
+
+  // AAYOS Admin Knowledge base sys_id
+  var KB_SYS_ID = '2a9ad1659725b6d0ec453b90f053af0a';
+
+  data.query = '';
+  data.results = [];
+  data.noResults = false;
+  data.hasSearched = false;
+  data.queryDisplay = '';
+
+  // First load – nothing to do
+  if (!input || !input.q)
+    return;
+
+  var q = ('' + input.q).trim();
+  data.query = q;
+  data.queryDisplay = q;
+  data.hasSearched = true;
+
+  // Too short – just return, client will keep helper text
+  if (q.length < 2)
+    return;
+
+  var gr = new GlideRecord('kb_knowledge');
+
+  // Limit to AAYOS Admin Knowledge and published articles
+  gr.addQuery('kb_knowledge_base', KB_SYS_ID);
+  gr.addQuery('workflow_state', 'published');
+
+  // Match in short description OR full text
+  var qc = gr.addQuery('short_description', 'CONTAINS', q);
+  qc.addOrCondition('text', 'CONTAINS', q);
+
+  gr.orderByDesc('sys_updated_on');
+  gr.setLimit(20);
+  gr.query();
+
+  while (gr.next()) {
+    data.results.push({
+      sys_id: gr.getUniqueValue(),
+      short_description: gr.getDisplayValue('short_description'),
+      category: gr.getDisplayValue('kb_category'),
+      updated_on: gr.getValue('sys_updated_on')
+    });
+  }
+
+  if (data.results.length === 0)
+    data.noResults = true;
+
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 06:52:03</sys_created_on>
+        <sys_id>35c3756997e5b6d0ec453b90f053af6d</sys_id>
+        <sys_mod_count>5</sys_mod_count>
+        <sys_name>AAYOS KB Search</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_35c3756997e5b6d0ec453b90f053af6d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-02 15:30:20</sys_updated_on>
+        <template><![CDATA[<div class="aayos-kb-search">
+
+  <form class="aayos-kb-search__form" ng-submit="c.doSearch()">
+    <input type="text"
+           class="form-control aayos-kb-search__input"
+           ng-model="c.query"
+           placeholder="Search AAYOS admin documentation and FAQs…">
+    <button type="submit"
+            class="btn btn-primary aayos-kb-search__button">
+      Search
+    </button>
+  </form>
+
+  <!-- Helper text before first search -->
+  <div class="aayos-kb-search__helper"
+       ng-if="!c.hasSearched">
+    Type at least 2 characters and press Enter or click Search.
+  </div>
+
+  <!-- Status when no results -->
+  <div class="aayos-kb-search__status"
+       ng-if="c.hasSearched && data.noResults">
+    No articles found for "<strong>{{data.queryDisplay}}</strong>" in AAYOS Admin Knowledge.
+  </div>
+
+  <!-- Results list -->
+  <ul class="aayos-kb-search__results"
+      ng-if="c.hasSearched && !data.noResults">
+    <li class="aayos-kb-search__result"
+        ng-repeat="r in data.results">
+      <a class="aayos-kb-search__result-link"
+         ng-href="/sp?id=aayos_admin_kb&sys_kb_id={{r.sys_id}}">
+        <div class="aayos-kb-search__result-title">
+          {{r.short_description}}
+        </div>
+        <div class="aayos-kb-search__result-meta">
+          {{r.category}} · {{r.updated_on | date:'MMM d, yyyy'}}
+        </div>
+      </a>
+    </li>
+  </ul>
+
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page">
+    <sp_page action="DELETE">
+        <category>custom</category>
+        <css/>
+        <draft>false</draft>
+        <dynamic_title_structure/>
+        <human_readable_url_structure/>
+        <id>aayos_vehicles</id>
+        <internal>false</internal>
+        <omit_watcher>false</omit_watcher>
+        <public>true</public>
+        <roles/>
+        <seo_script/>
+        <short_description/>
+        <sys_class_name>sp_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 16:54:10</sys_created_on>
+        <sys_id>54f3be15972176d0ec453b90f053afd7</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>aayos_vehicles</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_page_54f3be15972176d0ec453b90f053afd7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 17:01:23</sys_updated_on>
+        <title>Vehicles</title>
+        <use_seo_script>false</use_seo_script>
+    </sp_page>
+    <sys_translated_text action="DELETE" query="documentkey=54f3be15972176d0ec453b90f053afd7"/>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_page_54f3be15972176d0ec453b90f053afd7</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_page"><sp_page action="INSERT_OR_UPDATE"><category>custom</category><css/><draft>false</draft><dynamic_title_structure/><human_readable_url_structure/><id>aayos_vehicles</id><internal>false</internal><omit_watcher>false</omit_watcher><public>true</public><roles/><seo_script/><short_description/><sys_class_name>sp_page</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-11-30 16:54:10</sys_created_on><sys_id>54f3be15972176d0ec453b90f053afd7</sys_id><sys_mod_count>1</sys_mod_count><sys_name>aayos_vehicles</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_page_54f3be15972176d0ec453b90f053afd7</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-11-30 17:01:23</sys_updated_on><title>Vehicles</title><use_seo_script>false</use_seo_script></sp_page><sys_translated_text action="delete_multiple" query="documentkey=54f3be15972176d0ec453b90f053afd7"/></record_update>]]></payload>
+        <payload_hash>1451912469</payload_hash>
+        <record_name>aayos_vehicles</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-30 17:01:23</sys_created_on>
+        <sys_id>75a57619972176d0ec453b90f053af91</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad5b644300000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-30 17:01:23</sys_updated_on>
+        <type>Page</type>
+        <update_guid>b1a57619562176d079942bd152034e90</update_guid>
+        <update_guid_history>b1a57619562176d079942bd152034e90:1451912469,0c04fe15bf2176d0907b837f3fa4d389:372198850</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="aayos_vehicles">ed545ccf97e57214ec453b90f053af40</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 15:45:57</sys_created_on>
+        <sys_db_object display_value="" name="sp_page">sp_page</sys_db_object>
+        <sys_id>114f2346d47243f48dfcf4d51257ada4</sys_id>
+        <sys_metadata>54f3be15972176d0ec453b90f053afd7</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>aayos_vehicles</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_page_54f3be15972176d0ec453b90f053afd7</sys_update_name>
+        <sys_update_version display_value="sp_page_54f3be15972176d0ec453b90f053afd7">75a57619972176d0ec453b90f053af91</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 15:45:57</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

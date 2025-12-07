@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="DELETE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller = function ($scope, $sce) {
+    /* widget controller */
+    var c = this;
+
+    c.article = $scope.data.article || null;
+
+    if (c.article && c.article.text) {
+        // Trust the HTML so it renders properly
+        c.articleHtml = $sce.trustAsHtml(c.article.text);
+    }
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-kb-article-wrapper {&#13;
+  padding: 16px 0;&#13;
+}&#13;
+&#13;
+.aayos-kb-category-title {&#13;
+  margin-bottom: 8px;&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.aayos-kb-article-list li {&#13;
+  margin-bottom: 4px;&#13;
+}&#13;
+&#13;
+.aayos-kb-back-link {&#13;
+  display: inline-block;&#13;
+  margin-bottom: 8px;&#13;
+}&#13;
+&#13;
+.aayos-kb-article-title {&#13;
+  margin-top: 0;&#13;
+  margin-bottom: 12px;&#13;
+}&#13;
+&#13;
+.aayos-kb-article-body {&#13;
+  line-height: 1.5;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>color</field_list>
+        <has_preview>false</has_preview>
+        <id/>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>Copy of AAYOS KB Article Page</name>
+        <option_schema>[{"name":"show_star_rating","default_value":"Use system properties","section":"Presentation","label":"Show star rating","type":"choice","choices":[{"label":"Yes","value":"Yes"},{"label":"No","value":"No"},{"label":"Use system properties","value":"Use system properties"}]}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+    data.article = null;
+
+    // sys_id of the article is passed as ?kb_article=...
+    var articleId = $sp.getParameter('kb_article');
+    if (!articleId)
+        return; // nothing to show
+
+    var gr = new GlideRecord('kb_knowledge');
+    if (!gr.get(articleId))
+        return;
+
+    // If you ever restrict to the AAYOS KB only, you can also check:
+    // if (gr.kb_knowledge_base != '2a9ad1659725b6d0ec453b90f053af0a') return;
+
+    data.article = {
+        sys_id: gr.getUniqueValue(),
+        short_description: gr.getValue('short_description'),
+        number: gr.getValue('number'),
+        category_id: gr.getValue('category'),
+        category_name: gr.category.getDisplayValue(),
+
+        // Body field (handle both possible column names)
+        text: gr.getValue('text') || gr.getValue('article_body')
+    };
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:13:41</sys_created_on>
+        <sys_id>2976c2e197e9b6d0ec453b90f053af65</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_2976c2e197e9b6d0ec453b90f053af65</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:14:08</sys_updated_on>
+        <template><![CDATA[<div class="panel panel-default" ng-if="c.article">
+  <div class="panel-body">
+
+    <!-- Back link to the category list -->
+    <div class="m-b-sm" ng-if="c.article.category_id">
+      <a href="?id=aayos_admin_kb&kb_category={{c.article.category_id}}">
+        &larr; Back to {{c.article.category_name}}
+      </a>
+    </div>
+
+    <!-- Title -->
+    <h3 class="m-b-sm">
+      {{c.article.short_description || ('KB ' + c.article.number)}}
+    </h3>
+
+    <!-- Article body -->
+    <div class="kb-article-body" ng-bind-html="c.articleHtml"></div>
+
+  </div>
+</div>
+
+<div ng-if="!c.article">
+  <p>Article not found.</p>
+</div>
+]]></template>
+    </sp_widget>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_widget_2976c2e197e9b6d0ec453b90f053af65</name>
+        <payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sp_widget"&gt;&lt;sp_widget action="INSERT_OR_UPDATE"&gt;&lt;category&gt;kb&lt;/category&gt;&lt;client_script&gt;&lt;![CDATA[api.controller = function ($scope, $sce) {
+    /* widget controller */
+    var c = this;
+
+    c.article = $scope.data.article || null;
+
+    if (c.article &amp;&amp; c.article.text) {
+        // Trust the HTML so it renders properly
+        c.articleHtml = $sce.trustAsHtml(c.article.text);
+    }
+};
+]]&gt;&lt;/client_script&gt;&lt;controller_as&gt;c&lt;/controller_as&gt;&lt;css&gt;.aayos-kb-article-wrapper {&amp;#13;
+  padding: 16px 0;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-category-title {&amp;#13;
+  margin-bottom: 8px;&amp;#13;
+  font-weight: 600;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-article-list li {&amp;#13;
+  margin-bottom: 4px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-back-link {&amp;#13;
+  display: inline-block;&amp;#13;
+  margin-bottom: 8px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-article-title {&amp;#13;
+  margin-top: 0;&amp;#13;
+  margin-bottom: 12px;&amp;#13;
+}&amp;#13;
+&amp;#13;
+.aayos-kb-article-body {&amp;#13;
+  line-height: 1.5;&amp;#13;
+}&amp;#13;
+&lt;/css&gt;&lt;data_table&gt;sp_instance&lt;/data_table&gt;&lt;demo_data/&gt;&lt;description/&gt;&lt;docs/&gt;&lt;field_list&gt;color&lt;/field_list&gt;&lt;has_preview&gt;false&lt;/has_preview&gt;&lt;id/&gt;&lt;internal&gt;false&lt;/internal&gt;&lt;link&gt;&lt;![CDATA[function link(scope, element, attrs, controller) {  }]]&gt;&lt;/link&gt;&lt;name&gt;Copy of AAYOS KB Article Page&lt;/name&gt;&lt;option_schema&gt;[{"name":"show_star_rating","default_value":"Use system properties","section":"Presentation","label":"Show star rating","type":"choice","choices":[{"label":"Yes","value":"Yes"},{"label":"No","value":"No"},{"label":"Use system properties","value":"Use system properties"}]}]&lt;/option_schema&gt;&lt;public&gt;true&lt;/public&gt;&lt;roles/&gt;&lt;script&gt;&lt;![CDATA[(function () {
+    data.article = null;
+
+    // sys_id of the article is passed as ?kb_article=...
+    var articleId = $sp.getParameter('kb_article');
+    if (!articleId)
+        return; // nothing to show
+
+    var gr = new GlideRecord('kb_knowledge');
+    if (!gr.get(articleId))
+        return;
+
+    // If you ever restrict to the AAYOS KB only, you can also check:
+    // if (gr.kb_knowledge_base != '2a9ad1659725b6d0ec453b90f053af0a') return;
+
+    data.article = {
+        sys_id: gr.getUniqueValue(),
+        short_description: gr.getValue('short_description'),
+        number: gr.getValue('number'),
+        category_id: gr.getValue('category'),
+        category_name: gr.category.getDisplayValue(),
+
+        // Body field (handle both possible column names)
+        text: gr.getValue('text') || gr.getValue('article_body')
+    };
+})();
+]]&gt;&lt;/script&gt;&lt;servicenow&gt;false&lt;/servicenow&gt;&lt;sys_class_name&gt;sp_widget&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2025-12-01 08:13:41&lt;/sys_created_on&gt;&lt;sys_id&gt;2976c2e197e9b6d0ec453b90f053af65&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Copy of AAYOS KB Article Page&lt;/sys_name&gt;&lt;sys_package display_value="AAYOS" source="x_1868112_aayos"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="AAYOS"&gt;992cea7c971db250ec453b90f053af4b&lt;/sys_scope&gt;&lt;sys_update_name&gt;sp_widget_2976c2e197e9b6d0ec453b90f053af65&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;admin&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2025-12-01 08:14:08&lt;/sys_updated_on&gt;&lt;template&gt;&lt;![CDATA[&lt;div class="panel panel-default" ng-if="c.article"&gt;
+  &lt;div class="panel-body"&gt;
+
+    &lt;!-- Back link to the category list --&gt;
+    &lt;div class="m-b-sm" ng-if="c.article.category_id"&gt;
+      &lt;a href="?id=aayos_admin_kb&amp;kb_category={{c.article.category_id}}"&gt;
+        &amp;larr; Back to {{c.article.category_name}}
+      &lt;/a&gt;
+    &lt;/div&gt;
+
+    &lt;!-- Title --&gt;
+    &lt;h3 class="m-b-sm"&gt;
+      {{c.article.short_description || ('KB ' + c.article.number)}}
+    &lt;/h3&gt;
+
+    &lt;!-- Article body --&gt;
+    &lt;div class="kb-article-body" ng-bind-html="c.articleHtml"&gt;&lt;/div&gt;
+
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div ng-if="!c.article"&gt;
+  &lt;p&gt;Article not found.&lt;/p&gt;
+&lt;/div&gt;
+]]&gt;&lt;/template&gt;&lt;/sp_widget&gt;&lt;/record_update&gt;</payload>
+        <payload_hash>158615164</payload_hash>
+        <record_name>Copy of AAYOS KB Article Page</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:14:08</sys_created_on>
+        <sys_id>00960ae197e9b6d0ec453b90f053af9a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad8f9e8d70000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:14:08</sys_updated_on>
+        <type>Widget</type>
+        <update_guid>4c960ae1e9e9b6d09e4cdb5db692c398</update_guid>
+        <update_guid_history>4c960ae1e9e9b6d09e4cdb5db692c398:158615164,a176c2e16ae9b6d092df7502c1892068:1748053014</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Copy of AAYOS KB Article Page">ba8e5e2997edb6d0ec453b90f053af0a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 09:58:54</sys_created_on>
+        <sys_db_object display_value="" name="sp_widget">sp_widget</sys_db_object>
+        <sys_id>a6dd6ac0819348ffb0e23252ac086cc1</sys_id>
+        <sys_metadata>2976c2e197e9b6d0ec453b90f053af65</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Copy of AAYOS KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_widget_2976c2e197e9b6d0ec453b90f053af65</sys_update_name>
+        <sys_update_version display_value="sp_widget_2976c2e197e9b6d0ec453b90f053af65">00960ae197e9b6d0ec453b90f053af9a</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 09:58:54</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

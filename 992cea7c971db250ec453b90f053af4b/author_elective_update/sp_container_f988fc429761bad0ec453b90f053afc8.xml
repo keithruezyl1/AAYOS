@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container">
+    <sp_container action="DELETE">
+        <background_color/>
+        <background_image/>
+        <background_style>default</background_style>
+        <bootstrap_alt>false</bootstrap_alt>
+        <class_name/>
+        <container_class_name/>
+        <name>Vehicles - Container 1</name>
+        <order>1</order>
+        <semantic_tag/>
+        <sp_page display_value="aayos_vehicles">54f3be15972176d0ec453b90f053afd7</sp_page>
+        <subheader>false</subheader>
+        <sys_class_name>sp_container</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-02 15:50:08</sys_created_on>
+        <sys_id>f988fc429761bad0ec453b90f053afc8</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Vehicles - Container 1</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_container_f988fc429761bad0ec453b90f053afc8</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-02 15:50:08</sys_updated_on>
+        <title/>
+        <width>container</width>
+    </sp_container>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_container_f988fc429761bad0ec453b90f053afc8</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_container"><sp_container action="INSERT_OR_UPDATE"><background_color/><background_image/><background_style>default</background_style><bootstrap_alt>false</bootstrap_alt><class_name/><container_class_name/><name>Vehicles - Container 1</name><order>1</order><semantic_tag/><sp_page display_value="aayos_vehicles">54f3be15972176d0ec453b90f053afd7</sp_page><subheader>false</subheader><sys_class_name>sp_container</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-02 15:50:08</sys_created_on><sys_id>f988fc429761bad0ec453b90f053afc8</sys_id><sys_mod_count>0</sys_mod_count><sys_name>Vehicles - Container 1</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_container_f988fc429761bad0ec453b90f053afc8</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-02 15:50:08</sys_updated_on><title/><width>container</width></sp_container></record_update>]]></payload>
+        <payload_hash>983864870</payload_hash>
+        <record_name>Vehicles - Container 1</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-02 15:50:08</sys_created_on>
+        <sys_id>7188fc429761bad0ec453b90f053afcc</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19adfc1c3270000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-02 15:50:08</sys_updated_on>
+        <type>Container</type>
+        <update_guid>3188fc428961bad014ab0af6a4a679cb</update_guid>
+        <update_guid_history>3188fc428961bad014ab0af6a4a679cb:983864870</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="Vehicles - Container 1">ad545ccf97e57214ec453b90f053afb8</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-05 15:45:57</sys_created_on>
+        <sys_db_object display_value="" name="sp_container">sp_container</sys_db_object>
+        <sys_id>622d8e76e1ef456893f76a18e36d1cd9</sys_id>
+        <sys_metadata>f988fc429761bad0ec453b90f053afc8</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Vehicles - Container 1</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_container_f988fc429761bad0ec453b90f053afc8</sys_update_name>
+        <sys_update_version display_value="sp_container_f988fc429761bad0ec453b90f053afc8">7188fc429761bad0ec453b90f053afcc</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-05 15:45:57</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

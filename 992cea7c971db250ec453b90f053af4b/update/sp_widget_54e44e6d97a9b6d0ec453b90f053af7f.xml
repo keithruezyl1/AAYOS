@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>kb</category>
+        <client_script><![CDATA[api.controller = function($sce) {
+  var c = this;
+
+  // Return the article body as trusted HTML
+  c.trustedArticleBody = function() {
+    if (!c.data || !c.data.article || !c.data.article.text) {
+      return '';
+    }
+    return $sce.trustAsHtml(c.data.article.text);
+  };
+};
+]]></client_script>
+        <controller_as>c</controller_as>
+        <css>.aayos-kb-article-wrapper {&#13;
+  padding: 16px 0;&#13;
+}&#13;
+&#13;
+/* CATEGORY + LIST VIEW */&#13;
+&#13;
+.aayos-kb-category-title {&#13;
+  margin-top: 0;&#13;
+  margin-bottom: 12px;&#13;
+  font-size: 24px;          /* same scale as article title */&#13;
+  font-weight: 700;&#13;
+  color: #122620;&#13;
+}&#13;
+&#13;
+.aayos-kb-article-list li {&#13;
+  margin-bottom: 6px;&#13;
+}&#13;
+&#13;
+.kb-article-link {&#13;
+  display: inline-flex;&#13;
+  align-items: center;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.kb-article-link-icon {&#13;
+  margin-right: 6px;&#13;
+  color: #0f5132;           /* dark green chevron in list view */&#13;
+  font-weight: 700;&#13;
+}&#13;
+&#13;
+.kb-article-link-text {&#13;
+  color: #0f5132;           /* dark green text in list view */&#13;
+  font-weight: 600;&#13;
+}&#13;
+&#13;
+.kb-article-link:hover .kb-article-link-text {&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+/* ARTICLE VIEW */&#13;
+&#13;
+.aayos-kb-back-link {&#13;
+  display: inline-block;&#13;
+  margin-bottom: 10px;&#13;
+  color: #0f5132;           /* dark green back link */&#13;
+  font-weight: 500;&#13;
+  text-decoration: none;&#13;
+}&#13;
+&#13;
+.aayos-kb-back-link:hover {&#13;
+  text-decoration: underline;&#13;
+}&#13;
+&#13;
+.kb-article-category-title {&#13;
+  margin-top: 0;&#13;
+  margin-bottom: 4px;&#13;
+  font-size: 26px;          /* slightly larger, same style family */&#13;
+  font-weight: 700;&#13;
+  color: #122620;&#13;
+}&#13;
+&#13;
+.kb-article-main-title {&#13;
+  margin-top: 0;&#13;
+  margin-bottom: 16px;&#13;
+  font-size: 24px;&#13;
+  font-weight: 700;         /* bolder */&#13;
+  color: #0b3b22;           /* slightly darker green than links */&#13;
+}&#13;
+&#13;
+/* Article body */&#13;
+&#13;
+.aayos-kb-article-body {&#13;
+  line-height: 1.5;&#13;
+}&#13;
+</css>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list>color</field_list>
+        <has_preview>false</has_preview>
+        <id>aayos_kb_article_page</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {  }]]></link>
+        <name>AAYOS KB Article Page</name>
+        <option_schema>[{"name":"show_star_rating","default_value":"Use system properties","section":"Presentation","label":"Show star rating","type":"choice","choices":[{"label":"Yes","value":"Yes"},{"label":"No","value":"No"},{"label":"Use system properties","value":"Use system properties"}]}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function () {
+
+    // Fixed KB – AAYOS Admin Knowledge
+    data.kbId = '2a9ad1659725b6d0ec453b90f053af0a';
+
+    // URL parameters
+    data.categoryId = $sp.getParameter('kb_category') || '';
+    data.articleId  = $sp.getParameter('kb_article') || '';
+
+    // If neither category nor article is selected
+    if (!data.categoryId && !data.articleId) {
+        data.state = 'empty';
+        data.message = 'Select a category to see related articles.';
+        return;
+    }
+
+    // If an article is selected, show that article
+    if (data.articleId) {
+        var art = new GlideRecord('kb_knowledge');
+        if (art.get(data.articleId) &&
+            art.getValue('kb_knowledge_base') == data.kbId &&
+            art.getValue('workflow_state') == 'published') {
+
+            data.state = 'article';
+
+            // --- ARTICLE BODY from translated_html 'text' field ---
+            var bodyHtml = '';
+            var elem = art.getElement('text');
+            if (elem) {
+                bodyHtml = '' + elem.getHTMLValue();   // translated_html HTML
+            }
+
+            // Fallbacks if for some reason text is empty
+            if (!bodyHtml && art.isValidField('display_knowledge')) {
+                bodyHtml = '' + art.getValue('display_knowledge');
+            }
+            if (!bodyHtml && art.isValidField('article_body')) {
+                bodyHtml = '' + art.getValue('article_body');
+            }
+
+            data.article = {
+                sys_id: art.getUniqueValue(),
+                number: art.getValue('number'),
+                short_description: art.getValue('short_description'),
+                text: bodyHtml
+            };
+
+            // Category info for the back link
+            var catId = art.getValue('kb_category');
+            if (catId) {
+                data.categoryId = catId;
+                var cat = new GlideRecord('kb_category');
+                if (cat.get(catId)) {
+                    data.categoryLabel = cat.getValue('label');
+                }
+            }
+
+            return;
+
+        } else {
+            data.state = 'error';
+            data.message = 'Article not found or not published in AAYOS Admin Knowledge.';
+            return;
+        }
+    }
+
+    // Otherwise: list articles in the selected category
+    if (data.categoryId) {
+        data.state = 'list';
+        data.articles = [];
+
+        // Get category label
+        var catGR = new GlideRecord('kb_category');
+        if (catGR.get(data.categoryId)) {
+            data.categoryLabel = catGR.getValue('label');
+        }
+
+        var kb = new GlideRecord('kb_knowledge');
+        kb.addActiveQuery();
+        kb.addQuery('workflow_state', 'published');
+        kb.addQuery('kb_knowledge_base', data.kbId);
+        kb.addQuery('kb_category', data.categoryId);
+        kb.orderBy('short_description');
+        kb.query();
+
+        while (kb.next()) {
+            data.articles.push({
+                sys_id: kb.getUniqueValue(),
+                short_description: kb.getValue('short_description')
+            });
+        }
+    }
+})();
+]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:06:46</sys_created_on>
+        <sys_id>54e44e6d97a9b6d0ec453b90f053af7f</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>AAYOS KB Article Page</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_widget_54e44e6d97a9b6d0ec453b90f053af7f</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-03 05:55:42</sys_updated_on>
+        <template><![CDATA[<div class="aayos-kb-article-wrapper">
+
+  <!-- Empty / no selection -->
+  <div ng-if="data.state === 'empty'" class="text-muted m-t-md">
+    {{data.message}}
+  </div>
+
+  <!-- Error -->
+  <div ng-if="data.state === 'error'" class="text-danger m-t-md">
+    {{data.message}}
+  </div>
+
+  <!-- List of articles for a category -->
+  <div ng-if="data.state === 'list'">
+    <h2 class="aayos-kb-category-title">
+      {{data.categoryLabel || 'Articles'}}
+    </h2>
+
+    <ul class="list-unstyled aayos-kb-article-list">
+      <li ng-repeat="a in data.articles">
+        <a class="kb-article-link"
+           href="?id=aayos_admin_kb&kb_category={{data.categoryId}}&kb_article={{a.sys_id}}">
+          <span class="kb-article-link-icon">›</span>
+          <span class="kb-article-link-text">{{a.short_description}}</span>
+        </a>
+      </li>
+    </ul>
+
+    <div ng-if="!data.articles.length" class="text-muted">
+      No articles found in this category yet.
+    </div>
+  </div>
+
+<!-- Single article view -->
+<div ng-if="data.state === 'article'">
+
+  <a class="aayos-kb-back-link"
+     ng-if="data.categoryId"
+     href="?id=aayos_admin_kb&kb_category={{data.categoryId}}">
+    ← Back to {{data.categoryLabel || 'category'}}
+  </a>
+
+  <!-- Only the article title here -->
+  <h2 class="kb-article-main-title">
+    {{data.article.short_description}}
+  </h2>
+
+  <div class="aayos-kb-article-body"
+       ng-bind-html="c.trustedArticleBody()">
+  </div>
+
+</div>
+
+
+</div>
+]]></template>
+    </sp_widget>
+</record_update>

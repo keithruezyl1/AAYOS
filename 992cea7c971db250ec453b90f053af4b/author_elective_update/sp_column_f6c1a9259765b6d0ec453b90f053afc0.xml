@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_column">
+    <sp_column action="DELETE">
+        <class_name/>
+        <order>1</order>
+        <semantic_tag/>
+        <size>12</size>
+        <size_lg/>
+        <size_sm/>
+        <size_xs/>
+        <sp_row display_value="1">3ac1a9259765b6d0ec453b90f053afbc</sp_row>
+        <sys_class_name>sp_column</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:33:28</sys_created_on>
+        <sys_id>f6c1a9259765b6d0ec453b90f053afc0</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>1</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sp_column_f6c1a9259765b6d0ec453b90f053afc0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:33:28</sys_updated_on>
+    </sp_column>
+    <sys_update_version action="INSERT_OR_UPDATE">
+        <action>DELETE</action>
+        <application display_value="AAYOS">992cea7c971db250ec453b90f053af4b</application>
+        <file_path/>
+        <instance_id>d91492dddbcefd98199b1729139619e6</instance_id>
+        <instance_name>dev192977</instance_name>
+        <name>sp_column_f6c1a9259765b6d0ec453b90f053afc0</name>
+        <payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_column"><sp_column action="INSERT_OR_UPDATE"><class_name/><order>1</order><semantic_tag/><size>12</size><size_lg/><size_sm/><size_xs/><sp_row display_value="1">3ac1a9259765b6d0ec453b90f053afbc</sp_row><sys_class_name>sp_column</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2025-12-01 05:33:28</sys_created_on><sys_id>f6c1a9259765b6d0ec453b90f053afc0</sys_id><sys_mod_count>0</sys_mod_count><sys_name>1</sys_name><sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package><sys_policy/><sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope><sys_update_name>sp_column_f6c1a9259765b6d0ec453b90f053afc0</sys_update_name><sys_updated_by>admin</sys_updated_by><sys_updated_on>2025-12-01 05:33:28</sys_updated_on></sp_column></record_update>]]></payload>
+        <payload_hash>1652970164</payload_hash>
+        <record_name>1</record_name>
+        <reverted_from/>
+        <source>85a447fc97ddb250ec453b90f053af97</source>
+        <source_table>sys_update_set</source_table>
+        <state>previous</state>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 05:33:28</sys_created_on>
+        <sys_id>3ac1a9259765b6d0ec453b90f053afc3</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_recorded_at>19ad866d31c0000001</sys_recorded_at>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 05:33:28</sys_updated_on>
+        <type>Column</type>
+        <update_guid>f6c1a925ac65b6d04ee3069a9e3886c2</update_guid>
+        <update_guid_history>f6c1a925ac65b6d04ee3069a9e3886c2:1652970164</update_guid_history>
+    </sys_update_version>
+    <sys_metadata_delete action="INSERT_OR_UPDATE">
+        <sys_audit_delete display_value="1">7b5fc665972db6d0ec453b90f053af2a</sys_audit_delete>
+        <sys_class_name>sys_metadata_delete</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-01 08:52:37</sys_created_on>
+        <sys_db_object display_value="" name="sp_column">sp_column</sys_db_object>
+        <sys_id>0645d7cdcb7e467f83d21b57b46893a1</sys_id>
+        <sys_metadata>f6c1a9259765b6d0ec453b90f053afc0</sys_metadata>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>1</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_parent/>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_scope_delete display_value="">17b9a9017ff643da82b226c185047c99</sys_scope_delete>
+        <sys_update_name>sp_column_f6c1a9259765b6d0ec453b90f053afc0</sys_update_name>
+        <sys_update_version display_value="sp_column_f6c1a9259765b6d0ec453b90f053afc0">3ac1a9259765b6d0ec453b90f053afc3</sys_update_version>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-01 08:52:37</sys_updated_on>
+    </sys_metadata_delete>
+</record_update>

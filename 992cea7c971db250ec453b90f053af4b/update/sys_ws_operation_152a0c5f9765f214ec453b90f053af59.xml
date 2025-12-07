@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl/>
+        <http_method>POST</http_method>
+        <name>Vehicle Prediction</name>
+        <operation_script><![CDATA[(function process(request, response) {
+    // Safely get request body
+    var body = request.body || {};
+    var vehicleData = body.data || {};
+
+    // Log incoming request data for debugging
+    gs.info("VehiclePrediction: Incoming Request data = " + JSON.stringify(vehicleData));
+
+    // Retrieve vehicle data from the 'x_1868112_aayos_vehicle' table
+    var vehicleGR = new GlideRecord('x_1868112_aayos_vehicle');
+
+    // If vehicle number is provided, query by number; otherwise use the first record
+    if (vehicleData.number) {
+        vehicleGR.addQuery('number', vehicleData.number);
+    }
+    vehicleGR.query();
+
+    // If no records are found, return an error
+    if (!vehicleGR.next()) {
+        gs.warn("VehiclePrediction: No vehicle record found");
+        response.setStatus(404);
+        response.setBody({ error: "Vehicle not found" });
+        return;
+    }
+
+    // Extract necessary fields from the vehicle record
+    var vehicleDataFromDB = {
+        current_mileage: vehicleGR.getValue('current_mileage'),
+        last_oil_change_date: vehicleGR.getValue('last_oil_change_date'),
+        usage_type: vehicleGR.getValue('usage_type'),
+        load_type: vehicleGR.getValue('load_type'),
+        driving_condition_profile: vehicleGR.getValue('driving_condition_profile'),
+        fuel_type: vehicleGR.getValue('fuel_type'),
+        transmission: vehicleGR.getValue('transmission'),
+        last_service_date: vehicleGR.getValue('last_service_date'),
+        last_service_odometer: vehicleGR.getValue('last_service_odometer'),
+        last_oil_change_odometer: vehicleGR.getValue('last_oil_change_odometer'),
+        last_brake_service_date: vehicleGR.getValue('last_brake_service_date'),
+        last_brake_service_odometer: vehicleGR.getValue('last_brake_service_odometer'),
+        last_tire_service_date: vehicleGR.getValue('last_tire_service_date'),
+        last_tire_service_odometer: vehicleGR.getValue('last_tire_service_odometer'),
+        last_battery_service_date: vehicleGR.getValue('last_battery_service_date'),
+        last_battery_service_odometer: vehicleGR.getValue('last_battery_service_odometer'),
+        make: vehicleGR.getValue('make'),
+        model: vehicleGR.getValue('model'),
+        model_year: vehicleGR.getValue('model_year'),
+        has_tcu: vehicleGR.getValue('has_tcu')
+    };
+
+    // Log the vehicle data retrieved from the database
+    gs.info("VehiclePrediction: Vehicle Data Retrieved = " + JSON.stringify(vehicleDataFromDB));
+
+    // Current date as a plain string (YYYY-MM-DD)
+    var gd = new GlideDateTime();
+    var currentDate = gd.getLocalDate().toString();
+
+    // Prepare the payload for the OpenAI API call
+    var payload = {
+        model: "gpt-3.5-turbo",
+        messages: [
+            {
+                role: "system",
+                content: [
+                    "You are AAYOS, an AI assistant designed to predict vehicle maintenance needs based on the vehicle data provided.",
+                    "The vehicle data includes the following key fields:",
+                    "- Current Mileage: The total miles the vehicle has been driven.",
+                    "- Estimated Monthly Mileage: The vehicle's estimated monthly usage.",
+                    "- Driving Condition Profile: Urban or off-road driving conditions.",
+                    "- Fuel Type: Diesel or gasoline.",
+                    "- Transmission: Whether the vehicle has automatic or manual transmission.",
+                    "- Usage Type: Whether the vehicle is used for commercial or personal purposes.",
+                    "- Load Type: Light or heavy load.",
+                    "- Last Service Date: The most recent service date.",
+                    "- Last Oil Change Date: The most recent oil change date.",
+                    "- Last Brake Service Date: The last brake service date.",
+                    "- Last Tire Service Date: The last tire service date.",
+                    "- Last Battery Service Date: The last battery service date.",
+                    "",
+                    "Based on this data, predict the following for the vehicle:",
+                    "1. Predicted Issues: Maintenance needs like oil change, brake service, tire replacement, etc.",
+                    "2. Severity: Indicate the urgency of the maintenance required (low, medium, high, or critical).",
+                    "3. Confidence Score: A score (0-100) indicating how confident you are in your prediction.",
+                    "4. AI Explanation: A short paragraph (2–4 sentences) explaining why you reached this conclusion.",
+                    "",
+                    "Respond ONLY in this JSON format (no extra text):",
+                    "{",
+                    '  "severity": "low | medium | high | critical",',
+                    '  "issues": "string",',
+                    '  "confidenceScore": number,',
+                    '  "aiExplanation": "string"',
+                    "}"
+                ].join("\n")
+            },
+            {
+                role: "user",
+                content: [
+                    "The vehicle has " + (vehicleDataFromDB.current_mileage || "N/A") + " miles,",
+                    "last oil change at " + (vehicleDataFromDB.last_oil_change_date || "N/A") + ",",
+                    "and is used for " + (vehicleDataFromDB.usage_type || "N/A") + ".",
+                    "",
+                    "The vehicle is a " + (vehicleDataFromDB.make || "N/A") + " " +
+                        (vehicleDataFromDB.model || "N/A") + " " +
+                        (vehicleDataFromDB.model_year || "N/A") + ".",
+                    "",
+                    "Service history:",
+                    "- Last service at " + (vehicleDataFromDB.last_service_date || "N/A"),
+                    "- Last oil change at " + (vehicleDataFromDB.last_oil_change_date || "N/A"),
+                    "- Last brake service at " + (vehicleDataFromDB.last_brake_service_date || "N/A"),
+                    "- Last tire service at " + (vehicleDataFromDB.last_tire_service_date || "N/A"),
+                    "- Last battery service at " + (vehicleDataFromDB.last_battery_service_date || "N/A"),
+                    "",
+                    "Based on this information, predict the maintenance needs for this vehicle."
+                ].join("\n")
+            }
+        ],
+        max_tokens: 300,
+        temperature: 0.8,
+        frequency_penalty: 0,
+        presence_penalty: 0
+    };
+
+    if (!payload.messages || payload.messages.length === 0) {
+        gs.error('VehiclePrediction: Payload is empty or not properly formatted.');
+        response.setStatus(400);
+        response.setBody({ error: 'Invalid payload format.' });
+        return;
+    }
+
+    gs.info('VehiclePrediction: Sending payload to OpenAI: ' + JSON.stringify(payload));
+
+    // Call the OpenAI API
+    var aiResponse = callOpenAIAPI(payload);
+
+    if (aiResponse) {
+        gs.info('VehiclePrediction: AI raw response = ' + aiResponse);
+
+        try {
+            var parsedResponse = JSON.parse(aiResponse);
+
+            // The model returns JSON as a string in message.content – parse that
+            var aiContent = JSON.parse(parsedResponse.choices[0].message.content);
+
+            var prediction = {
+                severity: aiContent.severity || "N/A",
+                predictedDate: currentDate,                         // "YYYY-MM-DD"
+                issues: aiContent.issues || "No issues predicted",
+                confidenceScore: aiContent.confidenceScore || 0,
+                aiExplanation: aiContent.aiExplanation || "",
+                // include the inputs used, so PredictionService can store them
+                dataInputsUsed: vehicleDataFromDB
+            };
+
+            // Wrap under result so existing PredictionService parsing continues to work
+            response.setStatus(200);
+            response.setBody({ result: prediction });
+        } catch (error) {
+            gs.error('VehiclePrediction: Error parsing AI response: ' + error);
+            response.setStatus(500);
+            response.setBody({ error: 'AI response format is invalid' });
+        }
+    } else {
+        gs.error('VehiclePrediction: OpenAI API call failed: ' + JSON.stringify(aiResponse));
+        response.setStatus(500);
+        response.setBody({ error: 'Failed to get prediction from OpenAI' });
+    }
+})(request, response);
+
+// Function to call the OpenAI API
+function callOpenAIAPI(payload) {
+    var openAIEndpoint = 'https://api.openai.com/v1/chat/completions';
+    var apiKey = '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'; // your API key
+
+    var req = new sn_ws.RESTMessageV2();
+    req.setHttpMethod('POST');
+    req.setEndpoint(openAIEndpoint);
+    req.setRequestHeader('Authorization', 'Bearer ' + apiKey);
+    req.setRequestHeader('Content-Type', 'application/json');
+    req.setRequestBody(JSON.stringify(payload));
+
+    var res = req.execute();
+    var responseBody = res.getBody();
+    var responseCode = res.getStatusCode();
+
+    if (responseCode === 200) {
+        gs.info('VehiclePrediction: OpenAI HTTP 200, body = ' + responseBody);
+        return responseBody;
+    } else {
+        gs.error('VehiclePrediction: OpenAI call failed with status ' + responseCode +
+                 ' body = ' + responseBody);
+        return null;
+    }
+}
+]]></operation_script>
+        <operation_uri>/api/x_1868112_aayos/openai_vehicle_prediction/predict</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/predict</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>false</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-06 09:40:30</sys_created_on>
+        <sys_id>152a0c5f9765f214ec453b90f053af59</sys_id>
+        <sys_mod_count>55</sys_mod_count>
+        <sys_name>Vehicle Prediction</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_ws_operation_152a0c5f9765f214ec453b90f053af59</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-07 09:45:45</sys_updated_on>
+        <web_service_definition display_value="OpenAI Vehicle Prediction">6227ccd79765f214ec453b90f053afee</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

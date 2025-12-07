@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_filter">
+    <sys_filter action="INSERT_OR_UPDATE">
+        <filter table="x_1868112_aayos_customer">name=^EQ<item endquery="false" field="name" goto="false" newquery="false" operator="=" or="false" value=""/>
+            <item endquery="true" field="" goto="false" newquery="false" operator="=" or="false" value=""/>
+        </filter>
+        <group/>
+        <last_used/>
+        <mobile>false</mobile>
+        <roles/>
+        <sys_class_name>sys_filter</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-11-29 14:05:40</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_domain_path>/</sys_domain_path>
+        <sys_id>42d38d859725b2d0ec453b90f053afff</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>Name</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_filter_42d38d859725b2d0ec453b90f053afff</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-11-29 14:05:40</sys_updated_on>
+        <table>x_1868112_aayos_customer</table>
+        <title>Name</title>
+        <user/>
+    </sys_filter>
+    <sys_translated_text action="delete_multiple" query="documentkey=42d38d859725b2d0ec453b90f053afff"/>
+</record_update>

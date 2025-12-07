@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element db_object_id="4d6897a09769fe90ec453b90f053af10" label="AAYOS Prediction" max_length="40" name="x_1868112_aayos_prediction" type="collection">
+        <element attributes="edge_encryption_enabled=true" default="javascript:global.getNextObjNumberPadded();" label="Prediction ID" max_length="40" name="number" type="string"/>
+        <element label="Raw AI Response" max_length="4096" name="raw_ai_response" type="string"/>
+        <element choice="3" default="low" label="Severity" mandatory="true" max_length="40" name="severity" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+                <element inactive_on_update="false" label="Critical" sequence="3" value="critical"/>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+            </choice>
+        </element>
+        <element label="Vehicle" mandatory="true" max_length="32" name="vehicle" reference="x_1868112_aayos_vehicle" type="reference"/>
+        <element label="System Confidence Score" mandatory="true" max_length="38" name="system_confidence_score" type="decimal"/>
+        <element label="Predicted Issue" mandatory="true" max_length="255" name="predicted_issue" type="string"/>
+        <element label="Linked Ticket" mandatory="true" max_length="32" name="linked_ticket" reference="x_1868112_aayos_ticket" type="reference"/>
+        <element label="Confidence" max_length="38" name="confidence" type="decimal"/>
+        <element choice="3" default="daily_job" label="Source Type" mandatory="true" max_length="40" name="source_type" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="Manual Run" sequence="1" value="manual_run"/>
+                <element inactive_on_update="false" label="Imported" sequence="2" value="imported"/>
+                <element inactive_on_update="false" label="Daily Job" sequence="0" value="daily_job"/>
+            </choice>
+        </element>
+        <element label="AI Explanation" max_length="2048" name="ai_explanation" type="string"/>
+        <element label="Customer" max_length="32" name="customer" reference="x_1868112_aayos_customer" type="reference"/>
+        <element label="Predicted Date" max_length="255" name="predicted_date" type="glide_date"/>
+        <element choice="3" default="low" label="Urgency" mandatory="true" max_length="40" name="urgency" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="High" sequence="2" value="high"/>
+                <element inactive_on_update="false" label="Medium" sequence="1" value="medium"/>
+                <element inactive_on_update="false" label="Low" sequence="0" value="low"/>
+            </choice>
+        </element>
+        <element label="Data Inputs Used" max_length="2048" name="data_inputs_used" type="string"/>
+        <index name="index">
+            <element name="customer"/>
+        </index>
+        <index name="index2">
+            <element name="linked_ticket"/>
+        </index>
+        <index name="index3">
+            <element name="vehicle"/>
+        </index>
+    </element>
+</database>

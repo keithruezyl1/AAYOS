@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_kmf_crypto_caller_policy">
+    <sys_kmf_crypto_caller_policy action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <approval_type/>
+        <check_script_hash>false</check_script_hash>
+        <crypto_module display_value="global.com_snc_platform_security_oauth_glideencrypter">8e4dffa067331010b28becccb585efc1</crypto_module>
+        <crypto_spec display_value="com_snc_platform_security_oauth_glideencrypter --- Symmetric Key Wrapping/Unwrapping">0a4d33e067331010b28becccb585ef96</crypto_spec>
+        <granular_operation/>
+        <identity_group_alias/>
+        <impersonation>false</impersonation>
+        <instance_recipient/>
+        <owner>d91492dddbcefd98199b1729139619e6</owner>
+        <policy_name>AutoGen-script-6f479c7b7f23121058082cce7c86654d-global.com_snc_platform_security_oauth_glideencrypter</policy_name>
+        <result>track</result>
+        <script_hash>2JCFDgMQCfRRRreO6NIC6Gmd+JtY4v37QomrAzv4BYk=</script_hash>
+        <script_table>sys_script</script_table>
+        <signature_data/>
+        <specify_purpose>false</specify_purpose>
+        <sys_class_name>sys_kmf_crypto_caller_policy</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-06 13:49:28</sys_created_on>
+        <sys_id>cd438d9b97e13210ec453b90f053af02</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_kmf_crypto_caller_policy_cd438d9b97e13210ec453b90f053af02</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-06 13:49:28</sys_updated_on>
+        <target_role/>
+        <target_scope/>
+        <target_script>6f479c7b7f23121058082cce7c86654d</target_script>
+        <type>1</type>
+        <used>false</used>
+    </sys_kmf_crypto_caller_policy>
+</record_update>

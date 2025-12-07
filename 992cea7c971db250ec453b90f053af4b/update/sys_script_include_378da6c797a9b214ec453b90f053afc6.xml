@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_1868112_aayos.DeleteCustomerScript</api_name>
+        <caller_access/>
+        <client_callable>true</client_callable>
+        <description/>
+        <mobile_callable>false</mobile_callable>
+        <name>DeleteCustomerScript</name>
+        <sandbox_callable>false</sandbox_callable>
+        <script><![CDATA[var DeleteCustomerScript = Class.create();
+DeleteCustomerScript.prototype = Object.extendsObject(AbstractAjaxProcessor, {
+    
+    deleteCustomer: function() {
+        var customerGR = new GlideRecord('x_1868112_aayos_customer');
+        var sys_id = this.getParameter('sys_id');
+        
+        if (customerGR.get(sys_id)) {
+            customerGR.deleteRecord(); // Delete the customer
+            return 'success';
+        }
+        
+        return 'failed';
+    }
+});
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2025-12-06 02:56:07</sys_created_on>
+        <sys_id>378da6c797a9b214ec453b90f053afc6</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>DeleteCustomerScript</sys_name>
+        <sys_package display_value="AAYOS" source="x_1868112_aayos">992cea7c971db250ec453b90f053af4b</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="AAYOS">992cea7c971db250ec453b90f053af4b</sys_scope>
+        <sys_update_name>sys_script_include_378da6c797a9b214ec453b90f053afc6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2025-12-06 02:56:07</sys_updated_on>
+    </sys_script_include>
+</record_update>
